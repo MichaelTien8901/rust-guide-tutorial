@@ -183,6 +183,7 @@ fn create_random() -> Box<dyn Summary> {
 
 ### Display and Debug
 
+{% raw %}
 ```rust
 use std::fmt;
 
@@ -203,6 +204,7 @@ impl fmt::Debug for Point {
     }
 }
 ```
+{% endraw %}
 
 ### Clone and Copy
 

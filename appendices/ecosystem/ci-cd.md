@@ -107,6 +107,7 @@ flowchart TD
     D --> L[Windows]
 ```
 
+{% raw %}
 ```yaml
 name: CI
 
@@ -171,11 +172,13 @@ jobs:
         env:
           RUSTDOCFLAGS: -D warnings
 ```
+{% endraw %}
 
 ## Matrix Testing
 
 Test across multiple Rust versions and platforms:
 
+{% raw %}
 ```yaml
 jobs:
   test:
@@ -201,11 +204,13 @@ jobs:
           key: ${{ matrix.rust }}
       - run: cargo test
 ```
+{% endraw %}
 
 ## Feature Matrix Testing
 
 Test different feature combinations:
 
+{% raw %}
 ```yaml
 jobs:
   features:
@@ -225,6 +230,7 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - run: cargo test ${{ matrix.features }}
 ```
+{% endraw %}
 
 ## Code Coverage
 
@@ -258,6 +264,7 @@ jobs:
 
 Automatically check for vulnerable dependencies:
 
+{% raw %}
 ```yaml
 jobs:
   audit:
@@ -269,6 +276,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 ```
+{% endraw %}
 
 ## Release Workflow
 
@@ -293,6 +301,7 @@ flowchart TD
     I --> J[Upload Artifacts]
 ```
 
+{% raw %}
 ```yaml
 name: Release
 
@@ -364,11 +373,13 @@ jobs:
           files: myapp-*/myapp-*
           generate_release_notes: true
 ```
+{% endraw %}
 
 ## Publish to crates.io
 
 Automatically publish when a release is created:
 
+{% raw %}
 ```yaml
 name: Publish
 
@@ -386,6 +397,7 @@ jobs:
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
 ```
+{% endraw %}
 
 **Setup:**
 1. Go to [crates.io](https://crates.io) → Account Settings → API Tokens
@@ -396,6 +408,7 @@ jobs:
 
 Deploy rustdoc to GitHub Pages:
 
+{% raw %}
 ```yaml
 name: Deploy Docs
 
@@ -433,6 +446,7 @@ jobs:
       - uses: actions/deploy-pages@v3
         id: deployment
 ```
+{% endraw %}
 
 ## Caching Strategy
 
@@ -449,6 +463,7 @@ flowchart LR
     G --> H[Compile only changes]
 ```
 
+{% raw %}
 ```yaml
 # Recommended: Use the dedicated Rust cache action
 - uses: Swatinem/rust-cache@v2
@@ -465,6 +480,7 @@ flowchart LR
       target
     key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 ```
+{% endraw %}
 
 ## Environment Variables
 
