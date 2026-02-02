@@ -1,0 +1,9 @@
+[package]
+name = "closures"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates Rust closures and Fn traits"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part3/03-closures"

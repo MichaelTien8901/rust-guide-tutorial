@@ -1,0 +1,9 @@
+[package]
+name = "ownership"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates Rust's ownership system"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part2/03-ownership"

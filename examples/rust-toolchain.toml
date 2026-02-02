@@ -1,0 +1,28 @@
+# Rust toolchain configuration for all examples
+# This ensures consistent builds across different environments
+
+[toolchain]
+# Use stable channel for broad compatibility
+channel = "stable"
+
+# Specify the minimum Rust version for the examples
+# Uncomment to pin to a specific version:
+# channel = "1.75.0"
+
+# Components required for development
+components = [
+    "rustfmt",    # Code formatting
+    "clippy",     # Linting
+    "rust-src",   # Source for rust-analyzer
+]
+
+# Target platforms (uncomment as needed)
+# targets = [
+#     "x86_64-unknown-linux-gnu",
+#     "x86_64-apple-darwin",
+#     "aarch64-apple-darwin",
+#     "x86_64-pc-windows-msvc",
+# ]
+
+# Profile for this toolchain
+profile = "default"

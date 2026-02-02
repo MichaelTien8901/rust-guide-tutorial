@@ -1,0 +1,12 @@
+[package]
+name = "testing-patterns"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates testing patterns with proptest and mocking"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part5/08-testing-patterns"
+
+[dev-dependencies]
+proptest = "1"

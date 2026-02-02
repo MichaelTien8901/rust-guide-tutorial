@@ -1,0 +1,9 @@
+[package]
+name = "advanced-types"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates newtype pattern, type aliases, and DSTs"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part4/06-advanced-types"

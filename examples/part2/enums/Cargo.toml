@@ -1,0 +1,9 @@
+[package]
+name = "enums"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates Rust enums and pattern matching"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part2/07-enums"

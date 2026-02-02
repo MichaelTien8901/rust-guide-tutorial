@@ -1,0 +1,17 @@
+[package]
+name = "performance"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates profiling, benchmarking, and optimization"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part4/07-performance"
+
+# Enable optimizations for release builds
+[profile.release]
+opt-level = 3
+lto = true
+
+[profile.bench]
+opt-level = 3

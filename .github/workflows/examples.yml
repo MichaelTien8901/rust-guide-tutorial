@@ -1,0 +1,203 @@
+# CI workflow to test all Rust code examples
+# Ensures all examples compile, pass tests, and follow style guidelines
+
+name: Examples CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'examples/**'
+      - '.github/workflows/examples.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'examples/**'
+      - '.github/workflows/examples.yml'
+  # Allow manual trigger
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  # Check formatting for all examples
+  fmt:
+    name: Format Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+
+      - name: Check formatting
+        run: |
+          find examples -name "Cargo.toml" -execdir cargo fmt --check \;
+
+  # Run clippy on all examples
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+
+      - name: Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "examples"
+
+      - name: Run clippy
+        run: |
+          find examples -name "Cargo.toml" -execdir cargo clippy -- -D warnings \;
+
+  # Build and test all examples
+  test:
+    name: Build & Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "examples"
+
+      - name: Build all examples (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          for dir in examples/part*/*/; do
+            if [ -f "$dir/Cargo.toml" ]; then
+              echo "Building $dir..."
+              (cd "$dir" && cargo build)
+            fi
+          done
+
+      - name: Build all examples (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Get-ChildItem -Path examples -Recurse -Filter Cargo.toml | ForEach-Object {
+            $dir = $_.DirectoryName
+            Write-Host "Building $dir..."
+            Push-Location $dir
+            cargo build
+            Pop-Location
+          }
+
+      - name: Test all examples (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          for dir in examples/part*/*/; do
+            if [ -f "$dir/Cargo.toml" ]; then
+              echo "Testing $dir..."
+              (cd "$dir" && cargo test)
+            fi
+          done
+
+      - name: Test all examples (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Get-ChildItem -Path examples -Recurse -Filter Cargo.toml | ForEach-Object {
+            $dir = $_.DirectoryName
+            Write-Host "Testing $dir..."
+            Push-Location $dir
+            cargo test
+            Pop-Location
+          }
+
+  # Run examples and verify they don't crash
+  run:
+    name: Run Examples
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "examples"
+
+      - name: Run all examples
+        run: |
+          for dir in examples/part*/*/; do
+            if [ -f "$dir/Cargo.toml" ]; then
+              # Check if it's a binary (has main.rs)
+              if [ -f "$dir/src/main.rs" ]; then
+                echo "Running $dir..."
+                timeout 30s bash -c "cd '$dir' && cargo run" || {
+                  if [ $? -eq 124 ]; then
+                    echo "Warning: $dir timed out (may be interactive)"
+                  else
+                    echo "Error: $dir failed to run"
+                    exit 1
+                  fi
+                }
+              fi
+            fi
+          done
+
+  # MSRV (Minimum Supported Rust Version) check
+  msrv:
+    name: MSRV Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Rust 1.70 (MSRV)
+        uses: dtolnay/rust-toolchain@1.70.0
+
+      - name: Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "examples"
+
+      - name: Check MSRV
+        run: |
+          for dir in examples/part*/*/; do
+            if [ -f "$dir/Cargo.toml" ]; then
+              echo "Checking MSRV for $dir..."
+              (cd "$dir" && cargo check) || echo "Warning: $dir may require newer Rust"
+            fi
+          done
+
+  # Summary job that depends on all others
+  ci-success:
+    name: CI Success
+    runs-on: ubuntu-latest
+    needs: [fmt, clippy, test, run]
+    if: always()
+    steps:
+      - name: Check all jobs passed
+        run: |
+          if [[ "${{ needs.fmt.result }}" != "success" ]] || \
+             [[ "${{ needs.clippy.result }}" != "success" ]] || \
+             [[ "${{ needs.test.result }}" != "success" ]] || \
+             [[ "${{ needs.run.result }}" != "success" ]]; then
+            echo "One or more jobs failed"
+            exit 1
+          fi
+          echo "All CI checks passed!"

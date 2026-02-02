@@ -1,0 +1,9 @@
+[package]
+name = "memory-layout"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates struct layout and repr attributes"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part4/08-memory-layout"

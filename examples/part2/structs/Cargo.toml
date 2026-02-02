@@ -1,0 +1,9 @@
+[package]
+name = "structs"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates Rust structs, methods, and associated functions"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part2/06-structs"

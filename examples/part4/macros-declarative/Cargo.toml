@@ -1,0 +1,9 @@
+[package]
+name = "macros-declarative"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates declarative macros with macro_rules!"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part4/03-macros-declarative"

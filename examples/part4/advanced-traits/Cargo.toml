@@ -1,0 +1,9 @@
+[package]
+name = "advanced-traits"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates advanced trait patterns"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part4/05-advanced-traits"

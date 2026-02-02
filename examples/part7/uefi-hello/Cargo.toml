@@ -1,0 +1,18 @@
+[package]
+name = "uefi-hello"
+version = "0.1.0"
+edition = "2021"
+description = "UEFI programming concepts (reference example)"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part7/03-uefi-hello"
+
+# Note: This is a reference example showing UEFI patterns.
+# Real UEFI builds require:
+# - target = "x86_64-unknown-uefi"
+# - panic = "abort"
+# - No std library
+#
+# To build actual UEFI applications:
+# cargo build --target x86_64-unknown-uefi

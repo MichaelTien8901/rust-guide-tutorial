@@ -1,0 +1,9 @@
+[package]
+name = "smart-pointers"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates Box, Rc, Arc, and RefCell"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part3/04-smart-pointers"

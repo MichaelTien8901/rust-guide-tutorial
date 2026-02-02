@@ -1,0 +1,25 @@
+{
+    "name": "Rust Development",
+    "dockerFile": "../Dockerfile",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "rust-lang.rust-analyzer",
+                "vadimcn.vscode-lldb",
+                "tamasfe.even-better-toml",
+                "usernamehw.errorlens",
+                "serayuzgur.crates"
+            ],
+            "settings": {
+                "rust-analyzer.checkOnSave.command": "clippy",
+                "[rust]": {
+                    "editor.formatOnSave": true
+                }
+            }
+        }
+    },
+    "mounts": [
+        "source=rust-cargo-cache,target=/usr/local/cargo/registry,type=volume"
+    ],
+    "postCreateCommand": "rustup component add rustfmt clippy"
+}

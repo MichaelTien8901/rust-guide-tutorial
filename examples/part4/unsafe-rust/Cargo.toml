@@ -1,0 +1,9 @@
+[package]
+name = "unsafe-rust"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates unsafe Rust superpowers and invariants"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part4/01-unsafe"

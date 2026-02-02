@@ -1,0 +1,9 @@
+[package]
+name = "variables-types"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates Rust variables, mutability, and basic types"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part2/01-variables-types"

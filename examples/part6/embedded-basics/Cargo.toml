@@ -1,0 +1,12 @@
+[package]
+name = "embedded-basics"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates embedded Rust concepts (simulated)"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part6/03-embedded-hal"
+
+# Note: This example simulates embedded concepts
+# Real embedded code would target specific hardware

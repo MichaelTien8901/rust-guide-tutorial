@@ -1,0 +1,9 @@
+[package]
+name = "error-handling"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates Rust error handling with Result, Option, and ?"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part2/08-error-handling"

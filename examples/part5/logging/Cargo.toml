@@ -1,0 +1,13 @@
+[package]
+name = "logging"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates logging and tracing patterns"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part5/09-logging"
+
+[dependencies]
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }

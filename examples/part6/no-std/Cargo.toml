@@ -1,0 +1,16 @@
+[package]
+name = "no-std-example"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates no_std programming concepts"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part6/01-no-std"
+
+# Note: This example shows no_std concepts but compiles as std
+# for demonstration purposes. Real no_std code would use:
+# [profile.dev]
+# panic = "abort"
+# [profile.release]
+# panic = "abort"

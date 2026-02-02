@@ -1,0 +1,13 @@
+[package]
+name = "ffi"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates Foreign Function Interface with C"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part4/02-ffi"
+
+# FFI examples work best with libc for cross-platform compatibility
+[dependencies]
+libc = "0.2"

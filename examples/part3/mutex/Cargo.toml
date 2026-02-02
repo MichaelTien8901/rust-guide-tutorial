@@ -1,0 +1,9 @@
+[package]
+name = "mutex"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates Mutex and RwLock for shared state"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part3/07-mutex"

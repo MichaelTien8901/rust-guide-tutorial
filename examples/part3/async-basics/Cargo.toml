@@ -1,0 +1,13 @@
+[package]
+name = "async-basics"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates async/await basics"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part3/08-async-basics"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+futures = "0.3"

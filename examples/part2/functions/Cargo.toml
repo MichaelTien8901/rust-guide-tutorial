@@ -1,0 +1,9 @@
+[package]
+name = "functions"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates Rust functions, parameters, and return values"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part2/02-functions"

@@ -1,0 +1,12 @@
+[package]
+name = "cli-apps"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates CLI application patterns with clap"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part5/04-cli-apps"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }

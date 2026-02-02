@@ -1,0 +1,13 @@
+[package]
+name = "database"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates database patterns with sqlx"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part5/06-database"
+
+[dependencies]
+sqlx = { version = "0.7", features = ["runtime-tokio", "sqlite"] }
+tokio = { version = "1", features = ["full"] }

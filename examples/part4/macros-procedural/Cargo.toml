@@ -1,0 +1,17 @@
+[package]
+name = "macros-procedural"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates procedural macros concepts"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part4/04-macros-procedural"
+
+# Note: Actual procedural macros must be in a separate crate
+# with proc-macro = true. This example shows usage patterns.
+
+# Commonly used proc macro crates
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+thiserror = "1"
