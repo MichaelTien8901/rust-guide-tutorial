@@ -9,6 +9,52 @@ nav_order: 6
 
 Compile-time checked SQL queries with sqlx.
 
+## Overview
+
+Database access in Rust emphasizes type safety and compile-time verification. sqlx is the leading async database library, offering compile-time SQL checking without requiring an ORM.
+
+```mermaid
+flowchart TB
+    subgraph "sqlx Features"
+        CT[Compile-Time Checking]
+        AS[Async Support]
+        TS[Type Safety]
+        MB[Multi-Backend]
+    end
+
+    CT --> CT1["Verifies SQL at build<br/>Catches typos early"]
+    AS --> AS1["tokio/async-std<br/>Non-blocking I/O"]
+    TS --> TS1["FromRow derive<br/>Query macros"]
+    MB --> MB1["PostgreSQL<br/>MySQL<br/>SQLite"]
+
+    style CT fill:#c8e6c9
+    style TS fill:#e3f2fd
+```
+
+## When to Use sqlx
+
+```mermaid
+flowchart TD
+    A[Database Access] --> B{ORM or Raw SQL?}
+
+    B -->|"Raw SQL control"| C[sqlx]
+    B -->|"Full ORM"| D[Diesel or SeaORM]
+
+    C --> C1{Compile-time<br/>checking needed?}
+    C1 -->|Yes| E["query! macros"]
+    C1 -->|No| F["QueryBuilder"]
+
+    style C fill:#c8e6c9
+    style E fill:#e3f2fd
+```
+
+{: .best-practice }
+> **Database Access Strategy:**
+> - Use **sqlx** when you want SQL control with compile-time safety
+> - Use **Diesel** when you want a full ORM with migrations
+> - Use **SeaORM** when you want async ORM capabilities
+> - Always use connection pools in production
+
 ## sqlx Overview
 
 sqlx provides:
@@ -292,13 +338,46 @@ async fn main() {
 }
 ```
 
+## Query Execution Flow
+
+```mermaid
+flowchart LR
+    subgraph "Query Lifecycle"
+        Q[Query] --> P[Pool]
+        P --> C[Connection]
+        C --> E[Execute]
+        E --> R[Results]
+    end
+
+    Q --> Q1["query! or query_as!"]
+    P --> P1["Connection pool<br/>Manages lifecycle"]
+    R --> R1["fetch_one/all/optional"]
+
+    style Q fill:#c8e6c9
+    style P fill:#e3f2fd
+```
+
 ## Best Practices
 
-1. **Use connection pools** - never create connections per request
-2. **Use query macros** for compile-time verification
-3. **Handle migrations** at startup
-4. **Use transactions** for multi-step operations
-5. **Set appropriate pool sizes** based on workload
+{: .best-practice }
+> **Database Access Guidelines:**
+> 1. **Use connection pools** - never create connections per request
+> 2. **Use query macros** for compile-time verification
+> 3. **Handle migrations** at startup
+> 4. **Use transactions** for multi-step operations
+> 5. **Set appropriate pool sizes** based on workload
+> 6. **Use `fetch_optional`** when rows might not exist
+> 7. **Leverage `FromRow`** derive for clean mapping
+
+## Common Mistakes
+
+{: .warning }
+> **Avoid these database anti-patterns:**
+> - Creating connections per request (use pools!)
+> - N+1 query problems (batch or join queries)
+> - Not using transactions for related operations
+> - Ignoring connection pool limits
+> - Storing `DATABASE_URL` in code (use environment variables)
 
 ## Summary
 
@@ -309,6 +388,12 @@ async fn main() {
 | Multiple rows | `fetch_all()` |
 | Execute | `execute()` |
 | Transaction | `pool.begin()` |
+
+## See Also
+
+- [Web Services]({% link part5/05-web-services.md %}) - Integrating with web frameworks
+- [Database Libraries]({% link appendices/libraries/database.md %}) - Comprehensive database library reference
+- [Example Code](https://github.com/example/rust-guide/tree/main/examples/part5/database)
 
 ## Next Steps
 

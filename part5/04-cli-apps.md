@@ -9,6 +9,57 @@ nav_order: 4
 
 Build command-line tools with clap.
 
+## Overview
+
+Rust excels at building fast, reliable command-line tools. The ecosystem provides powerful crates for argument parsing, user interaction, and terminal output that make CLI development productive and enjoyable.
+
+```mermaid
+flowchart TB
+    subgraph "CLI Ecosystem"
+        C[clap]
+        I[indicatif]
+        CO[colored]
+        D[dialoguer]
+    end
+
+    C --> C1["Argument parsing<br/>Subcommands<br/>Validation"]
+    I --> I1["Progress bars<br/>Spinners<br/>Multi-progress"]
+    CO --> CO1["Colored output<br/>Bold/italic<br/>Cross-platform"]
+    D --> D1["User prompts<br/>Selection menus<br/>Confirmations"]
+
+    style C fill:#c8e6c9
+```
+
+## When to Use Each Crate
+
+```mermaid
+flowchart TD
+    A[CLI Feature Needed] --> B{What type?}
+
+    B -->|Arguments| C[clap]
+    B -->|Progress| D[indicatif]
+    B -->|Colors| E[colored]
+    B -->|Interaction| F[dialoguer]
+
+    C --> C1["derive or builder API"]
+    D --> D1["ProgressBar or Spinner"]
+    E --> E1["Colorize trait"]
+    F --> F1["Input, Select, Confirm"]
+
+    style C fill:#c8e6c9
+    style D fill:#e3f2fd
+    style E fill:#fff3e0
+    style F fill:#f3e5f5
+```
+
+{: .best-practice }
+> **CLI Design Principles:**
+> - Use derive macros for cleaner argument definitions
+> - Respect `NO_COLOR` environment variable
+> - Provide helpful error messages
+> - Support both short (`-v`) and long (`--verbose`) flags
+> - Use subcommands for complex tools
+
 ## Basic CLI with clap
 
 ```rust
@@ -338,14 +389,46 @@ fn main() -> Result<()> {
 }
 ```
 
+## CLI Architecture
+
+```mermaid
+flowchart LR
+    subgraph "Typical CLI Flow"
+        A[Parse Args] --> B[Validate]
+        B --> C[Execute]
+        C --> D[Output]
+    end
+
+    A --> A1[clap]
+    B --> B1["value_parser"]
+    C --> C1["Business logic"]
+    D --> D1["colored + indicatif"]
+
+    style A fill:#c8e6c9
+    style D fill:#e3f2fd
+```
+
 ## Best Practices
 
-1. **Use derive macros** for cleaner argument definitions
-2. **Add help text** with `///` doc comments
-3. **Support environment variables** for sensitive data
-4. **Validate inputs** with value parsers
-5. **Use colors** but respect `NO_COLOR` environment variable
-6. **Show progress** for long operations
+{: .best-practice }
+> **CLI Development Guidelines:**
+> 1. **Use derive macros** for cleaner argument definitions
+> 2. **Add help text** with `///` doc comments
+> 3. **Support environment variables** for sensitive data
+> 4. **Validate inputs** with value parsers
+> 5. **Use colors** but respect `NO_COLOR` environment variable
+> 6. **Show progress** for long operations
+> 7. **Return proper exit codes** (0 for success, non-zero for errors)
+
+## Common Mistakes
+
+{: .warning }
+> **Avoid these CLI anti-patterns:**
+> - Hardcoding paths (use proper path handling)
+> - Ignoring `NO_COLOR` environment variable
+> - Not providing `--help` and `--version` flags
+> - Using `unwrap()` instead of proper error handling
+> - Blocking the main thread without progress indication
 
 ## Summary
 
@@ -361,6 +444,7 @@ fn main() -> Result<()> {
 
 - [CLI Libraries]({% link appendices/libraries/cli.md %}) - Comprehensive CLI library reference
 - [Error Patterns]({% link part5/02-error-patterns.md %}) - CLI-friendly error handling
+- [Example Code](https://github.com/example/rust-guide/tree/main/examples/part5/cli-apps)
 
 ## Next Steps
 

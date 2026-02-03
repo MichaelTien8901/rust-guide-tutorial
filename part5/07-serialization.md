@@ -9,6 +9,59 @@ nav_order: 7
 
 Convert Rust data structures to and from various formats.
 
+## Overview
+
+serde (Serialize/Deserialize) is Rust's foundational serialization framework. It provides a powerful derive macro system and supports numerous data formats through separate crates.
+
+```mermaid
+flowchart TB
+    subgraph "serde Ecosystem"
+        S[serde core]
+        SJ[serde_json]
+        ST[toml]
+        SY[serde_yaml]
+        SB[bincode]
+    end
+
+    S --> S1["Serialize/Deserialize traits<br/>Derive macros<br/>Attributes"]
+
+    SJ --> F1[JSON]
+    ST --> F2[TOML]
+    SY --> F3[YAML]
+    SB --> F4[Binary]
+
+    style S fill:#c8e6c9
+    style SJ fill:#e3f2fd
+```
+
+## When to Use Each Format
+
+```mermaid
+flowchart TD
+    A[Data Format Needed] --> B{Use Case?}
+
+    B -->|"Web APIs"| C[JSON]
+    B -->|"Config files"| D[TOML or YAML]
+    B -->|"Performance"| E[Binary formats]
+    B -->|"Human readable"| F[JSON or YAML]
+
+    C --> C1["serde_json"]
+    D --> D1["toml or serde_yaml"]
+    E --> E1["bincode or rmp-serde"]
+
+    style C fill:#c8e6c9
+    style D fill:#fff3e0
+    style E fill:#e3f2fd
+```
+
+{: .best-practice }
+> **Format Selection Guide:**
+> - **JSON**: Web APIs, JavaScript interop, debugging
+> - **TOML**: Configuration files, Cargo.toml style
+> - **YAML**: Configuration with comments, Kubernetes
+> - **Bincode**: Fast binary, same-architecture only
+> - **MessagePack**: Compact binary, cross-platform
+
 ## Basic Usage
 
 ```rust
@@ -313,13 +366,46 @@ struct Flexible {
 }
 ```
 
+## Enum Tagging Comparison
+
+```mermaid
+flowchart LR
+    subgraph "Enum Tagging Styles"
+        ET[Externally Tagged]
+        IT[Internally Tagged]
+        AT[Adjacently Tagged]
+        UT[Untagged]
+    end
+
+    ET --> ET1["{\"Variant\": data}"]
+    IT --> IT1["{\"type\": \"Variant\", ...}"]
+    AT --> AT1["{\"type\": \"Variant\", \"data\": ...}"]
+    UT --> UT1["data only"]
+
+    style IT fill:#c8e6c9
+```
+
 ## Best Practices
 
-1. **Use `#[serde(rename_all)]`** for consistent naming
-2. **Provide defaults** for optional fields
-3. **Use `#[serde(skip_serializing_if)]`** to reduce payload size
-4. **Choose appropriate enum tagging** for your API
-5. **Test round-trips** (serialize then deserialize)
+{: .best-practice }
+> **Serialization Guidelines:**
+> 1. **Use `#[serde(rename_all)]`** for consistent naming
+> 2. **Provide defaults** for optional fields
+> 3. **Use `#[serde(skip_serializing_if)]`** to reduce payload size
+> 4. **Choose appropriate enum tagging** for your API
+> 5. **Test round-trips** (serialize then deserialize)
+> 6. **Use internally tagged enums** for REST APIs
+> 7. **Document the expected format** for public APIs
+
+## Common Mistakes
+
+{: .warning }
+> **Avoid these serialization anti-patterns:**
+> - Using untagged enums when types overlap (ambiguous parsing)
+> - Forgetting `#[serde(default)]` for optional fields
+> - Not handling missing fields gracefully
+> - Leaking internal representation to external APIs
+> - Not testing deserialization of external data
 
 ## Summary
 
@@ -336,6 +422,7 @@ struct Flexible {
 ## See Also
 
 - [Serialization Libraries]({% link appendices/libraries/serialization.md %}) - Comprehensive serde ecosystem reference
+- [Example Code](https://github.com/example/rust-guide/tree/main/examples/part5/serialization)
 
 ## Next Steps
 

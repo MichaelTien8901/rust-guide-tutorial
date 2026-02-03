@@ -9,6 +9,54 @@ nav_order: 9
 
 Structured logging with the tracing ecosystem.
 
+## Overview
+
+The `tracing` crate is Rust's modern approach to application-level telemetry. It goes beyond traditional logging by supporting structured data, spans for tracking execution flow, and async-aware instrumentation.
+
+```mermaid
+flowchart TB
+    subgraph "tracing Ecosystem"
+        T[tracing]
+        TS[tracing-subscriber]
+        TA[tracing-appender]
+        TH[tower-http]
+    end
+
+    T --> T1["Events & Spans<br/>Structured fields<br/>Async-aware"]
+    TS --> TS1["Output formatting<br/>Filtering<br/>Layers"]
+    TA --> TA1["File output<br/>Rolling logs<br/>Non-blocking"]
+    TH --> TH1["HTTP tracing<br/>Request spans"]
+
+    style T fill:#c8e6c9
+    style TS fill:#e3f2fd
+```
+
+## When to Use tracing
+
+```mermaid
+flowchart TD
+    A[Logging Needed] --> B{Application type?}
+
+    B -->|"Simple scripts"| C["println! or log crate"]
+    B -->|"Web services"| D[tracing + tower-http]
+    B -->|"CLI tools"| E[tracing + env filter]
+    B -->|"Libraries"| F[tracing optional]
+
+    D --> D1["Request spans<br/>Performance metrics"]
+    E --> E1["RUST_LOG filtering<br/>Colored output"]
+
+    style D fill:#c8e6c9
+    style E fill:#e3f2fd
+```
+
+{: .best-practice }
+> **Observability Strategy:**
+> - Use **spans** for request/transaction boundaries
+> - Use **structured fields** over string interpolation
+> - Include **request IDs** for correlation
+> - Configure appropriate **log levels** per module
+> - Use **JSON output** in production for log aggregation
+
 ## Why tracing?
 
 - Structured logging with key-value pairs
@@ -316,6 +364,29 @@ fn timed_operation() {
 }
 ```
 
+## Log Level Guidelines
+
+```mermaid
+flowchart LR
+    subgraph "Log Levels"
+        E[ERROR]
+        W[WARN]
+        I[INFO]
+        D[DEBUG]
+        T[TRACE]
+    end
+
+    E --> E1["Unrecoverable errors<br/>Requires attention"]
+    W --> W1["Recoverable issues<br/>Degraded service"]
+    I --> I1["Significant events<br/>Request boundaries"]
+    D --> D1["Debugging info<br/>Development use"]
+    T --> T1["Detailed tracing<br/>Performance impact"]
+
+    style E fill:#ffcdd2
+    style W fill:#fff3e0
+    style I fill:#c8e6c9
+```
+
 ## Summary
 
 | Component | Purpose |
@@ -328,15 +399,30 @@ fn timed_operation() {
 
 ## Best Practices
 
-1. **Use spans** for request/transaction boundaries
-2. **Include request IDs** for correlation
-3. **Use structured fields** over string interpolation
-4. **Filter appropriately** in production
-5. **Log errors with context**
+{: .best-practice }
+> **Logging Guidelines:**
+> 1. **Use spans** for request/transaction boundaries
+> 2. **Include request IDs** for correlation
+> 3. **Use structured fields** over string interpolation
+> 4. **Filter appropriately** in production
+> 5. **Log errors with context** (include error chain)
+> 6. **Use `#[instrument]`** for automatic function tracing
+> 7. **Consider sampling** for high-volume debug logs
+
+## Common Mistakes
+
+{: .warning }
+> **Avoid these logging anti-patterns:**
+> - Logging sensitive data (passwords, tokens, PII)
+> - Using DEBUG/TRACE in production without filtering
+> - Not including correlation IDs
+> - String formatting instead of structured fields
+> - Blocking I/O in log subscribers
 
 ## See Also
 
 - [Logging Libraries]({% link appendices/libraries/logging.md %}) - Comprehensive logging library reference
+- [Example Code](https://github.com/example/rust-guide/tree/main/examples/part5/logging)
 
 ## Next Steps
 

@@ -9,6 +9,63 @@ nav_order: 5
 
 Build HTTP APIs with axum and actix-web.
 
+## Overview
+
+Rust's async ecosystem enables building high-performance web services. The two leading frameworks, axum and actix-web, offer different approaches while both delivering excellent performance and type safety.
+
+```mermaid
+flowchart TB
+    subgraph "Web Framework Ecosystem"
+        AX[axum]
+        AC[actix-web]
+    end
+
+    subgraph "Shared Foundation"
+        TO[tokio]
+        SE[serde]
+        HY[hyper]
+    end
+
+    AX --> AX1["Tower middleware<br/>Extractors<br/>Type-safe routing"]
+    AC --> AC1["Actor model<br/>Attribute macros<br/>Built-in features"]
+
+    AX --> TO
+    AX --> HY
+    AC --> TO
+
+    style AX fill:#c8e6c9
+    style AC fill:#e3f2fd
+```
+
+## When to Use Each Framework
+
+```mermaid
+flowchart TD
+    A[Building Web Service] --> B{Preference?}
+
+    B -->|"Tower ecosystem"| C[axum]
+    B -->|"Attribute macros"| D[actix-web]
+    B -->|"Max performance"| E[Both are excellent]
+
+    C --> C1["Extractors pattern<br/>Composable layers"]
+    D --> D1["#[get], #[post] macros<br/>Built-in websockets"]
+
+    F{Need specific<br/>feature?} -->|WebSockets| D
+    F -->|gRPC| G[tonic]
+    F -->|REST| E
+
+    style C fill:#c8e6c9
+    style D fill:#e3f2fd
+```
+
+{: .best-practice }
+> **Web Service Design Principles:**
+> - Use extractors for clean parameter handling
+> - Implement `IntoResponse` for custom error types
+> - Share state safely with `Arc`
+> - Add middleware for cross-cutting concerns (logging, CORS, auth)
+> - Structure routes in modules for maintainability
+
 ## axum - Modern Web Framework
 
 axum is built on tokio and tower for maximum performance.
@@ -242,13 +299,45 @@ actix-web = "4"
 | Performance | Excellent | Excellent |
 | Ecosystem | tower | actix |
 
+## Web Service Architecture
+
+```mermaid
+flowchart LR
+    subgraph "Request Flow"
+        R[Request] --> M[Middleware]
+        M --> RO[Router]
+        RO --> H[Handler]
+        H --> RE[Response]
+    end
+
+    M --> M1["Logging<br/>Auth<br/>CORS"]
+    H --> H1["Extractors<br/>Business Logic<br/>State Access"]
+
+    style M fill:#fff3e0
+    style H fill:#c8e6c9
+```
+
 ## Best Practices
 
-1. **Use extractors** for clean parameter handling
-2. **Implement IntoResponse** for custom error types
-3. **Share state with Arc** for thread safety
-4. **Add middleware** for logging, CORS, auth
-5. **Structure routes** in modules for large apps
+{: .best-practice }
+> **Web Service Guidelines:**
+> 1. **Use extractors** for clean parameter handling
+> 2. **Implement IntoResponse** for custom error types
+> 3. **Share state with Arc** for thread safety
+> 4. **Add middleware** for logging, CORS, auth
+> 5. **Structure routes** in modules for large apps
+> 6. **Use connection pools** for database access
+> 7. **Handle errors gracefully** with proper HTTP status codes
+
+## Common Mistakes
+
+{: .warning }
+> **Avoid these web service anti-patterns:**
+> - Creating database connections per request (use pools)
+> - Blocking the async runtime with sync code
+> - Exposing internal errors to clients
+> - Not validating input data
+> - Forgetting CORS configuration for frontends
 
 ## Summary
 
@@ -262,6 +351,7 @@ actix-web = "4"
 - [Async Basics]({% link part3/08-async-basics.md %}) - Async/await fundamentals
 - [Web Frameworks]({% link appendices/libraries/web-frameworks.md %}) - Framework comparison
 - [Serialization]({% link part5/07-serialization.md %}) - JSON and serde patterns
+- [Example Code](https://github.com/example/rust-guide/tree/main/examples/part5/web-services)
 
 ## Next Steps
 

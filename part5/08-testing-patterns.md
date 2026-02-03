@@ -9,6 +9,55 @@ nav_order: 8
 
 Advanced testing techniques with proptest and mockall.
 
+## Overview
+
+Beyond basic unit tests, Rust's testing ecosystem provides powerful tools for property-based testing, mocking, fixtures, and snapshot testing. These patterns help ensure code correctness and maintainability.
+
+```mermaid
+flowchart TB
+    subgraph "Testing Ecosystem"
+        PT[proptest]
+        MK[mockall]
+        RS[rstest]
+        IN[insta]
+    end
+
+    PT --> PT1["Property-based<br/>Shrinking<br/>Random inputs"]
+    MK --> MK1["Mock traits<br/>Expectations<br/>Sequences"]
+    RS --> RS1["Fixtures<br/>Parameterized<br/>Matrix tests"]
+    IN --> IN1["Snapshot tests<br/>Review diffs<br/>JSON/YAML"]
+
+    style PT fill:#c8e6c9
+    style MK fill:#e3f2fd
+```
+
+## When to Use Each Approach
+
+```mermaid
+flowchart TD
+    A[Testing Need] --> B{What type?}
+
+    B -->|"Algorithm correctness"| C[proptest]
+    B -->|"External dependencies"| D[mockall]
+    B -->|"Parameterized tests"| E[rstest]
+    B -->|"Complex output"| F[insta]
+
+    C --> C1["Test properties<br/>not specific values"]
+    D --> D1["Mock databases<br/>APIs, services"]
+    E --> E1["Multiple inputs<br/>shared setup"]
+    F --> F1["HTML, JSON<br/>serialization"]
+
+    style C fill:#c8e6c9
+    style D fill:#e3f2fd
+```
+
+{: .best-practice }
+> **Testing Strategy:**
+> - **Unit tests**: Fast, focused, test one thing
+> - **Property tests**: Algorithmic invariants
+> - **Integration tests**: End-to-end workflows
+> - **Mock tests**: External dependency isolation
+
 ## Property-Based Testing with proptest
 
 Instead of testing specific values, test properties that should hold for all inputs.
@@ -318,14 +367,45 @@ Add to Cargo.toml:
 insta = { version = "1", features = ["json"] }
 ```
 
+## Test Organization
+
+```mermaid
+flowchart TB
+    subgraph "Test Structure"
+        U[Unit Tests]
+        I[Integration Tests]
+        D[Doc Tests]
+    end
+
+    U --> U1["src/*.rs<br/>#[cfg(test)] mod tests"]
+    I --> I1["tests/*.rs<br/>Full binary tests"]
+    D --> D1["/// examples<br/>In documentation"]
+
+    style U fill:#c8e6c9
+    style I fill:#e3f2fd
+```
+
 ## Best Practices
 
-1. **Use property tests** for algorithmic code
-2. **Mock external dependencies** (databases, APIs)
-3. **Keep unit tests fast** - milliseconds, not seconds
-4. **Use fixtures** to reduce test setup duplication
-5. **Test error cases** as thoroughly as success cases
-6. **Use snapshot tests** for complex outputs
+{: .best-practice }
+> **Testing Guidelines:**
+> 1. **Use property tests** for algorithmic code
+> 2. **Mock external dependencies** (databases, APIs)
+> 3. **Keep unit tests fast** - milliseconds, not seconds
+> 4. **Use fixtures** to reduce test setup duplication
+> 5. **Test error cases** as thoroughly as success cases
+> 6. **Use snapshot tests** for complex outputs
+> 7. **Name tests descriptively** - `test_login_with_invalid_password_returns_error`
+
+## Common Mistakes
+
+{: .warning }
+> **Avoid these testing anti-patterns:**
+> - Testing implementation details instead of behavior
+> - Slow unit tests (move to integration tests)
+> - Not testing error paths
+> - Excessive mocking (test real code when possible)
+> - Ignoring flaky tests instead of fixing them
 
 ## Summary
 
@@ -336,6 +416,11 @@ insta = { version = "1", features = ["json"] }
 | `rstest` | Fixtures and parameterized tests |
 | `insta` | Snapshot testing |
 | `tempfile` | Temporary test directories |
+
+## See Also
+
+- [Testing Libraries]({% link appendices/libraries/testing.md %}) - Comprehensive testing library reference
+- [Example Code](https://github.com/example/rust-guide/tree/main/examples/part5/testing-patterns)
 
 ## Next Steps
 

@@ -9,6 +9,60 @@ nav_order: 2
 
 Idiomatic error handling with thiserror and anyhow.
 
+## Overview
+
+Rust's error handling is explicit and type-safe. The ecosystem provides powerful crates that make error handling ergonomic while maintaining these guarantees. Understanding when to use which approach is key to writing maintainable Rust code.
+
+```mermaid
+flowchart TB
+    subgraph "Error Handling Ecosystem"
+        STD[std::error::Error]
+        TH[thiserror]
+        AH[anyhow]
+        EY[color-eyre]
+    end
+
+    STD --> STD1["Base trait<br/>Manual impl"]
+    TH --> TH1["Derive macro<br/>Custom errors"]
+    AH --> AH1["Flexible type<br/>Quick prototyping"]
+    EY --> EY1["Pretty errors<br/>CLI apps"]
+
+    TH -->|"implements"| STD
+    AH -->|"wraps any"| STD
+    EY -->|"extends"| AH
+
+    style TH fill:#c8e6c9
+    style AH fill:#e3f2fd
+```
+
+## When to Use Each Approach
+
+```mermaid
+flowchart TD
+    A[Error Handling Decision] --> B{Library or<br/>Application?}
+
+    B -->|Library| C{Need specific<br/>error types?}
+    B -->|Application| D{Priority?}
+
+    C -->|Yes| E[thiserror]
+    C -->|No| F["Box<dyn Error>"]
+
+    D -->|Quick development| G[anyhow]
+    D -->|Pretty CLI output| H[color-eyre]
+    D -->|Specific handling| I[thiserror + anyhow]
+
+    style E fill:#c8e6c9
+    style G fill:#e3f2fd
+    style H fill:#fff3e0
+```
+
+{: .best-practice }
+> **Error Handling Strategy:**
+> - **Libraries**: Use `thiserror` for specific, documented error types
+> - **Applications**: Use `anyhow` for flexible error propagation
+> - **Both**: Always add context when propagating errors
+> - **CLI apps**: Consider `color-eyre` for user-friendly output
+
 ## Custom Error Types with thiserror
 
 The `thiserror` crate derives `std::error::Error` implementations.
@@ -213,13 +267,46 @@ fn main() -> Result<()> {
 }
 ```
 
+## Error Design Patterns
+
+```mermaid
+flowchart LR
+    subgraph "Error Architecture"
+        direction TB
+        L1[Public API Error]
+        L2[Module Errors]
+        L3[External Errors]
+    end
+
+    L3 -->|"#[from]"| L2
+    L2 -->|"#[source]"| L1
+
+    L1 --> U[User sees<br/>high-level error]
+    L3 --> D[Preserves<br/>original cause]
+
+    style L1 fill:#c8e6c9
+    style U fill:#e3f2fd
+```
+
 ## Best Practices
 
-1. **Libraries**: Use `thiserror` with specific error enums
-2. **Applications**: Use `anyhow` for flexible error handling
-3. **Always add context** when propagating errors
-4. **Don't lose information** - use `#[from]` and `#[source]`
-5. **Use `bail!` and `ensure!`** for cleaner error creation
+{: .best-practice }
+> **Error Handling Guidelines:**
+> 1. **Libraries**: Use `thiserror` with specific error enums
+> 2. **Applications**: Use `anyhow` for flexible error handling
+> 3. **Always add context** when propagating errors
+> 4. **Don't lose information** - use `#[from]` and `#[source]`
+> 5. **Use `bail!` and `ensure!`** for cleaner error creation
+> 6. **Document error conditions** in public API functions
+
+## Common Mistakes
+
+{: .warning }
+> **Avoid these error handling anti-patterns:**
+> - Using `.unwrap()` in library code (panic on error)
+> - Losing error context by converting to strings early
+> - Creating too many error variants (keep it simple)
+> - Forgetting to implement `Send + Sync` for thread-safe errors
 
 ## Summary
 
@@ -235,6 +322,7 @@ fn main() -> Result<()> {
 
 - [Error Handling]({% link part2/08-error-handling.md %}) - Fundamental error handling with Result
 - [Error Handling Libraries]({% link appendices/libraries/error-handling.md %}) - Library reference
+- [Example Code](https://github.com/example/rust-guide/tree/main/examples/part5/error-patterns)
 
 ## Next Steps
 

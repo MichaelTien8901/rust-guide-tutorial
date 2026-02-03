@@ -9,6 +9,52 @@ nav_order: 3
 
 Model state transitions safely with Rust's type system.
 
+## Overview
+
+State machines are fundamental patterns for modeling systems with discrete states and transitions. Rust's powerful type system enables encoding state machines with varying levels of compile-time safety.
+
+```mermaid
+flowchart TB
+    subgraph "State Machine Approaches"
+        E[Enum-Based]
+        T[Typestate]
+        TR[Trait-Based]
+    end
+
+    E --> E1["Runtime checked<br/>Serializable<br/>Dynamic dispatch"]
+    T --> T1["Compile-time checked<br/>Zero-cost<br/>Type-level states"]
+    TR --> TR1["Extensible<br/>Generic transitions<br/>Trait bounds"]
+
+    style T fill:#c8e6c9
+    style E fill:#e3f2fd
+```
+
+## When to Use Each Pattern
+
+```mermaid
+flowchart TD
+    A[State Machine Needed] --> B{Invalid transitions<br/>are bugs?}
+
+    B -->|"Yes, catch at compile-time"| C{Need to<br/>serialize state?}
+    B -->|"No, handle at runtime"| D[Enum-Based]
+
+    C -->|Yes| E[Enum + Validation]
+    C -->|No| F[Typestate Pattern]
+
+    G{Need extensible<br/>transitions?} --> H[Trait-Based]
+    G --> F
+
+    style F fill:#c8e6c9
+    style D fill:#e3f2fd
+    style H fill:#fff3e0
+```
+
+{: .best-practice }
+> **Choose Your State Machine Pattern:**
+> - **Enum-based**: When you need serialization or runtime flexibility
+> - **Typestate**: When invalid transitions should be compile errors
+> - **Trait-based**: When you need extensible or generic transitions
+
 ## Enum-Based State Machine
 
 ```rust
@@ -277,6 +323,24 @@ fn main() {
 }
 ```
 
+## Pattern Comparison
+
+```mermaid
+flowchart LR
+    subgraph "Enum-Based"
+        E1[State stored<br/>as value] --> E2[Match on<br/>transitions]
+        E2 --> E3[Runtime<br/>error if invalid]
+    end
+
+    subgraph "Typestate"
+        T1[State in<br/>type parameter] --> T2[Methods only<br/>on valid states]
+        T2 --> T3[Compile error<br/>if invalid]
+    end
+
+    style E3 fill:#fff3e0
+    style T3 fill:#c8e6c9
+```
+
 ## When to Use Each Pattern
 
 | Pattern | Compile-time Safe | Runtime Flexible | Use Case |
@@ -287,10 +351,22 @@ fn main() {
 
 ## Best Practices
 
-1. **Use typestate** when invalid transitions should be compile errors
-2. **Use enums** when states need to be stored or serialized
-3. **Document state diagrams** with Mermaid
-4. **Keep states focused** - each state should have clear responsibilities
+{: .best-practice }
+> **State Machine Guidelines:**
+> 1. **Use typestate** when invalid transitions should be compile errors
+> 2. **Use enums** when states need to be stored or serialized
+> 3. **Document state diagrams** with Mermaid
+> 4. **Keep states focused** - each state should have clear responsibilities
+> 5. **Consider hybrid approaches** - typestate for creation, enum for storage
+
+## Common Mistakes
+
+{: .warning }
+> **Avoid these state machine anti-patterns:**
+> - Making states too granular (explosion of types)
+> - Forgetting to handle all transitions in enum-based machines
+> - Using typestate when serialization is needed
+> - Not documenting the state diagram
 
 ## Summary
 
@@ -298,6 +374,12 @@ fn main() {
 - Typestate pattern catches invalid transitions at compile time
 - PhantomData allows zero-cost state markers
 - Traits can define transition capabilities
+
+## See Also
+
+- [Enums]({% link part2/07-enums.md %}) - Enum fundamentals
+- [Advanced Types]({% link part4/06-advanced-types.md %}) - PhantomData and type-level programming
+- [Example Code](https://github.com/example/rust-guide/tree/main/examples/part5/state-machine)
 
 ## Next Steps
 
