@@ -76,7 +76,7 @@ type UefiUint8 = u8;
 type UefiUint16 = u16;
 type UefiUint32 = u32;
 type UefiUint64 = u64;
-type UefiUintn = usize;  // Platform-dependent size
+type UefiUintn = usize; // Platform-dependent size
 
 /// UEFI Handle - opaque pointer to a protocol collection
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -93,19 +93,28 @@ struct Guid {
 
 impl Guid {
     const fn new(data1: u32, data2: u16, data3: u16, data4: [u8; 8]) -> Self {
-        Guid { data1, data2, data3, data4 }
+        Guid {
+            data1,
+            data2,
+            data3,
+            data4,
+        }
     }
 }
 
 // Well-known GUIDs
 const EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL_GUID: Guid = Guid::new(
-    0x387477c2, 0x69c7, 0x11d2,
-    [0x8e, 0x39, 0x00, 0xa0, 0xc9, 0x69, 0x72, 0x3b]
+    0x387477c2,
+    0x69c7,
+    0x11d2,
+    [0x8e, 0x39, 0x00, 0xa0, 0xc9, 0x69, 0x72, 0x3b],
 );
 
 const EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID: Guid = Guid::new(
-    0x9042a9de, 0x23dc, 0x4a38,
-    [0x96, 0xfb, 0x7a, 0xde, 0xd0, 0x80, 0x51, 0x6a]
+    0x9042a9de,
+    0x23dc,
+    0x4a38,
+    [0x96, 0xfb, 0x7a, 0xde, 0xd0, 0x80, 0x51, 0x6a],
 );
 
 fn uefi_types() {
@@ -114,7 +123,10 @@ fn uefi_types() {
     println!("    UINT16: {} bytes", std::mem::size_of::<UefiUint16>());
     println!("    UINT32: {} bytes", std::mem::size_of::<UefiUint32>());
     println!("    UINT64: {} bytes", std::mem::size_of::<UefiUint64>());
-    println!("    UINTN:  {} bytes (platform-dependent)", std::mem::size_of::<UefiUintn>());
+    println!(
+        "    UINTN:  {} bytes (platform-dependent)",
+        std::mem::size_of::<UefiUintn>()
+    );
 
     println!("\n  GUID Examples:");
     println!("    SimpleTextOutput: {:08X}-{:04X}-{:04X}-{:02X}{:02X}-{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}",
@@ -184,7 +196,8 @@ fn uefi_status_codes() {
     ];
 
     for status in &statuses {
-        println!("  Status {}: {} (success: {})",
+        println!(
+            "  Status {}: {} (success: {})",
             status.0,
             status.description(),
             status.is_success()
@@ -340,13 +353,17 @@ fn memory_map_simulation() {
 
     println!("  Simulated Memory Map:");
     println!("  {:-^70}", "");
-    println!("  {:20} {:16} {:16} {:>10}", "Type", "Physical Start", "Pages", "Size");
+    println!(
+        "  {:20} {:16} {:16} {:>10}",
+        "Type", "Physical Start", "Pages", "Size"
+    );
     println!("  {:-^70}", "");
 
     let mut total_conventional = 0u64;
 
     for desc in &memory_map {
-        println!("  {:20?} 0x{:014X} {:16} {:>10}",
+        println!(
+            "  {:20?} 0x{:014X} {:16} {:>10}",
             desc.memory_type,
             desc.physical_start,
             desc.number_of_pages,
@@ -359,7 +376,10 @@ fn memory_map_simulation() {
     }
 
     println!("  {:-^70}", "");
-    println!("  Total conventional memory: {}", format_size(total_conventional));
+    println!(
+        "  Total conventional memory: {}",
+        format_size(total_conventional)
+    );
 }
 
 fn format_size(bytes: u64) -> String {
@@ -401,15 +421,21 @@ impl VariableStore {
 }
 
 const EFI_GLOBAL_VARIABLE_GUID: Guid = Guid::new(
-    0x8BE4DF61, 0x93CA, 0x11d2,
-    [0xAA, 0x0D, 0x00, 0xE0, 0x98, 0x03, 0x2B, 0x8C]
+    0x8BE4DF61,
+    0x93CA,
+    0x11d2,
+    [0xAA, 0x0D, 0x00, 0xE0, 0x98, 0x03, 0x2B, 0x8C],
 );
 
 fn uefi_variables() {
     let mut store = VariableStore::new();
 
     // Set some variables
-    store.set_variable("BootOrder", &EFI_GLOBAL_VARIABLE_GUID, vec![0x00, 0x00, 0x01, 0x00]);
+    store.set_variable(
+        "BootOrder",
+        &EFI_GLOBAL_VARIABLE_GUID,
+        vec![0x00, 0x00, 0x01, 0x00],
+    );
     store.set_variable("Timeout", &EFI_GLOBAL_VARIABLE_GUID, vec![0x05, 0x00]);
 
     println!("  UEFI Variables:");
@@ -481,7 +507,12 @@ impl BootServices {
         handle
     }
 
-    fn install_protocol(&mut self, handle: Handle, guid: Guid, protocol: Box<dyn std::any::Any>) -> Status {
+    fn install_protocol(
+        &mut self,
+        handle: Handle,
+        guid: Guid,
+        protocol: Box<dyn std::any::Any>,
+    ) -> Status {
         self.protocols.insert((handle, guid), protocol);
         Status::SUCCESS
     }

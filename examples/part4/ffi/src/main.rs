@@ -154,7 +154,10 @@ fn c_compatible_structs() {
         bottom_right: Point { x: 10.0, y: 0.0 },
     };
     println!("  Rectangle: {:?}", rect);
-    println!("  Rectangle size: {} bytes", std::mem::size_of::<Rectangle>());
+    println!(
+        "  Rectangle size: {} bytes",
+        std::mem::size_of::<Rectangle>()
+    );
 
     // repr(C) enum with explicit discriminants
     #[repr(C)]
@@ -184,19 +187,19 @@ pub extern "C" fn rust_multiply(a: f64, b: f64) -> f64 {
     a * b
 }
 
+/// # Safety
+/// `name` must be a valid null-terminated C string pointer, or null.
 #[no_mangle]
-pub extern "C" fn rust_greet(name: *const c_char) {
+pub unsafe extern "C" fn rust_greet(name: *const c_char) {
     if name.is_null() {
         println!("  Hello, stranger!");
         return;
     }
 
-    unsafe {
-        let c_str = CStr::from_ptr(name);
-        match c_str.to_str() {
-            Ok(s) => println!("  Hello, {}!", s),
-            Err(_) => println!("  Hello, (invalid UTF-8)!"),
-        }
+    let c_str = CStr::from_ptr(name);
+    match c_str.to_str() {
+        Ok(s) => println!("  Hello, {}!", s),
+        Err(_) => println!("  Hello, (invalid UTF-8)!"),
     }
 }
 
@@ -209,8 +212,11 @@ fn exposing_rust_to_c() {
     println!("  rust_multiply(3.0, 4.5) = {}", product);
 
     let name = CString::new("World").unwrap();
-    rust_greet(name.as_ptr());
-    rust_greet(std::ptr::null());
+    // SAFETY: name.as_ptr() returns a valid null-terminated C string
+    unsafe {
+        rust_greet(name.as_ptr());
+        rust_greet(std::ptr::null());
+    }
 }
 
 /// Callbacks from C to Rust
@@ -254,7 +260,10 @@ fn safe_wrappers() {
     }
 
     println!("  safe_strlen(\"hello\") = {:?}", safe_strlen("hello"));
-    println!("  safe_strlen(\"hi\\0there\") = {:?}", safe_strlen("hi\0there"));
+    println!(
+        "  safe_strlen(\"hi\\0there\") = {:?}",
+        safe_strlen("hi\0there")
+    );
 
     // Safe wrapper for Point operations
     impl Point {
@@ -309,7 +318,11 @@ fn safe_wrappers() {
     }
 
     if let Some(buffer) = CBuffer::new(256) {
-        println!("  CBuffer allocated: {} bytes at {:?}", buffer.size(), buffer.as_ptr());
+        println!(
+            "  CBuffer allocated: {} bytes at {:?}",
+            buffer.size(),
+            buffer.as_ptr()
+        );
         // Automatically freed when buffer goes out of scope
     }
     println!("  CBuffer automatically freed (RAII)");

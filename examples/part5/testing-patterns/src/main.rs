@@ -183,12 +183,7 @@ impl TestContext {
     fn new() -> Self {
         TestContext {
             calculator: Calculator::new(),
-            test_values: vec![
-                (1.0, 2.0),
-                (10.0, 5.0),
-                (-3.0, 7.0),
-                (0.0, 100.0),
-            ],
+            test_values: vec![(1.0, 2.0), (10.0, 5.0), (-3.0, 7.0), (0.0, 100.0)],
         }
     }
 

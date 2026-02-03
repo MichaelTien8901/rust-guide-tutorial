@@ -76,10 +76,7 @@ fn iterator_adapters() {
 
     // filter_map - filter and transform
     let strings = vec!["1", "two", "3", "four", "5"];
-    let numbers: Vec<i32> = strings
-        .iter()
-        .filter_map(|s| s.parse().ok())
-        .collect();
+    let numbers: Vec<i32> = strings.iter().filter_map(|s| s.parse().ok()).collect();
     println!("filter_map: {:?}", numbers);
 
     // take and skip
@@ -256,13 +253,12 @@ fn iterator_patterns() {
     println!("Chunks(2): {:?}", chunks);
 
     // Partitioning
-    let (evens, odds): (Vec<_>, Vec<_>) = numbers.iter().partition(|&&x| x % 2 == 0);
+    let (evens, odds): (Vec<&i32>, Vec<&i32>) = numbers.iter().partition(|&&x| x % 2 == 0);
     println!("Evens: {:?}, Odds: {:?}", evens, odds);
 
     // Grouping with fold
     let words = vec!["apple", "banana", "apricot", "blueberry"];
-    let mut grouped: std::collections::HashMap<char, Vec<&str>> =
-        std::collections::HashMap::new();
+    let mut grouped: std::collections::HashMap<char, Vec<&str>> = std::collections::HashMap::new();
     for word in words {
         let first = word.chars().next().unwrap();
         grouped.entry(first).or_default().push(word);

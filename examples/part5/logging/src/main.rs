@@ -21,6 +21,7 @@
 //!     Troubleshooting: TRACE
 //! ```
 
+use std::error::Error;
 use tracing::{debug, error, info, info_span, instrument, trace, warn, Level};
 use tracing_subscriber::{fmt, prelude::*, EnvFilter};
 
@@ -84,7 +85,7 @@ fn structured_logging() {
 
     // Display vs Debug formatting
     let data = vec![1, 2, 3];
-    info!(data = ?data, "Debug format");        // Uses {:?}
+    info!(data = ?data, "Debug format"); // Uses {:?}
     info!(count = %data.len(), "Display format"); // Uses {}
 
     // Nested structured data
@@ -299,9 +300,7 @@ mod subscriber_examples {
 
     /// JSON output for structured log aggregation
     pub fn json_output() {
-        tracing_subscriber::fmt()
-            .json()
-            .init();
+        tracing_subscriber::fmt().json().init();
     }
 
     /// Compact format for development
@@ -326,8 +325,7 @@ mod subscriber_examples {
 
         tracing_subscriber::registry()
             .with(fmt::layer())
-            .with(EnvFilter::from_default_env()
-                .add_directive(Level::INFO.into()))
+            .with(EnvFilter::from_default_env().add_directive(Level::INFO.into()))
             .init();
     }
 }
@@ -335,8 +333,8 @@ mod subscriber_examples {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use tracing_subscriber::fmt::MakeWriter;
     use std::sync::{Arc, Mutex};
+    use tracing_subscriber::fmt::MakeWriter;
 
     // Test helper to capture log output
     struct TestWriter {

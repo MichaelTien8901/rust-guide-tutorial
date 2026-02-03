@@ -130,8 +130,7 @@ fn thiserror_example() {
 fn anyhow_example() {
     // Adding context to errors
     fn read_config(path: &str) -> AnyhowResult<String> {
-        fs::read_to_string(path)
-            .with_context(|| format!("Failed to read config file: {}", path))
+        fs::read_to_string(path).with_context(|| format!("Failed to read config file: {}", path))
     }
 
     match read_config("/nonexistent/config.toml") {
@@ -235,8 +234,7 @@ fn error_conversion() {
 
     // Map error types
     fn map_error_example() -> Result<String, String> {
-        fs::read_to_string("/nonexistent")
-            .map_err(|e| format!("Failed to read file: {}", e))
+        fs::read_to_string("/nonexistent").map_err(|e| format!("Failed to read file: {}", e))
     }
 
     match map_error_example() {
@@ -251,8 +249,8 @@ fn error_conversion() {
 
 fn error_patterns() {
     // Pattern 1: Default on error
-    let value = fs::read_to_string("/nonexistent")
-        .unwrap_or_else(|_| "default content".to_string());
+    let value =
+        fs::read_to_string("/nonexistent").unwrap_or_else(|_| "default content".to_string());
     println!("  unwrap_or_else: {}", value);
 
     // Pattern 2: Transform Option to Result
@@ -267,10 +265,7 @@ fn error_patterns() {
 
     // Pattern 3: Collect results
     let numbers = vec!["1", "2", "three", "4"];
-    let parsed: Result<Vec<i32>, _> = numbers
-        .iter()
-        .map(|s| s.parse::<i32>())
-        .collect();
+    let parsed: Result<Vec<i32>, _> = numbers.iter().map(|s| s.parse::<i32>()).collect();
 
     match parsed {
         Ok(v) => println!("  All parsed: {:?}", v),
@@ -384,8 +379,7 @@ mod tests {
 
     #[test]
     fn test_anyhow_context() {
-        let result: AnyhowResult<()> = Err(anyhow!("base error"))
-            .context("additional context");
+        let result: AnyhowResult<()> = Err(anyhow!("base error")).context("additional context");
 
         let err = result.unwrap_err();
         assert!(err.to_string().contains("additional context"));

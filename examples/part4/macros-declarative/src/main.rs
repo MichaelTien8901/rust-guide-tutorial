@@ -270,7 +270,12 @@ macro_rules! string_enum {
     };
 }
 
-string_enum!(Color { Red, Green, Blue, Yellow });
+string_enum!(Color {
+    Red,
+    Green,
+    Blue,
+    Yellow
+});
 
 fn practical_macros() {
     let x = vec![1, 2, 3];
@@ -289,26 +294,31 @@ fn practical_macros() {
 // DSL Example
 // ============================================
 
-/// Simple HTML-like DSL
+/// Simple HTML-like DSL using brace syntax
+/// (angle brackets are problematic in macros)
 macro_rules! html {
-    // Self-closing tag
-    ( < $tag:ident /> ) => {
+    // Self-closing tag: html!(br)
+    ( $tag:ident ) => {
         format!("<{} />", stringify!($tag))
     };
-    // Tag with text content
-    ( < $tag:ident > $content:expr </ $close:ident > ) => {
-        format!("<{}>{}</{}>", stringify!($tag), $content, stringify!($close))
+    // Tag with content: html!(p { "Hello" })
+    ( $tag:ident { $content:expr } ) => {
+        format!("<{}>{}</{}>", stringify!($tag), $content, stringify!($tag))
     };
-    // Tag with nested elements
-    ( < $tag:ident > $( $inner:tt )* </ $close:ident > ) => {
-        format!("<{}>{}</{}>", stringify!($tag), html!($($inner)*), stringify!($close))
+    // Nested tags: html!(div { html!(p { "text" }) })
+    ( $tag:ident { $( $inner:tt )+ } ) => {
+        format!("<{}>{}</{}>", stringify!($tag), html!($($inner)+), stringify!($tag))
     };
 }
 
 /// Simple test assertion DSL
 macro_rules! test_that {
     ($val:expr, equals, $expected:expr) => {
-        assert_eq!($val, $expected, "Expected {:?} to equal {:?}", $val, $expected);
+        assert_eq!(
+            $val, $expected,
+            "Expected {:?} to equal {:?}",
+            $val, $expected
+        );
         println!("  ✓ {} equals {}", stringify!($val), stringify!($expected));
     };
     ($val:expr, is_some) => {
@@ -320,17 +330,22 @@ macro_rules! test_that {
         println!("  ✓ {} is None", stringify!($val));
     };
     ($val:expr, contains, $item:expr) => {
-        assert!($val.contains(&$item), "Expected {:?} to contain {:?}", $val, $item);
+        assert!(
+            $val.contains(&$item),
+            "Expected {:?} to contain {:?}",
+            $val,
+            $item
+        );
         println!("  ✓ {} contains {}", stringify!($val), stringify!($item));
     };
 }
 
 fn dsl_example() {
-    // HTML DSL
-    let br = html!(<br />);
+    // HTML DSL (using brace syntax to avoid macro ambiguity)
+    let br = html!(br);
     println!("  {}", br);
 
-    let para = html!(<p>"Hello, World!"</p>);
+    let para = html!(p { "Hello, World!" });
     println!("  {}", para);
 
     // Test DSL

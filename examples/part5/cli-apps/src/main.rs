@@ -161,8 +161,21 @@ fn main() {
 fn demonstrate_parsing() {
     // Simulate parsing different commands
     let test_cases = vec![
-        vec!["myapp", "--verbose", "init", "my-project", "--template", "web"],
-        vec!["myapp", "build", "--release", "--target", "x86_64-unknown-linux-gnu"],
+        vec![
+            "myapp",
+            "--verbose",
+            "init",
+            "my-project",
+            "--template",
+            "web",
+        ],
+        vec![
+            "myapp",
+            "build",
+            "--release",
+            "--target",
+            "x86_64-unknown-linux-gnu",
+        ],
         vec!["myapp", "build", "-F", "serde,tokio", "--jobs", "8"],
         vec!["myapp", "run", "--", "arg1", "arg2", "--flag"],
         vec!["myapp", "config", "set", "debug", "true"],
@@ -213,7 +226,10 @@ fn handle_command(cli: &Cli) {
 
     match &cli.command {
         Commands::Init { name, template } => {
-            println!("  Initializing project '{}' with template '{}'", name, template);
+            println!(
+                "  Initializing project '{}' with template '{}'",
+                name, template
+            );
             // In real app: create directories, files, etc.
         }
         Commands::Build(args) => {
@@ -318,9 +334,7 @@ mod tests {
 
     #[test]
     fn test_build_command() {
-        let cli = Cli::try_parse_from([
-            "myapp", "build", "--release", "--jobs", "8"
-        ]).unwrap();
+        let cli = Cli::try_parse_from(["myapp", "build", "--release", "--jobs", "8"]).unwrap();
 
         match cli.command {
             Commands::Build(args) => {
@@ -333,18 +347,14 @@ mod tests {
 
     #[test]
     fn test_global_verbose() {
-        let cli = Cli::try_parse_from([
-            "myapp", "--verbose", "init", "test"
-        ]).unwrap();
+        let cli = Cli::try_parse_from(["myapp", "--verbose", "init", "test"]).unwrap();
 
         assert!(cli.verbose);
     }
 
     #[test]
     fn test_features_list() {
-        let cli = Cli::try_parse_from([
-            "myapp", "build", "-F", "serde,tokio,async"
-        ]).unwrap();
+        let cli = Cli::try_parse_from(["myapp", "build", "-F", "serde,tokio,async"]).unwrap();
 
         match cli.command {
             Commands::Build(args) => {
@@ -356,12 +366,12 @@ mod tests {
 
     #[test]
     fn test_config_subcommand() {
-        let cli = Cli::try_parse_from([
-            "myapp", "config", "set", "key", "value"
-        ]).unwrap();
+        let cli = Cli::try_parse_from(["myapp", "config", "set", "key", "value"]).unwrap();
 
         match cli.command {
-            Commands::Config { action: ConfigAction::Set { key, value } } => {
+            Commands::Config {
+                action: ConfigAction::Set { key, value },
+            } => {
                 assert_eq!(key, "key");
                 assert_eq!(value, "value");
             }

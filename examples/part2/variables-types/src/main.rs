@@ -2,6 +2,9 @@
 //!
 //! Demonstrates Rust's variable declarations, mutability, and basic types.
 
+// Allow approximate constants - these are intentional examples of float literals
+#![allow(clippy::approx_constant)]
+
 fn main() {
     println!("=== Variables and Types ===\n");
 
@@ -48,7 +51,10 @@ fn scalar_types() {
     let signed: i8 = -128;
     let default_int = 42; // i32 by default
     let big: i64 = 9_223_372_036_854_775_807;
-    println!("Integers: u8={}, i8={}, i32={}, i64={}", byte, signed, default_int, big);
+    println!(
+        "Integers: u8={}, i8={}, i32={}, i64={}",
+        byte, signed, default_int, big
+    );
 
     // Integer literals
     let decimal = 98_222;
@@ -56,8 +62,10 @@ fn scalar_types() {
     let octal = 0o77;
     let binary = 0b1111_0000;
     let byte_literal = b'A';
-    println!("Literals: dec={}, hex={}, oct={}, bin={}, byte={}",
-             decimal, hex, octal, binary, byte_literal);
+    println!(
+        "Literals: dec={}, hex={}, oct={}, bin={}, byte={}",
+        decimal, hex, octal, binary, byte_literal
+    );
 
     // Floating point
     let float32: f32 = 3.14;
@@ -81,7 +89,10 @@ fn compound_types() {
     let tuple: (i32, f64, char) = (500, 6.4, 'x');
     let (a, b, c) = tuple; // Destructuring
     println!("Tuple destructured: a={}, b={}, c={}", a, b, c);
-    println!("Tuple indexing: .0={}, .1={}, .2={}", tuple.0, tuple.1, tuple.2);
+    println!(
+        "Tuple indexing: .0={}, .1={}, .2={}",
+        tuple.0, tuple.1, tuple.2
+    );
 
     // Unit tuple
     let unit: () = ();

@@ -61,10 +61,7 @@ fn basic_structs() {
     println!("Updated email: {}", user2.email);
 
     // Using a builder function
-    let user3 = build_user(
-        String::from("test@example.com"),
-        String::from("testuser"),
-    );
+    let user3 = build_user(String::from("test@example.com"), String::from("testuser"));
     println!("Built user: {}", user3.username);
 }
 

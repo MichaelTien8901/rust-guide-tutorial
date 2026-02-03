@@ -92,7 +92,7 @@ fn ownership_and_functions() {
     let s = String::from("hello");
 
     takes_ownership(s); // s is moved into the function
-    // println!("{}", s); // Error! s no longer valid
+                        // println!("{}", s); // Error! s no longer valid
 
     let x = 5;
     makes_copy(x); // x is copied
@@ -113,7 +113,7 @@ fn return_values() {
 
     let s2 = String::from("hello");
     let s3 = takes_and_gives_back(s2); // s2 moved in, return moved to s3
-    // s2 is no longer valid
+                                       // s2 is no longer valid
     println!("Got it back: {}", s3);
 
     // Common pattern: return tuple to give back ownership

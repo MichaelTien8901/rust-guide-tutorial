@@ -1,7 +1,10 @@
 //! Advanced Traits Example
 //!
 //! Demonstrates associated types, supertraits, and advanced trait patterns.
-//!
+
+// Allow approximate constants in examples
+#![allow(clippy::approx_constant)]
+
 //! # Trait Relationship Hierarchy
 //! ```text
 //!     ┌─────────────────────────────────────────────────────────┐
@@ -105,10 +108,14 @@ trait GenericIterator<T> {
 // With generics, same type can implement for multiple T
 struct MultiIterator;
 impl GenericIterator<i32> for MultiIterator {
-    fn next(&mut self) -> Option<i32> { Some(1) }
+    fn next(&mut self) -> Option<i32> {
+        Some(1)
+    }
 }
 impl GenericIterator<String> for MultiIterator {
-    fn next(&mut self) -> Option<String> { Some("hello".into()) }
+    fn next(&mut self) -> Option<String> {
+        Some("hello".into())
+    }
 }
 
 // With associated type, only one implementation per type
@@ -129,7 +136,7 @@ fn associated_types() {
     // Function using associated type
     fn print_container<C: Container>(c: &C)
     where
-        C::Item: Debug
+        C::Item: Debug,
     {
         for i in 0..c.len() {
             println!("    [{}]: {:?}", i, c.get(i));
@@ -188,11 +195,15 @@ struct Employee {
 }
 
 impl Named for Employee {
-    fn name(&self) -> &str { &self.name }
+    fn name(&self) -> &str {
+        &self.name
+    }
 }
 
 impl Aged for Employee {
-    fn age(&self) -> u32 { self.age }
+    fn age(&self) -> u32 {
+        self.age
+    }
 }
 
 impl Person for Employee {}
@@ -271,15 +282,21 @@ trait Wizard {
 struct Human;
 
 impl Pilot for Human {
-    fn fly(&self) { println!("  Flying an airplane"); }
+    fn fly(&self) {
+        println!("  Flying an airplane");
+    }
 }
 
 impl Wizard for Human {
-    fn fly(&self) { println!("  Flying on a broomstick"); }
+    fn fly(&self) {
+        println!("  Flying on a broomstick");
+    }
 }
 
 impl Human {
-    fn fly(&self) { println!("  Waving arms frantically"); }
+    fn fly(&self) {
+        println!("  Waving arms frantically");
+    }
 }
 
 trait Animal {
@@ -289,11 +306,15 @@ trait Animal {
 struct Dog;
 
 impl Dog {
-    fn name() -> String { "Spot".into() }
+    fn name() -> String {
+        "Spot".into()
+    }
 }
 
 impl Animal for Dog {
-    fn name() -> String { "puppy".into() }
+    fn name() -> String {
+        "puppy".into()
+    }
 }
 
 fn fully_qualified_syntax() {
@@ -357,7 +378,9 @@ fn blanket_implementations() {
 
 /// GAT example: lending iterator
 trait LendingIterator {
-    type Item<'a> where Self: 'a;
+    type Item<'a>
+    where
+        Self: 'a;
 
     fn next<'a>(&'a mut self) -> Option<Self::Item<'a>>;
 }
@@ -369,7 +392,10 @@ struct WindowIter<'data> {
 }
 
 impl<'data> LendingIterator for WindowIter<'data> {
-    type Item<'a> = &'a [i32] where Self: 'a;
+    type Item<'a>
+        = &'a [i32]
+    where
+        Self: 'a;
 
     fn next<'a>(&'a mut self) -> Option<Self::Item<'a>> {
         if self.pos + self.window_size <= self.data.len() {
@@ -417,25 +443,41 @@ impl<T: Drawable + Clone + 'static> CloneDrawable for T {
 }
 
 #[derive(Clone)]
-struct Circle { radius: f64 }
+struct Circle {
+    radius: f64,
+}
 
 #[derive(Clone)]
-struct Rectangle { width: f64, height: f64 }
+struct Rectangle {
+    width: f64,
+    height: f64,
+}
 
 impl Drawable for Circle {
-    fn draw(&self) { println!("    Drawing circle (r={})", self.radius); }
-    fn name(&self) -> &str { "Circle" }
+    fn draw(&self) {
+        println!("    Drawing circle (r={})", self.radius);
+    }
+    fn name(&self) -> &str {
+        "Circle"
+    }
 }
 
 impl Drawable for Rectangle {
-    fn draw(&self) { println!("    Drawing rectangle ({}x{})", self.width, self.height); }
-    fn name(&self) -> &str { "Rectangle" }
+    fn draw(&self) {
+        println!("    Drawing rectangle ({}x{})", self.width, self.height);
+    }
+    fn name(&self) -> &str {
+        "Rectangle"
+    }
 }
 
 fn trait_objects_advanced() {
     let shapes: Vec<Box<dyn Drawable>> = vec![
         Box::new(Circle { radius: 5.0 }),
-        Box::new(Rectangle { width: 10.0, height: 20.0 }),
+        Box::new(Rectangle {
+            width: 10.0,
+            height: 20.0,
+        }),
     ];
 
     println!("  Drawing shapes:");

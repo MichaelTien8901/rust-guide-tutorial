@@ -1,7 +1,10 @@
 //! Serialization Patterns Example
 //!
 //! Demonstrates serde for JSON, TOML, and custom serialization.
-//!
+
+// Allow approximate constants in example data
+#![allow(clippy::approx_constant)]
+
 //! # Serde Architecture
 //! ```text
 //!     ┌─────────────────────────────────────────────────────────┐
@@ -198,17 +201,23 @@ fn enum_serialization() {
     println!("  Simple enum: {}", json);
 
     // Externally tagged (default)
-    let msg = Message::Text { content: "Hello".to_string() };
+    let msg = Message::Text {
+        content: "Hello".to_string(),
+    };
     let json = serde_json::to_string(&msg).unwrap();
     println!("  Externally tagged: {}", json);
 
     // Internally tagged
-    let msg = InternallyTagged::Text { content: "Hello".to_string() };
+    let msg = InternallyTagged::Text {
+        content: "Hello".to_string(),
+    };
     let json = serde_json::to_string(&msg).unwrap();
     println!("  Internally tagged: {}", json);
 
     // Adjacently tagged
-    let msg = AdjacentlyTagged::Image { url: "http://example.com/img.png".to_string() };
+    let msg = AdjacentlyTagged::Image {
+        url: "http://example.com/img.png".to_string(),
+    };
     let json = serde_json::to_string(&msg).unwrap();
     println!("  Adjacently tagged: {}", json);
 
@@ -293,7 +302,10 @@ fn custom_serialization() {
         username: "admin".to_string(),
         password: "secret123".to_string(),
     };
-    println!("  Masked password: {}", serde_json::to_string(&creds).unwrap());
+    println!(
+        "  Masked password: {}",
+        serde_json::to_string(&creds).unwrap()
+    );
 }
 
 // ============================================
@@ -370,8 +382,12 @@ enable_logging = true
 // Optional and Default
 // ============================================
 
-fn default_port() -> u16 { 8080 }
-fn default_workers() -> usize { 4 }
+fn default_port() -> u16 {
+    8080
+}
+fn default_workers() -> usize {
+    4
+}
 
 #[derive(Debug, Serialize, Deserialize)]
 struct ServerOpts {

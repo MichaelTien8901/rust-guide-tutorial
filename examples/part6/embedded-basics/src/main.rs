@@ -209,10 +209,13 @@ impl Timer {
 
 fn timer_example() {
     let mut timer = Timer::new();
-    timer.set_prescaler(8);     // Divide clock by 8
-    timer.set_auto_reload(10);  // Count to 10
+    timer.set_prescaler(8); // Divide clock by 8
+    timer.set_auto_reload(10); // Count to 10
 
-    println!("  Timer configured: prescaler={}, arr={}", timer.prescaler, timer.auto_reload);
+    println!(
+        "  Timer configured: prescaler={}, arr={}",
+        timer.prescaler, timer.auto_reload
+    );
 
     timer.start();
 
@@ -540,9 +543,7 @@ fn mmio_simulation() {
     println!("  Wrote data: 0x{:08X}", regs.read_data());
 
     // Start operation
-    regs.write_control(
-        PeripheralRegisters::CTRL_ENABLE | PeripheralRegisters::CTRL_START
-    );
+    regs.write_control(PeripheralRegisters::CTRL_ENABLE | PeripheralRegisters::CTRL_START);
     println!("  Started operation");
 
     // Check status

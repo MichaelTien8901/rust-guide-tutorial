@@ -96,7 +96,10 @@ fn struct_lifetimes() {
 
     println!("Excerpt: {}", excerpt.part);
     println!("Level: {}", excerpt.level());
-    println!("Announce: {}", excerpt.announce_and_return("Here's an excerpt"));
+    println!(
+        "Announce: {}",
+        excerpt.announce_and_return("Here's an excerpt")
+    );
 }
 
 // Struct holding a reference needs lifetime annotation

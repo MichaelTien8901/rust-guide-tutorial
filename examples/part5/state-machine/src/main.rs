@@ -263,7 +263,7 @@ enum State {
     Stopped,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 enum Event {
     Start,
     Pause,
@@ -357,19 +357,19 @@ impl TrafficLight {
 
     fn tick(&mut self) {
         *self = match *self {
-            TrafficLight::Red { remaining } if remaining > 0 => {
-                TrafficLight::Red { remaining: remaining - 1 }
-            }
+            TrafficLight::Red { remaining } if remaining > 0 => TrafficLight::Red {
+                remaining: remaining - 1,
+            },
             TrafficLight::Red { .. } => TrafficLight::Green { remaining: 25 },
 
-            TrafficLight::Green { remaining } if remaining > 0 => {
-                TrafficLight::Green { remaining: remaining - 1 }
-            }
+            TrafficLight::Green { remaining } if remaining > 0 => TrafficLight::Green {
+                remaining: remaining - 1,
+            },
             TrafficLight::Green { .. } => TrafficLight::Yellow { remaining: 5 },
 
-            TrafficLight::Yellow { remaining } if remaining > 0 => {
-                TrafficLight::Yellow { remaining: remaining - 1 }
-            }
+            TrafficLight::Yellow { remaining } if remaining > 0 => TrafficLight::Yellow {
+                remaining: remaining - 1,
+            },
             TrafficLight::Yellow { .. } => TrafficLight::Red { remaining: 30 },
         };
     }
@@ -464,48 +464,50 @@ mod workflow {
 
         pub fn approve(self) -> Result<Self, &'static str> {
             match self {
-                DocumentState::UnderReview { author, content, reviewer } => {
-                    Ok(DocumentState::Approved {
-                        author,
-                        content,
-                        approved_by: reviewer,
-                    })
-                }
+                DocumentState::UnderReview {
+                    author,
+                    content,
+                    reviewer,
+                } => Ok(DocumentState::Approved {
+                    author,
+                    content,
+                    approved_by: reviewer,
+                }),
                 _ => Err("Can only approve documents under review"),
             }
         }
 
         pub fn reject(self, reason: String) -> Result<Self, &'static str> {
             match self {
-                DocumentState::UnderReview { author, content, .. } => {
-                    Ok(DocumentState::Rejected {
-                        author,
-                        content,
-                        reason,
-                    })
-                }
+                DocumentState::UnderReview {
+                    author, content, ..
+                } => Ok(DocumentState::Rejected {
+                    author,
+                    content,
+                    reason,
+                }),
                 _ => Err("Can only reject documents under review"),
             }
         }
 
         pub fn publish(self) -> Result<Self, &'static str> {
             match self {
-                DocumentState::Approved { author, content, .. } => {
-                    Ok(DocumentState::Published {
-                        author,
-                        content,
-                        published_at: "2024-01-15".to_string(),
-                    })
-                }
+                DocumentState::Approved {
+                    author, content, ..
+                } => Ok(DocumentState::Published {
+                    author,
+                    content,
+                    published_at: "2024-01-15".to_string(),
+                }),
                 _ => Err("Can only publish approved documents"),
             }
         }
 
         pub fn revise(self) -> Result<Self, &'static str> {
             match self {
-                DocumentState::Rejected { author, content, .. } => {
-                    Ok(DocumentState::Draft { author, content })
-                }
+                DocumentState::Rejected {
+                    author, content, ..
+                } => Ok(DocumentState::Draft { author, content }),
                 _ => Err("Can only revise rejected documents"),
             }
         }

@@ -9,4 +9,4 @@ publish = false
 tutorial-chapter = "part5/04-cli-apps"
 
 [dependencies]
-clap = { version = "4", features = ["derive"] }
+clap = { version = "4", features = ["derive", "env"] }

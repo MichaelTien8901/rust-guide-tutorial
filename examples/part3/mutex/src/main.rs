@@ -45,7 +45,7 @@ fn basic_mutex() {
         println!("try_lock succeeded: {}", guard);
     } else {
         println!("try_lock failed");
-    }
+    };
 }
 
 fn mutex_with_threads() {
@@ -182,15 +182,13 @@ fn avoiding_deadlocks() {
     let lock = Arc::new(Mutex::new(0));
     let lock2 = Arc::clone(&lock);
 
-    thread::spawn(move || {
-        loop {
-            if let Ok(mut guard) = lock2.try_lock() {
-                *guard += 1;
-                println!("Got lock with try_lock");
-                break;
-            }
-            thread::sleep(Duration::from_millis(1));
+    thread::spawn(move || loop {
+        if let Ok(mut guard) = lock2.try_lock() {
+            *guard += 1;
+            println!("Got lock with try_lock");
+            break;
         }
+        thread::sleep(Duration::from_millis(1));
     })
     .join()
     .unwrap();

@@ -130,8 +130,8 @@ fn generic_enums() {
         }
     }
 
-    process(Either::Left(100));
-    process(Either::Right("world"));
+    process(Either::<i32, &str>::Left(100));
+    process(Either::<i32, &str>::Right("world"));
 }
 
 fn generic_methods() {
@@ -166,21 +166,32 @@ fn generic_methods() {
     // int_point.distance_from_origin(); // Won't compile!
 
     println!("float_point.x = {}", float_point.x());
-    println!("Distance from origin: {}", float_point.distance_from_origin());
+    println!(
+        "Distance from origin: {}",
+        float_point.distance_from_origin()
+    );
 
-    // Method with different generic types
-    impl<T, U> Point<T> {
-        fn mixup<V, W>(self, other: Point<V>) -> Point<T>
-        where
-            T: Clone,
-        {
-            // This is a simplified example
-            Point {
+    // Method with different generic types - mixup example
+    // Note: This requires a separate impl block to avoid conflicts
+    #[derive(Debug)]
+    struct MixPoint<T, U> {
+        x: T,
+        y: U,
+    }
+
+    impl<T, U> MixPoint<T, U> {
+        fn mixup<V, W>(self, other: MixPoint<V, W>) -> MixPoint<T, W> {
+            MixPoint {
                 x: self.x,
-                y: self.y,
+                y: other.y,
             }
         }
     }
+
+    let p1 = MixPoint { x: 5, y: 10.4 };
+    let p2 = MixPoint { x: "Hello", y: 'c' };
+    let p3 = p1.mixup(p2);
+    println!("Mixup result: p3.x = {}, p3.y = {}", p3.x, p3.y);
 }
 
 fn trait_bounds_examples() {

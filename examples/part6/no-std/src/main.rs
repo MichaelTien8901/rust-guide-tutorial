@@ -162,7 +162,10 @@ fn static_allocation() {
     static COUNTER: std::sync::atomic::AtomicU32 = std::sync::atomic::AtomicU32::new(0);
 
     COUNTER.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-    println!("  Static counter: {}", COUNTER.load(std::sync::atomic::Ordering::SeqCst));
+    println!(
+        "  Static counter: {}",
+        COUNTER.load(std::sync::atomic::Ordering::SeqCst)
+    );
 
     // Static buffers
     static mut BUFFER: [u8; 1024] = [0; 1024];
@@ -390,7 +393,10 @@ fn bit_manipulation() {
 
     println!("  Status register: {:08b}", status.0);
     println!("  Zero flag: {}", status.is_set(StatusRegister::ZERO));
-    println!("  Overflow flag: {}", status.is_set(StatusRegister::OVERFLOW));
+    println!(
+        "  Overflow flag: {}",
+        status.is_set(StatusRegister::OVERFLOW)
+    );
 
     // Extract bit fields
     let packed: u32 = 0xABCD1234;
@@ -399,8 +405,10 @@ fn bit_manipulation() {
     let byte2 = ((packed >> 16) & 0xFF) as u8;
     let byte3 = ((packed >> 24) & 0xFF) as u8;
 
-    println!("  Packed 0x{:08X} -> bytes: {:02X} {:02X} {:02X} {:02X}",
-             packed, byte3, byte2, byte1, byte0);
+    println!(
+        "  Packed 0x{:08X} -> bytes: {:02X} {:02X} {:02X} {:02X}",
+        packed, byte3, byte2, byte1, byte0
+    );
 }
 
 #[cfg(test)]

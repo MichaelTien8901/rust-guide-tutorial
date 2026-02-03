@@ -57,7 +57,10 @@ fn box_examples() {
     }
 
     let large = Box::new(LargeData { data: [0; 1000] });
-    println!("Large data size on stack: {} bytes", std::mem::size_of_val(&large));
+    println!(
+        "Large data size on stack: {} bytes",
+        std::mem::size_of_val(&large)
+    );
 
     // Trait objects
     trait Animal {
@@ -99,7 +102,10 @@ fn rc_examples() {
         println!("Reference count in inner scope: {}", Rc::strong_count(&a));
     }
 
-    println!("Reference count after inner scope: {}", Rc::strong_count(&a));
+    println!(
+        "Reference count after inner scope: {}",
+        Rc::strong_count(&a)
+    );
 
     // Shared ownership example
     #[derive(Debug)]

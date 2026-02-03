@@ -77,7 +77,11 @@ fn vec_examples() {
     let mut v = Vec::with_capacity(10);
     println!("Capacity: {}, len: {}", v.capacity(), v.len());
     v.extend([1, 2, 3]);
-    println!("After extend - capacity: {}, len: {}", v.capacity(), v.len());
+    println!(
+        "After extend - capacity: {}, len: {}",
+        v.capacity(),
+        v.len()
+    );
 }
 
 fn hashmap_examples() {
@@ -90,10 +94,7 @@ fn hashmap_examples() {
     println!("Scores: {:?}", scores);
 
     // From iterator of tuples
-    let teams = vec![
-        (String::from("Green"), 25),
-        (String::from("Yellow"), 30),
-    ];
+    let teams = vec![(String::from("Green"), 25), (String::from("Yellow"), 30)];
     let scores2: HashMap<_, _> = teams.into_iter().collect();
     println!("From iter: {:?}", scores2);
 

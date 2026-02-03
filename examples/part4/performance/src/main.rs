@@ -176,19 +176,19 @@ fn memory_optimization() {
     // Field ordering affects struct size
     #[repr(C)]
     struct Unoptimized {
-        a: u8,      // 1 byte
+        a: u8, // 1 byte
         // 7 bytes padding
-        b: u64,     // 8 bytes
-        c: u8,      // 1 byte
-        // 7 bytes padding
+        b: u64, // 8 bytes
+        c: u8,  // 1 byte
+                // 7 bytes padding
     }
 
     #[repr(C)]
     struct Optimized {
-        b: u64,     // 8 bytes
-        a: u8,      // 1 byte
-        c: u8,      // 1 byte
-        // 6 bytes padding
+        b: u64, // 8 bytes
+        a: u8,  // 1 byte
+        c: u8,  // 1 byte
+                // 6 bytes padding
     }
 
     // Rust optimizes this automatically without repr(C)
@@ -199,9 +199,18 @@ fn memory_optimization() {
     }
 
     println!("  Struct sizes:");
-    println!("    Unoptimized (repr(C)): {} bytes", std::mem::size_of::<Unoptimized>());
-    println!("    Optimized (repr(C)): {} bytes", std::mem::size_of::<Optimized>());
-    println!("    RustOptimized: {} bytes", std::mem::size_of::<RustOptimized>());
+    println!(
+        "    Unoptimized (repr(C)): {} bytes",
+        std::mem::size_of::<Unoptimized>()
+    );
+    println!(
+        "    Optimized (repr(C)): {} bytes",
+        std::mem::size_of::<Optimized>()
+    );
+    println!(
+        "    RustOptimized: {} bytes",
+        std::mem::size_of::<RustOptimized>()
+    );
 
     // Using smaller types
     struct LargeIds {
@@ -217,16 +226,28 @@ fn memory_optimization() {
     }
 
     println!("  ID struct sizes:");
-    println!("    LargeIds (u64): {} bytes", std::mem::size_of::<LargeIds>());
-    println!("    SmallIds (u32): {} bytes", std::mem::size_of::<SmallIds>());
+    println!(
+        "    LargeIds (u64): {} bytes",
+        std::mem::size_of::<LargeIds>()
+    );
+    println!(
+        "    SmallIds (u32): {} bytes",
+        std::mem::size_of::<SmallIds>()
+    );
 
     // Box for large data on heap
     struct LargeData {
         data: [u8; 10000],
     }
 
-    println!("  LargeData on stack: {} bytes", std::mem::size_of::<LargeData>());
-    println!("  Box<LargeData>: {} bytes (pointer)", std::mem::size_of::<Box<LargeData>>());
+    println!(
+        "  LargeData on stack: {} bytes",
+        std::mem::size_of::<LargeData>()
+    );
+    println!(
+        "  Box<LargeData>: {} bytes (pointer)",
+        std::mem::size_of::<Box<LargeData>>()
+    );
 }
 
 // ============================================
@@ -349,10 +370,7 @@ fn iterator_optimization() {
 
     // Iterators are lazy and often zero-cost
     let start = Instant::now();
-    let sum1: i32 = data.iter()
-        .filter(|&&x| x % 2 == 0)
-        .map(|x| x * 2)
-        .sum();
+    let sum1: i32 = data.iter().filter(|&&x| x % 2 == 0).map(|x| x * 2).sum();
     let iterator_time = start.elapsed();
 
     // Imperative approach
@@ -372,17 +390,11 @@ fn iterator_optimization() {
 
     // Avoid collect() when not needed
     let start = Instant::now();
-    let sum_with_collect: i32 = data.iter()
-        .map(|x| x * 2)
-        .collect::<Vec<_>>()
-        .iter()
-        .sum();
+    let sum_with_collect: i32 = data.iter().map(|x| x * 2).collect::<Vec<_>>().iter().sum();
     let collect_time = start.elapsed();
 
     let start = Instant::now();
-    let sum_without_collect: i32 = data.iter()
-        .map(|x| x * 2)
-        .sum();
+    let sum_without_collect: i32 = data.iter().map(|x| x * 2).sum();
     let no_collect_time = start.elapsed();
 
     println!("  Map + sum:");

@@ -198,10 +198,7 @@ fn parallel_processing() {
     // Parallel map
     let items = vec![1, 2, 3, 4, 5];
     let squared: Vec<i32> = thread::scope(|s| {
-        let handles: Vec<_> = items
-            .iter()
-            .map(|&x| s.spawn(move || x * x))
-            .collect();
+        let handles: Vec<_> = items.iter().map(|&x| s.spawn(move || x * x)).collect();
 
         handles.into_iter().map(|h| h.join().unwrap()).collect()
     });
@@ -229,9 +226,7 @@ mod tests {
     #[test]
     fn test_scoped_threads() {
         let data = vec![1, 2, 3];
-        let sum = thread::scope(|s| {
-            s.spawn(|| data.iter().sum::<i32>()).join().unwrap()
-        });
+        let sum = thread::scope(|s| s.spawn(|| data.iter().sum::<i32>()).join().unwrap());
         assert_eq!(sum, 6);
     }
 }

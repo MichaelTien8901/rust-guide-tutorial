@@ -26,6 +26,7 @@ use axum::{
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::sync::{Arc, RwLock};
+use tower::ServiceExt;
 
 // ============================================
 // Data Models
@@ -131,20 +132,13 @@ async fn list_users(
     let limit = params.limit.unwrap_or(10);
 
     user_list.sort_by_key(|u| u.id);
-    let paginated: Vec<User> = user_list
-        .into_iter()
-        .skip(offset)
-        .take(limit)
-        .collect();
+    let paginated: Vec<User> = user_list.into_iter().skip(offset).take(limit).collect();
 
     ApiResponse::success(paginated)
 }
 
 /// GET /users/:id - Get a specific user
-async fn get_user(
-    State(state): State<AppState>,
-    Path(id): Path<u64>,
-) -> impl IntoResponse {
+async fn get_user(State(state): State<AppState>, Path(id): Path<u64>) -> impl IntoResponse {
     let users = state.users.read().unwrap();
 
     match users.get(&id) {
@@ -221,10 +215,7 @@ async fn update_user(
 }
 
 /// DELETE /users/:id - Delete a user
-async fn delete_user(
-    State(state): State<AppState>,
-    Path(id): Path<u64>,
-) -> impl IntoResponse {
+async fn delete_user(State(state): State<AppState>, Path(id): Path<u64>) -> impl IntoResponse {
     let mut users = state.users.write().unwrap();
 
     match users.remove(&id) {
@@ -271,16 +262,22 @@ async fn main() {
     // Seed some initial data
     {
         let mut users = state.users.write().unwrap();
-        users.insert(1, User {
-            id: 1,
-            name: "Alice".to_string(),
-            email: "alice@example.com".to_string(),
-        });
-        users.insert(2, User {
-            id: 2,
-            name: "Bob".to_string(),
-            email: "bob@example.com".to_string(),
-        });
+        users.insert(
+            1,
+            User {
+                id: 1,
+                name: "Alice".to_string(),
+                email: "alice@example.com".to_string(),
+            },
+        );
+        users.insert(
+            2,
+            User {
+                id: 2,
+                name: "Bob".to_string(),
+                email: "bob@example.com".to_string(),
+            },
+        );
         *state.next_id.write().unwrap() = 3;
     }
 
@@ -317,7 +314,9 @@ async fn simulate_requests(app: Router) {
 
     // Helper to make requests
     async fn make_request(app: &Router, method: &str, uri: &str, body: Option<&str>) {
-        let body = body.map(|s| Body::from(s.to_string())).unwrap_or(Body::empty());
+        let body = body
+            .map(|s| Body::from(s.to_string()))
+            .unwrap_or(Body::empty());
 
         let request = Request::builder()
             .method(method)
@@ -328,7 +327,9 @@ async fn simulate_requests(app: Router) {
 
         let response = app.clone().oneshot(request).await.unwrap();
         let status = response.status();
-        let body = axum::body::to_bytes(response.into_body(), usize::MAX).await.unwrap();
+        let body = axum::body::to_bytes(response.into_body(), usize::MAX)
+            .await
+            .unwrap();
         let body_str = String::from_utf8_lossy(&body);
 
         println!("  {} {} -> {}", method, uri, status);
@@ -348,18 +349,14 @@ async fn simulate_requests(app: Router) {
         "POST",
         "/users",
         Some(r#"{"name": "Charlie", "email": "charlie@example.com"}"#),
-    ).await;
+    )
+    .await;
 
     // GET /users/3
     make_request(&app, "GET", "/users/3", None).await;
 
     // PUT /users/3
-    make_request(
-        &app,
-        "PUT",
-        "/users/3",
-        Some(r#"{"name": "Charles"}"#),
-    ).await;
+    make_request(&app, "PUT", "/users/3", Some(r#"{"name": "Charles"}"#)).await;
 
     // DELETE /users/3
     make_request(&app, "DELETE", "/users/3", None).await;
@@ -377,11 +374,14 @@ mod tests {
 
     fn create_test_app() -> Router {
         let state = AppState::new();
-        state.users.write().unwrap().insert(1, User {
-            id: 1,
-            name: "Test User".to_string(),
-            email: "test@example.com".to_string(),
-        });
+        state.users.write().unwrap().insert(
+            1,
+            User {
+                id: 1,
+                name: "Test User".to_string(),
+                email: "test@example.com".to_string(),
+            },
+        );
         *state.next_id.write().unwrap() = 2;
         create_router(state)
     }
@@ -419,7 +419,9 @@ mod tests {
 
         assert_eq!(response.status(), StatusCode::OK);
 
-        let body = axum::body::to_bytes(response.into_body(), usize::MAX).await.unwrap();
+        let body = axum::body::to_bytes(response.into_body(), usize::MAX)
+            .await
+            .unwrap();
         let json: ApiResponse<Vec<User>> = serde_json::from_slice(&body).unwrap();
         assert!(json.success);
         assert_eq!(json.data.unwrap().len(), 1);
@@ -435,7 +437,9 @@ mod tests {
                     .method("POST")
                     .uri("/users")
                     .header("content-type", "application/json")
-                    .body(Body::from(r#"{"name": "New User", "email": "new@example.com"}"#))
+                    .body(Body::from(
+                        r#"{"name": "New User", "email": "new@example.com"}"#,
+                    ))
                     .unwrap(),
             )
             .await

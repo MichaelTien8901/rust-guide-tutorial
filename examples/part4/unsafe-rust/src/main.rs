@@ -15,6 +15,9 @@
 //! └─────────────────────────────────────────────────────────────┘
 //! ```
 
+// Allow approximate constants in tests (intentional bit pattern example)
+#![allow(clippy::approx_constant)]
+
 use std::slice;
 
 fn main() {
@@ -47,8 +50,8 @@ fn raw_pointers() {
     let mut num = 5;
 
     // Creating raw pointers (safe)
-    let r1 = &num as *const i32;      // immutable raw pointer
-    let r2 = &mut num as *mut i32;    // mutable raw pointer
+    let r1 = &num as *const i32; // immutable raw pointer
+    let r2 = &mut num as *mut i32; // mutable raw pointer
 
     println!("Raw pointers created:");
     println!("  r1 (const): {:?}", r1);
@@ -73,7 +76,12 @@ fn raw_pointers() {
     let arr = [1, 2, 3, 4, 5];
     let ptr = arr.as_ptr();
     unsafe {
-        println!("  Array via pointer: [{}, {}, {}]", *ptr, *ptr.add(1), *ptr.add(2));
+        println!(
+            "  Array via pointer: [{}, {}, {}]",
+            *ptr,
+            *ptr.add(1),
+            *ptr.add(2)
+        );
     }
 }
 

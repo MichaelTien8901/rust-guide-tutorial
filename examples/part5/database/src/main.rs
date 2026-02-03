@@ -324,7 +324,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("  Found by email: {:?}", found_email);
 
     // Update
-    let updated = user_repo.update(1, "Alice Smith", "alice.smith@example.com").await?;
+    let updated = user_repo
+        .update(1, "Alice Smith", "alice.smith@example.com")
+        .await?;
     println!("  Updated: {:?}", updated);
 
     // List

@@ -195,7 +195,9 @@ fn dynamically_sized_types() {
 
     struct Dog;
     impl Speak for Dog {
-        fn speak(&self) { println!("    Woof!"); }
+        fn speak(&self) {
+            println!("    Woof!");
+        }
     }
 
     // Must use reference or Box
@@ -373,7 +375,10 @@ impl Mul<f64> for Percentage {
 fn zero_cost_abstractions() {
     // Same size as f64
     println!("  Size of f64: {} bytes", std::mem::size_of::<f64>());
-    println!("  Size of Percentage: {} bytes", std::mem::size_of::<Percentage>());
+    println!(
+        "  Size of Percentage: {} bytes",
+        std::mem::size_of::<Percentage>()
+    );
 
     // Type-safe percentage
     let discount = Percentage::new(20.0).unwrap();
@@ -398,7 +403,10 @@ fn zero_cost_abstractions() {
 
     impl<T> Id<T> {
         fn new(value: u64) -> Self {
-            Id { value, _marker: PhantomData }
+            Id {
+                value,
+                _marker: PhantomData,
+            }
         }
     }
 
@@ -413,7 +421,10 @@ fn zero_cost_abstractions() {
 
     println!("  User ID: {}", user_id.value);
     println!("  Product ID: {}", product_id.value);
-    println!("  PhantomData size: {} bytes", std::mem::size_of::<PhantomData<User>>());
+    println!(
+        "  PhantomData size: {} bytes",
+        std::mem::size_of::<PhantomData<User>>()
+    );
 }
 
 #[cfg(test)]

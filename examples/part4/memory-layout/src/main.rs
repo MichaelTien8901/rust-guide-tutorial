@@ -104,10 +104,10 @@ fn primitive_layout() {
 
 /// Rust may reorder fields for optimal layout
 struct DefaultLayout {
-    a: u8,   // 1 byte
-    b: u32,  // 4 bytes
-    c: u16,  // 2 bytes
-    d: u8,   // 1 byte
+    a: u8,  // 1 byte
+    b: u32, // 4 bytes
+    c: u16, // 2 bytes
+    d: u8,  // 1 byte
 }
 
 fn default_struct_layout() {
@@ -118,10 +118,10 @@ fn default_struct_layout() {
 
     // Optimal manual ordering
     struct ManualOptimal {
-        b: u32,  // 4 bytes
-        c: u16,  // 2 bytes
-        a: u8,   // 1 byte
-        d: u8,   // 1 byte
+        b: u32, // 4 bytes
+        c: u16, // 2 bytes
+        a: u8,  // 1 byte
+        d: u8,  // 1 byte
     }
 
     println!("\n  struct ManualOptimal {{ b: u32, c: u16, a: u8, d: u8 }}");
@@ -136,20 +136,20 @@ fn default_struct_layout() {
 /// C-compatible layout - fields in declaration order
 #[repr(C)]
 struct CLayout {
-    a: u8,   // offset 0
+    a: u8, // offset 0
     // 3 bytes padding
-    b: u32,  // offset 4
-    c: u16,  // offset 8
-    d: u8,   // offset 10
-    // 1 byte padding
+    b: u32, // offset 4
+    c: u16, // offset 8
+    d: u8,  // offset 10
+            // 1 byte padding
 }
 
 #[repr(C)]
 struct CLayoutOptimal {
-    b: u32,  // offset 0
-    c: u16,  // offset 4
-    a: u8,   // offset 6
-    d: u8,   // offset 7
+    b: u32, // offset 0
+    c: u16, // offset 4
+    a: u8,  // offset 6
+    d: u8,  // offset 7
 }
 
 fn repr_c_layout() {
@@ -159,15 +159,32 @@ fn repr_c_layout() {
     println!("    Alignment: {} bytes", align_of::<CLayout>());
 
     // Show field offsets
-    let instance = CLayout { a: 0, b: 0, c: 0, d: 0 };
+    let instance = CLayout {
+        a: 0,
+        b: 0,
+        c: 0,
+        d: 0,
+    };
     let base = &instance as *const _ as usize;
 
     unsafe {
         println!("    Field offsets:");
-        println!("      a: {} (u8)", (&instance.a as *const _ as usize) - base);
-        println!("      b: {} (u32)", (&instance.b as *const _ as usize) - base);
-        println!("      c: {} (u16)", (&instance.c as *const _ as usize) - base);
-        println!("      d: {} (u8)", (&instance.d as *const _ as usize) - base);
+        println!(
+            "      a: {} (u8)",
+            (&instance.a as *const _ as usize) - base
+        );
+        println!(
+            "      b: {} (u32)",
+            (&instance.b as *const _ as usize) - base
+        );
+        println!(
+            "      c: {} (u16)",
+            (&instance.c as *const _ as usize) - base
+        );
+        println!(
+            "      d: {} (u8)",
+            (&instance.d as *const _ as usize) - base
+        );
     }
 
     println!("\n  #[repr(C)]");
@@ -183,10 +200,10 @@ fn repr_c_layout() {
 /// Packed layout - no padding (may cause unaligned access)
 #[repr(C, packed)]
 struct PackedLayout {
-    a: u8,   // offset 0
-    b: u32,  // offset 1 (unaligned!)
-    c: u16,  // offset 5 (unaligned!)
-    d: u8,   // offset 7
+    a: u8,  // offset 0
+    b: u32, // offset 1 (unaligned!)
+    c: u16, // offset 5 (unaligned!)
+    d: u8,  // offset 7
 }
 
 fn repr_packed_layout() {
@@ -195,7 +212,12 @@ fn repr_packed_layout() {
     println!("    Size: {} bytes", size_of::<PackedLayout>());
     println!("    Alignment: {} bytes", align_of::<PackedLayout>());
 
-    let instance = PackedLayout { a: 1, b: 2, c: 3, d: 4 };
+    let instance = PackedLayout {
+        a: 1,
+        b: 2,
+        c: 3,
+        d: 4,
+    };
 
     // Safe access through copy
     let a = { instance.a };
@@ -276,7 +298,10 @@ fn repr_transparent() {
     println!("    u32 size: {} bytes", size_of::<u32>());
 
     println!("\n  struct NewtypeString(String)");
-    println!("    NewtypeString size: {} bytes", size_of::<NewtypeString>());
+    println!(
+        "    NewtypeString size: {} bytes",
+        size_of::<NewtypeString>()
+    );
     println!("    String size: {} bytes", size_of::<String>());
 
     // Safe to transmute between transparent wrapper and inner type
@@ -329,7 +354,10 @@ fn enum_layout() {
     // NonZero optimization
     use std::num::NonZeroU32;
     println!("\n    NonZeroU32 size: {} bytes", size_of::<NonZeroU32>());
-    println!("    Option<NonZeroU32> size: {} bytes", size_of::<Option<NonZeroU32>>());
+    println!(
+        "    Option<NonZeroU32> size: {} bytes",
+        size_of::<Option<NonZeroU32>>()
+    );
 }
 
 // ============================================
@@ -377,7 +405,10 @@ fn practical_patterns() {
     }
 
     println!("  Network packet header (packed):");
-    println!("    Size: {} bytes (fixed wire format)", size_of::<PacketHeader>());
+    println!(
+        "    Size: {} bytes (fixed wire format)",
+        size_of::<PacketHeader>()
+    );
 
     // Pattern 2: Cache-line aligned buffer for concurrent access
     #[repr(C, align(64))]
@@ -388,7 +419,10 @@ fn practical_patterns() {
 
     println!("\n  Per-CPU data (cache-line aligned):");
     println!("    Size: {} bytes", size_of::<PerCpuData>());
-    println!("    Alignment: {} bytes (prevents false sharing)", align_of::<PerCpuData>());
+    println!(
+        "    Alignment: {} bytes (prevents false sharing)",
+        align_of::<PerCpuData>()
+    );
 
     // Pattern 3: FFI struct matching C definition
     #[repr(C)]
@@ -409,9 +443,15 @@ fn practical_patterns() {
         const WRITE: u32 = 1 << 1;
         const EXECUTE: u32 = 1 << 2;
 
-        fn new() -> Self { Flags(0) }
-        fn set(&mut self, flag: u32) { self.0 |= flag; }
-        fn has(&self, flag: u32) -> bool { self.0 & flag != 0 }
+        fn new() -> Self {
+            Flags(0)
+        }
+        fn set(&mut self, flag: u32) {
+            self.0 |= flag;
+        }
+        fn has(&self, flag: u32) -> bool {
+            self.0 & flag != 0
+        }
     }
 
     let mut flags = Flags::new();

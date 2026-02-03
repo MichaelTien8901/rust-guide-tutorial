@@ -115,9 +115,7 @@ fn basic_builder() {
     println!("  Full config: {:?}", server);
 
     // Partial configuration (uses defaults)
-    let default_server = Server::builder()
-        .host("127.0.0.1")
-        .build();
+    let default_server = Server::builder().host("127.0.0.1").build();
 
     println!("  With defaults: {:?}", default_server);
 }
@@ -228,9 +226,7 @@ fn builder_with_validation() {
     }
 
     // Invalid - missing required field
-    let invalid = DatabaseConfigBuilder::new()
-        .host("localhost")
-        .build();
+    let invalid = DatabaseConfigBuilder::new().host("localhost").build();
 
     match invalid {
         Ok(_) => println!("  Unexpected success"),
@@ -537,10 +533,7 @@ mod tests {
 
     #[test]
     fn test_basic_builder() {
-        let server = Server::builder()
-            .host("test")
-            .port(9000)
-            .build();
+        let server = Server::builder().host("test").port(9000).build();
 
         assert_eq!(server.host, "test");
         assert_eq!(server.port, 9000);
@@ -567,9 +560,7 @@ mod tests {
 
     #[test]
     fn test_validated_builder_failure() {
-        let config = DatabaseConfigBuilder::new()
-            .host("localhost")
-            .build();
+        let config = DatabaseConfigBuilder::new().host("localhost").build();
 
         assert!(config.is_err());
     }

@@ -93,9 +93,18 @@ fn derive_macros_example() {
 
     // Ord for sorting
     let mut people = vec![
-        Person { name: "Bob".into(), age: 30 },
-        Person { name: "Alice".into(), age: 25 },
-        Person { name: "Alice".into(), age: 20 },
+        Person {
+            name: "Bob".into(),
+            age: 30,
+        },
+        Person {
+            name: "Alice".into(),
+            age: 25,
+        },
+        Person {
+            name: "Alice".into(),
+            age: 20,
+        },
     ];
     people.sort();
     println!("  Sorted people: {:?}", people);
@@ -124,7 +133,11 @@ enum Message {
     Text { content: String },
 
     #[serde(rename = "image")]
-    Image { url: String, width: u32, height: u32 },
+    Image {
+        url: String,
+        width: u32,
+        height: u32,
+    },
 }
 
 fn serde_derive_example() {
@@ -144,7 +157,9 @@ fn serde_derive_example() {
     println!("  Deserialized User: {:?}", user2);
 
     // Tagged enum
-    let msg = Message::Text { content: "Hello!".into() };
+    let msg = Message::Text {
+        content: "Hello!".into(),
+    };
     let json = serde_json::to_string(&msg).unwrap();
     println!("  Tagged enum: {}", json);
 }
@@ -173,7 +188,9 @@ fn thiserror_example() {
     println!("  Error display: {}", err1);
     println!("  Error debug: {:?}", err1);
 
-    let err2 = AppError::Parse { msg: "invalid JSON".into() };
+    let err2 = AppError::Parse {
+        msg: "invalid JSON".into(),
+    };
     println!("  Error display: {}", err2);
 
     // From conversion
@@ -360,11 +377,7 @@ mod tests {
 
     #[test]
     fn test_builder() {
-        let config = Config::builder()
-            .host("test")
-            .port(9000)
-            .build()
-            .unwrap();
+        let config = Config::builder().host("test").port(9000).build().unwrap();
         assert_eq!(config.host, "test");
         assert_eq!(config.port, 9000);
         assert!(!config.debug);
