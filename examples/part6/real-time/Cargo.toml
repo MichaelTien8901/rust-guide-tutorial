@@ -1,0 +1,14 @@
+[package]
+name = "real-time-example"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates real-time programming patterns and heapless data structures"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part6/06-real-time"
+
+# Note: This example demonstrates real-time concepts
+# in a std environment for learning purposes.
+
+[dependencies]

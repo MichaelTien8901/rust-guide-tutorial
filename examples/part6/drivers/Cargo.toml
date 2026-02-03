@@ -1,0 +1,14 @@
+[package]
+name = "drivers-example"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates device driver patterns for embedded systems"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part6/05-drivers"
+
+# Note: This example demonstrates driver concepts
+# in a std environment for learning purposes.
+
+[dependencies]

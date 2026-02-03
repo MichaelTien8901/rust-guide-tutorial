@@ -1,0 +1,14 @@
+[package]
+name = "rtos-patterns-example"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates RTOS patterns and async embedded programming"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part6/07-rtos"
+
+# Note: This example demonstrates RTOS concepts
+# in a std environment for learning purposes.
+
+[dependencies]

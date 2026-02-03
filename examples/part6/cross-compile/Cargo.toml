@@ -1,0 +1,21 @@
+[package]
+name = "cross-compile-example"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates cross-compilation concepts and target configuration"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part6/08-cross-compilation"
+
+# Note: This example demonstrates cross-compilation concepts
+# in a std environment for learning purposes.
+
+[dependencies]
+
+# Example of conditional dependencies based on target
+# [target.'cfg(target_os = "linux")'.dependencies]
+# nix = "0.29"
+
+# [target.'cfg(target_arch = "arm")'.dependencies]
+# cortex-m = "0.7"

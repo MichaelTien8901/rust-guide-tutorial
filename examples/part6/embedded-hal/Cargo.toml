@@ -1,0 +1,15 @@
+[package]
+name = "embedded-hal-example"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates embedded-hal trait patterns"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part6/03-embedded-hal"
+
+# Note: This example demonstrates embedded-hal concepts
+# in a std environment for learning purposes.
+# Real embedded code requires no_std and actual hardware.
+
+[dependencies]
