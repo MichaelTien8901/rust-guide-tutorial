@@ -1,0 +1,15 @@
+[package]
+name = "uefi-graphics"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates UEFI Graphics Output Protocol patterns"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part7/07-graphics"
+
+# Note: This example demonstrates UEFI graphics concepts
+# in a std environment for learning purposes.
+# Real UEFI apps require no_std and the uefi crate.
+
+[dependencies]

@@ -1,0 +1,15 @@
+[package]
+name = "uefi-qemu"
+version = "0.1.0"
+edition = "2021"
+description = "Demonstrates UEFI QEMU testing setup and debugging"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part7/09-qemu-testing"
+
+# Note: This example demonstrates UEFI QEMU testing concepts
+# and provides scripts for testing real UEFI applications.
+# The Rust code simulates QEMU/OVMF interaction patterns.
+
+[dependencies]
