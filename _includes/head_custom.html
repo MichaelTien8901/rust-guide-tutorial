@@ -1,4 +1,4 @@
-<!-- Custom Mermaid configuration for dark theme visibility -->
+<!-- Custom Mermaid configuration with light background for visibility -->
 <script type="module">
   // Wait for Mermaid to be available
   const configureMermaid = () => {
@@ -8,64 +8,70 @@
         theme: 'base',
         securityLevel: 'loose',
         themeVariables: {
-          // Background and text - bright colors for dark mode
-          primaryColor: '#3498db',
-          primaryTextColor: '#ffffff',
-          primaryBorderColor: '#5dade2',
+          // Use LIGHT background for visibility on any page theme
+          background: '#ffffff',
+          mainBkg: '#f8f9fa',
 
-          // Secondary colors
-          secondaryColor: '#27ae60',
-          secondaryTextColor: '#ffffff',
-          secondaryBorderColor: '#58d68d',
+          // Primary colors - blue tones
+          primaryColor: '#4a90d9',
+          primaryTextColor: '#1a1a1a',
+          primaryBorderColor: '#2171b5',
 
-          // Tertiary colors
-          tertiaryColor: '#9b59b6',
-          tertiaryTextColor: '#ffffff',
-          tertiaryBorderColor: '#bb8fce',
+          // Secondary colors - green tones
+          secondaryColor: '#6cc644',
+          secondaryTextColor: '#1a1a1a',
+          secondaryBorderColor: '#4a9c2d',
 
-          // Line and arrow colors - BRIGHT for dark backgrounds
-          lineColor: '#adb5bd',
+          // Tertiary colors - purple tones
+          tertiaryColor: '#a855f7',
+          tertiaryTextColor: '#1a1a1a',
+          tertiaryBorderColor: '#7c3aed',
 
-          // Background colors
-          background: 'transparent',
-          mainBkg: '#3d4852',
-          nodeBkg: '#4a5568',
+          // Lines and arrows - dark for contrast on light background
+          lineColor: '#333333',
 
-          // Text colors
-          textColor: '#e2e8f0',
-          nodeTextColor: '#ffffff',
+          // Node styling
+          nodeBkg: '#e8f4fd',
+          nodeTextColor: '#1a1a1a',
+          nodeBorder: '#2171b5',
 
-          // Flowchart specific
-          clusterBkg: '#2d3748',
-          clusterBorder: '#718096',
+          // Text colors - dark for light background
+          textColor: '#1a1a1a',
+
+          // Flowchart clusters
+          clusterBkg: '#f0f4f8',
+          clusterBorder: '#5a6c7d',
 
           // Notes
-          noteBkgColor: '#4a5568',
-          noteTextColor: '#e2e8f0',
-          noteBorderColor: '#718096',
+          noteBkgColor: '#fff8dc',
+          noteTextColor: '#1a1a1a',
+          noteBorderColor: '#d4a574',
 
           // Sequence diagram
-          actorBkg: '#4a5568',
-          actorBorder: '#718096',
-          actorTextColor: '#e2e8f0',
-          actorLineColor: '#adb5bd',
-          signalColor: '#e2e8f0',
-          signalTextColor: '#1a202c',
+          actorBkg: '#e8f4fd',
+          actorBorder: '#2171b5',
+          actorTextColor: '#1a1a1a',
+          actorLineColor: '#333333',
+          signalColor: '#333333',
+          signalTextColor: '#1a1a1a',
 
-          // Critical and done styles
-          critBkgColor: '#c53030',
-          critBorderColor: '#9b2c2c',
-          doneBkgColor: '#38a169',
-          doneBorderColor: '#2f855a',
+          // Critical and done styles (for Gantt)
+          critBkgColor: '#fee2e2',
+          critBorderColor: '#dc2626',
+          doneBkgColor: '#d1fae5',
+          doneBorderColor: '#059669',
 
-          // Edge label background
-          edgeLabelBackground: '#2d3748',
+          // Edge labels
+          edgeLabelBackground: '#ffffff',
 
-          // Gantt
-          sectionBkgColor: '#4a5568',
-          altSectionBkgColor: '#2d3748',
-          gridColor: '#718096',
-          todayLineColor: '#e53e3e'
+          // Gantt chart
+          sectionBkgColor: '#e8f4fd',
+          altSectionBkgColor: '#f0f4f8',
+          gridColor: '#cbd5e1',
+          todayLineColor: '#dc2626',
+
+          // Mindmap
+          mindmapNodeBkg: '#e8f4fd'
         },
         flowchart: {
           useMaxWidth: true,
@@ -104,37 +110,55 @@
 </script>
 
 <style>
-  /* Additional CSS to ensure Mermaid diagram visibility on dark theme */
-  .language-mermaid {
-    background-color: transparent !important;
+  /* Mermaid diagram container - light background */
+  .language-mermaid,
+  pre.mermaid,
+  .mermaid {
+    background-color: #ffffff !important;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
   }
 
-  /* Ensure arrows and lines are visible */
+  /* Ensure lines and arrows are dark and visible */
   .mermaid .edgePath .path,
   .mermaid .flowchart-link {
-    stroke: #adb5bd !important;
+    stroke: #333333 !important;
     stroke-width: 2px !important;
   }
 
   .mermaid .arrowheadPath {
-    fill: #adb5bd !important;
+    fill: #333333 !important;
   }
 
   /* Sequence diagram lines */
   .mermaid .messageLine0,
   .mermaid .messageLine1 {
-    stroke: #adb5bd !important;
+    stroke: #333333 !important;
     stroke-width: 1.5px !important;
   }
 
   /* Actor lines */
   .mermaid .actor-line {
-    stroke: #718096 !important;
+    stroke: #666666 !important;
   }
 
   /* Mindmap lines */
   .mermaid .mindmap-edges path {
-    stroke: #adb5bd !important;
+    stroke: #333333 !important;
     stroke-width: 2px !important;
+  }
+
+  /* Text visibility */
+  .mermaid text,
+  .mermaid .nodeLabel,
+  .mermaid .label {
+    fill: #1a1a1a !important;
+    color: #1a1a1a !important;
+  }
+
+  /* Cluster labels */
+  .mermaid .cluster-label text {
+    fill: #1a1a1a !important;
   }
 </style>
