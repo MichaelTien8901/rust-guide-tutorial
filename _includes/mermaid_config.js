@@ -4,9 +4,9 @@ mermaid.initialize({
   theme: 'base',
   securityLevel: 'loose',
   themeVariables: {
-    // Light background (slightly darker for better contrast)
-    background: '#e2e6eb',
-    mainBkg: '#dce0e5',
+    // Paper-like background (warm, unlit paper tone)
+    background: '#d5d0c8',
+    mainBkg: '#ccc7bf',
 
     // Primary colors - muted blue
     primaryColor: '#5a9bd5',
@@ -26,26 +26,26 @@ mermaid.initialize({
     // Lines - dark gray for good contrast
     lineColor: '#4a5568',
 
-    // Node backgrounds - soft tones
-    nodeBkg: '#cdd5e0',
+    // Node backgrounds - paper tones
+    nodeBkg: '#c5c0b8',
     nodeTextColor: '#2c3e50',
-    nodeBorder: '#4a89c0',
+    nodeBorder: '#8a8578',
 
     // Text - dark gray (not pure black)
     textColor: '#2c3e50',
 
     // Clusters
-    clusterBkg: '#d5dae0',
-    clusterBorder: '#7a8a9a',
+    clusterBkg: '#cac5bd',
+    clusterBorder: '#8a8578',
 
-    // Notes - soft cream
-    noteBkgColor: '#ebe5d8',
+    // Notes - slightly warmer
+    noteBkgColor: '#ddd8c8',
     noteTextColor: '#2c3e50',
-    noteBorderColor: '#c9b896',
+    noteBorderColor: '#a89878',
 
     // Sequence diagram
-    actorBkg: '#cdd5e0',
-    actorBorder: '#4a89c0',
+    actorBkg: '#c5c0b8',
+    actorBorder: '#8a8578',
     actorTextColor: '#2c3e50',
     actorLineColor: '#4a5568',
     signalColor: '#4a5568',
@@ -53,7 +53,7 @@ mermaid.initialize({
     labelTextColor: '#2c3e50',
 
     // Edge labels
-    edgeLabelBackground: '#e2e6eb',
+    edgeLabelBackground: '#d5d0c8',
 
     // Gantt
     sectionBkgColor: '#dde4ed',
