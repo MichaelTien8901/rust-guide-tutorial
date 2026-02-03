@@ -9,6 +9,59 @@ nav_order: 2
 
 Functions are the building blocks of Rust programs. They're defined with `fn` and follow specific conventions.
 
+## Overview
+
+Functions in Rust are first-class citizens that can be passed around, returned, and stored in variables. Understanding the distinction between statements and expressions is key to writing idiomatic Rust.
+
+```mermaid
+flowchart TB
+    subgraph "Function Types"
+        F[Regular Function]
+        A[Associated Function]
+        M[Method]
+        C[Closure]
+    end
+
+    F --> F1["fn foo() { }"]
+    A --> A1["Type::new()"]
+    M --> M1["self.method()"]
+    C --> C1["|x| x + 1"]
+
+    subgraph "Key Concepts"
+        E["Expressions return values"]
+        S["Statements don't"]
+    end
+
+    style F fill:#c8e6c9
+    style M fill:#e3f2fd
+```
+
+## When to Use Each Function Type
+
+```mermaid
+flowchart TD
+    A{What do you need?} -->|Standalone logic| B["Regular function"]
+    A -->|Constructor/factory| C["Associated function (Type::new)"]
+    A -->|Operate on instance| D["Method (&self)"]
+    A -->|Short, inline logic| E["Closure"]
+    A -->|Capture environment| E
+
+    B --> B1["fn process(data: Data)"]
+    C --> C1["fn new() -> Self"]
+    D --> D1["fn area(&self) -> u32"]
+    E --> E1["|x| x * 2"]
+
+    style B fill:#c8e6c9
+    style D fill:#e3f2fd
+```
+
+{: .best-practice }
+> **Function Design Principles:**
+> - Keep functions small and focused on one task
+> - Use descriptive names in `snake_case`
+> - Prefer returning values over mutating arguments
+> - Use `&self` methods to operate on struct data
+
 ## Function Syntax
 
 ```rust
@@ -304,6 +357,42 @@ fn process(value: i32) -> Result<i32, &'static str> {
 | Early return | `return value;` |
 | Unit return | `fn name() -> () { }` |
 | Never returns | `fn name() -> ! { loop {} }` |
+
+## Function Return Patterns
+
+```mermaid
+flowchart LR
+    subgraph "Return Styles"
+        I["Implicit (no semicolon)"]
+        E["Explicit return"]
+        U["Unit () return"]
+        N["Never returns !"]
+    end
+
+    I --> I1["x + 1"]
+    E --> E1["return x + 1;"]
+    U --> U1["println!(...)"]
+    N --> N1["panic!() or loop {}"]
+
+    style I fill:#c8e6c9
+```
+
+## Best Practices
+
+{: .best-practice }
+> **Function Guidelines:**
+> 1. **Prefer implicit returns** - omit the semicolon for the final expression
+> 2. **Use early returns** for validation at the start of functions
+> 3. **Document public functions** with `///` doc comments
+> 4. **Keep parameter lists short** - consider a struct for many parameters
+> 5. **Return `Result`** for operations that can fail
+> 6. **Use `impl Trait`** for flexible parameter types
+
+{: .warning }
+> **Common Mistakes:**
+> - Adding a semicolon to the return value (returns `()` instead)
+> - Forgetting type annotations on parameters (required in Rust)
+> - Using `return` with a semicolon when implicit return would work
 
 ## Exercises
 

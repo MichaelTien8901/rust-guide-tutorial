@@ -9,6 +9,53 @@ nav_order: 1
 
 Rust is a statically typed language with type inference. Let's explore how to declare variables and use different data types.
 
+## Overview
+
+Understanding variables and types is fundamental to Rust programming. Rust's type system is powerful yet ergonomic, catching errors at compile time while often inferring types automatically.
+
+```mermaid
+flowchart TB
+    subgraph "Variable Declaration"
+        L["let x = 5"]
+        LM["let mut x = 5"]
+        C["const MAX: i32 = 100"]
+    end
+
+    L --> L1["Immutable<br/>Cannot reassign"]
+    LM --> LM1["Mutable<br/>Can reassign"]
+    C --> C1["Constant<br/>Compile-time value"]
+
+    subgraph "Type Categories"
+        S["Scalar Types"]
+        CO["Compound Types"]
+    end
+
+    S --> S1["i32, f64, bool, char"]
+    CO --> CO1["tuples, arrays"]
+
+    style L fill:#c8e6c9
+    style LM fill:#fff3e0
+    style C fill:#e3f2fd
+```
+
+## When to Use Each Declaration
+
+```mermaid
+flowchart TD
+    A{What do you need?} -->|Value won't change| B["let (immutable)"]
+    A -->|Value needs to change| C["let mut (mutable)"]
+    A -->|Global constant| D["const"]
+
+    B --> B1["Default choice<br/>Safer, clearer intent"]
+    C --> C1["Counters, accumulators<br/>Building strings"]
+    D --> D1["Config values<br/>Magic numbers"]
+
+    style B fill:#c8e6c9
+```
+
+{: .best-practice }
+> **Prefer immutability by default.** Use `let` without `mut` unless you specifically need to modify the variable. This makes code easier to reason about and prevents accidental modifications.
+
 ## Variables with `let`
 
 Variables are declared with the `let` keyword:
@@ -283,6 +330,43 @@ fn main() {
 | `char` | `'a'` | 4 bytes |
 | `(i32, f64)` | `(1, 2.0)` | 12 bytes |
 | `[i32; 3]` | `[1, 2, 3]` | 12 bytes |
+
+## Type Selection Guide
+
+```mermaid
+flowchart TD
+    A{What kind of data?} -->|Whole numbers| B{Need negatives?}
+    A -->|Decimal numbers| C["f64 (default) or f32"]
+    A -->|Yes/No values| D["bool"]
+    A -->|Single character| E["char"]
+    A -->|Fixed collection| F{Same types?}
+
+    B -->|Yes| G["i32 (default) or i64"]
+    B -->|No| H["u32 or usize"]
+
+    F -->|Yes| I["Array [T; N]"]
+    F -->|No| J["Tuple (T1, T2, ...)"]
+
+    style G fill:#c8e6c9
+    style C fill:#c8e6c9
+```
+
+## Best Practices
+
+{: .best-practice }
+> **Variable and Type Guidelines:**
+> 1. **Prefer immutability** - use `let` without `mut` by default
+> 2. **Let the compiler infer** - only annotate when needed
+> 3. **Use `i32` for integers** - it's the default and usually fastest
+> 4. **Use `f64` for floats** - more precision, similar speed to f32
+> 5. **Use `usize` for indices** - matches pointer size
+> 6. **Prefer shadowing over `mut`** when transforming values
+
+{: .warning }
+> **Common Pitfalls:**
+> - Integer overflow panics in debug mode, wraps in release
+> - `as` casts can lose data silently - use `try_into()` for safety
+> - Array index out of bounds causes a runtime panic
 
 ## Exercises
 
