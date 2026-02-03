@@ -47,7 +47,7 @@ Welcome to the comprehensive Rust programming guide. This tutorial takes you fro
 
 ## Sample Code
 
-All examples in this guide are tested and available in the [examples/](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples) directory. Each example includes:
+All examples in this guide are tested and available in the [examples/](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples) directory. Each example includes:
 
 - Complete, runnable Cargo project
 - Detailed comments explaining the code
@@ -66,7 +66,7 @@ See [Docker Setup]({% link part1/05-docker-setup.md %}) for details.
 
 ## Contributing
 
-Found an error? Want to add content? See our [Contributing Guide](https://github.com/MichaelTien8901/rust-guide-tutorial/blob/main/CONTRIBUTING.md).
+Found an error? Want to add content? [Open an issue](https://github.com/MichaelTien8901/rust-guide-tutorial/issues) on GitHub.
 
 ---
 
