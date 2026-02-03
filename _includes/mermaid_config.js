@@ -1,75 +1,75 @@
-// Mermaid configuration with LIGHT background for visibility
+// Mermaid configuration with soft light background
 mermaid.initialize({
   startOnLoad: true,
   theme: 'base',
   securityLevel: 'loose',
   themeVariables: {
-    // LIGHT background for visibility on dark pages
-    background: '#ffffff',
-    mainBkg: '#f8f9fa',
+    // Soft light background (not too bright)
+    background: '#f0f2f5',
+    mainBkg: '#e8ebef',
 
-    // Primary colors - blue
-    primaryColor: '#4a90d9',
-    primaryTextColor: '#1a1a1a',
-    primaryBorderColor: '#2171b5',
+    // Primary colors - muted blue
+    primaryColor: '#5a9bd5',
+    primaryTextColor: '#2c3e50',
+    primaryBorderColor: '#4a89c0',
 
-    // Secondary colors - green
-    secondaryColor: '#6cc644',
-    secondaryTextColor: '#1a1a1a',
-    secondaryBorderColor: '#4a9c2d',
+    // Secondary colors - muted green
+    secondaryColor: '#7ec88b',
+    secondaryTextColor: '#2c3e50',
+    secondaryBorderColor: '#5fb06f',
 
-    // Tertiary colors - purple
-    tertiaryColor: '#a855f7',
-    tertiaryTextColor: '#1a1a1a',
-    tertiaryBorderColor: '#7c3aed',
+    // Tertiary colors - muted purple
+    tertiaryColor: '#b08ed0',
+    tertiaryTextColor: '#2c3e50',
+    tertiaryBorderColor: '#9575b5',
 
-    // Lines - DARK for visibility on light background
-    lineColor: '#333333',
+    // Lines - dark gray for good contrast
+    lineColor: '#4a5568',
 
-    // Node backgrounds - light
-    nodeBkg: '#e8f4fd',
-    nodeTextColor: '#1a1a1a',
-    nodeBorder: '#2171b5',
+    // Node backgrounds - soft tones
+    nodeBkg: '#dde4ed',
+    nodeTextColor: '#2c3e50',
+    nodeBorder: '#4a89c0',
 
-    // Text - dark for light background
-    textColor: '#1a1a1a',
+    // Text - dark gray (not pure black)
+    textColor: '#2c3e50',
 
     // Clusters
-    clusterBkg: '#f0f4f8',
-    clusterBorder: '#5a6c7d',
+    clusterBkg: '#e2e6eb',
+    clusterBorder: '#7a8a9a',
 
-    // Notes
-    noteBkgColor: '#fff8dc',
-    noteTextColor: '#1a1a1a',
-    noteBorderColor: '#d4a574',
+    // Notes - soft cream
+    noteBkgColor: '#f5f0e6',
+    noteTextColor: '#2c3e50',
+    noteBorderColor: '#c9b896',
 
     // Sequence diagram
-    actorBkg: '#e8f4fd',
-    actorBorder: '#2171b5',
-    actorTextColor: '#1a1a1a',
-    actorLineColor: '#333333',
-    signalColor: '#333333',
-    signalTextColor: '#1a1a1a',
-    labelTextColor: '#1a1a1a',
+    actorBkg: '#dde4ed',
+    actorBorder: '#4a89c0',
+    actorTextColor: '#2c3e50',
+    actorLineColor: '#4a5568',
+    signalColor: '#4a5568',
+    signalTextColor: '#2c3e50',
+    labelTextColor: '#2c3e50',
 
     // Edge labels
-    edgeLabelBackground: '#ffffff',
+    edgeLabelBackground: '#f0f2f5',
 
     // Gantt
-    sectionBkgColor: '#e8f4fd',
-    altSectionBkgColor: '#f0f4f8',
-    gridColor: '#cbd5e1',
-    todayLineColor: '#dc2626',
-    critBkgColor: '#fee2e2',
-    critBorderColor: '#dc2626',
-    doneBkgColor: '#d1fae5',
-    doneBorderColor: '#059669',
+    sectionBkgColor: '#dde4ed',
+    altSectionBkgColor: '#e8ebef',
+    gridColor: '#b8c4d0',
+    todayLineColor: '#e05252',
+    critBkgColor: '#f8d7da',
+    critBorderColor: '#dc3545',
+    doneBkgColor: '#d4edda',
+    doneBorderColor: '#28a745',
 
     // Git graph
-    git0: '#4a90d9',
-    git1: '#6cc644',
-    git2: '#dc2626',
-    git3: '#f59e0b'
+    git0: '#5a9bd5',
+    git1: '#7ec88b',
+    git2: '#e05252',
+    git3: '#f0ad4e'
   },
   flowchart: {
     useMaxWidth: true,
