@@ -1,0 +1,140 @@
+<!-- Custom Mermaid configuration for dark theme visibility -->
+<script type="module">
+  // Wait for Mermaid to be available
+  const configureMermaid = () => {
+    if (typeof mermaid !== 'undefined') {
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        securityLevel: 'loose',
+        themeVariables: {
+          // Background and text - bright colors for dark mode
+          primaryColor: '#3498db',
+          primaryTextColor: '#ffffff',
+          primaryBorderColor: '#5dade2',
+
+          // Secondary colors
+          secondaryColor: '#27ae60',
+          secondaryTextColor: '#ffffff',
+          secondaryBorderColor: '#58d68d',
+
+          // Tertiary colors
+          tertiaryColor: '#9b59b6',
+          tertiaryTextColor: '#ffffff',
+          tertiaryBorderColor: '#bb8fce',
+
+          // Line and arrow colors - BRIGHT for dark backgrounds
+          lineColor: '#adb5bd',
+
+          // Background colors
+          background: 'transparent',
+          mainBkg: '#3d4852',
+          nodeBkg: '#4a5568',
+
+          // Text colors
+          textColor: '#e2e8f0',
+          nodeTextColor: '#ffffff',
+
+          // Flowchart specific
+          clusterBkg: '#2d3748',
+          clusterBorder: '#718096',
+
+          // Notes
+          noteBkgColor: '#4a5568',
+          noteTextColor: '#e2e8f0',
+          noteBorderColor: '#718096',
+
+          // Sequence diagram
+          actorBkg: '#4a5568',
+          actorBorder: '#718096',
+          actorTextColor: '#e2e8f0',
+          actorLineColor: '#adb5bd',
+          signalColor: '#e2e8f0',
+          signalTextColor: '#1a202c',
+
+          // Critical and done styles
+          critBkgColor: '#c53030',
+          critBorderColor: '#9b2c2c',
+          doneBkgColor: '#38a169',
+          doneBorderColor: '#2f855a',
+
+          // Edge label background
+          edgeLabelBackground: '#2d3748',
+
+          // Gantt
+          sectionBkgColor: '#4a5568',
+          altSectionBkgColor: '#2d3748',
+          gridColor: '#718096',
+          todayLineColor: '#e53e3e'
+        },
+        flowchart: {
+          useMaxWidth: true,
+          htmlLabels: true,
+          curve: 'basis',
+          diagramPadding: 8
+        },
+        sequence: {
+          diagramMarginX: 50,
+          diagramMarginY: 10,
+          actorMargin: 50,
+          width: 150,
+          height: 65,
+          boxMargin: 10,
+          boxTextMargin: 5,
+          noteMargin: 10,
+          messageMargin: 35
+        },
+        gantt: {
+          titleTopMargin: 25,
+          barHeight: 20,
+          barGap: 4,
+          topPadding: 50
+        }
+      });
+    }
+  };
+
+  // Try to configure immediately and also after DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', configureMermaid);
+  } else {
+    // Small delay to ensure Mermaid script is loaded
+    setTimeout(configureMermaid, 100);
+  }
+</script>
+
+<style>
+  /* Additional CSS to ensure Mermaid diagram visibility on dark theme */
+  .language-mermaid {
+    background-color: transparent !important;
+  }
+
+  /* Ensure arrows and lines are visible */
+  .mermaid .edgePath .path,
+  .mermaid .flowchart-link {
+    stroke: #adb5bd !important;
+    stroke-width: 2px !important;
+  }
+
+  .mermaid .arrowheadPath {
+    fill: #adb5bd !important;
+  }
+
+  /* Sequence diagram lines */
+  .mermaid .messageLine0,
+  .mermaid .messageLine1 {
+    stroke: #adb5bd !important;
+    stroke-width: 1.5px !important;
+  }
+
+  /* Actor lines */
+  .mermaid .actor-line {
+    stroke: #718096 !important;
+  }
+
+  /* Mindmap lines */
+  .mermaid .mindmap-edges path {
+    stroke: #adb5bd !important;
+    stroke-width: 2px !important;
+  }
+</style>
