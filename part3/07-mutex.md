@@ -84,6 +84,10 @@ fn main() {
 - Use `try_lock()` for non-blocking attempts
 - Keep lock scopes short
 
+## See Also
+
+- [Real-Time Constraints]({% link part6/06-real-time.md %}) - Lock-free patterns for embedded systems
+
 ## Next Steps
 
 Learn about [Async Basics]({% link part3/08-async-basics.md %}) for asynchronous programming.

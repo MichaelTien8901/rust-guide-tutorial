@@ -345,6 +345,11 @@ fn combine() -> Result<(i32, i32), &'static str> {
 2. Create a custom error type for a temperature converter (invalid format, out of range)
 3. Refactor code using `unwrap()` to use `?` operator
 
+## See Also
+
+- [Error Patterns]({% link part5/02-error-patterns.md %}) - Advanced patterns with thiserror and anyhow
+- [Error Handling Libraries]({% link appendices/libraries/error-handling.md %}) - Library reference
+
 ## Next Steps
 
 Learn about [Traits]({% link part2/09-traits.md %}) to define shared behavior.

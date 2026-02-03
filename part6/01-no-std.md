@@ -265,6 +265,11 @@ fn safe_divide(a: i32, b: i32) -> Option<i32> {
 4. **Handle errors** without panicking
 5. **Test on host** with std feature enabled
 
+## See Also
+
+- [Unsafe Rust]({% link part4/01-unsafe.md %}) - Low-level memory operations
+- [Memory Layout]({% link part4/08-memory-layout.md %}) - Data representation
+
 ## Next Steps
 
 Learn about [Bare Metal]({% link part6/02-bare-metal.md %}) programming without an OS.

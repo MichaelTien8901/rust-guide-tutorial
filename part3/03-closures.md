@@ -213,6 +213,10 @@ fn main() {
 | Named | No | Yes |
 | Can be `const` | No | Yes |
 
+## See Also
+
+- [Iterators]({% link part3/02-iterators.md %}) - Closures power iterator combinators
+
 ## Next Steps
 
 Learn about [Smart Pointers]({% link part3/04-smart-pointers.md %}) for heap allocation and shared ownership.

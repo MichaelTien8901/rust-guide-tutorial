@@ -315,6 +315,10 @@ let groups: HashMap<_, Vec<_>> = items.iter()
 | `fold()` | Reduce to single value |
 | `find()` | First matching element |
 
+## See Also
+
+- [Utilities Libraries]({% link appendices/libraries/utilities.md %}) - itertools and more iterator utilities
+
 ## Next Steps
 
 Learn about [Closures]({% link part3/03-closures.md %}) to understand the anonymous functions used in iterators.

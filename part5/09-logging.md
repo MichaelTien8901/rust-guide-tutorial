@@ -334,6 +334,10 @@ fn timed_operation() {
 4. **Filter appropriately** in production
 5. **Log errors with context**
 
+## See Also
+
+- [Logging Libraries]({% link appendices/libraries/logging.md %}) - Comprehensive logging library reference
+
 ## Next Steps
 
 Continue to [Part 6: Systems Programming]({% link part6/index.md %}) for low-level Rust.

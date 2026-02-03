@@ -69,6 +69,11 @@ fn split_at_mut(values: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
 {: .warning }
 Only use unsafe when necessary. Document safety invariants.
 
+## See Also
+
+- [Memory Layout]({% link part4/08-memory-layout.md %}) - Understanding memory representation
+- [no_std Basics]({% link part6/01-no-std.md %}) - Systems programming without the standard library
+
 ## Next Steps
 
 Learn about [FFI]({% link part4/02-ffi.md %}) for calling C code.

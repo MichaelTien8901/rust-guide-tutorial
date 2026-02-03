@@ -44,6 +44,11 @@ pub struct Point {
 }
 ```
 
+## See Also
+
+- [Unsafe Rust]({% link part4/01-unsafe.md %}) - Raw pointers and unsafe operations
+- [Memory Layout]({% link part4/08-memory-layout.md %}) - #[repr(C)] and data layout
+
 ## Next Steps
 
 Learn about [Declarative Macros]({% link part4/03-macros-declarative.md %}).

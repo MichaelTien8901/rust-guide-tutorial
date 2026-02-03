@@ -231,6 +231,11 @@ fn main() -> Result<()> {
 | Early return | `bail!("error message")` |
 | Assert condition | `ensure!(cond, "message")` |
 
+## See Also
+
+- [Error Handling]({% link part2/08-error-handling.md %}) - Fundamental error handling with Result
+- [Error Handling Libraries]({% link appendices/libraries/error-handling.md %}) - Library reference
+
 ## Next Steps
 
 Learn about [State Machine]({% link part5/03-state-machine.md %}) patterns with enums.

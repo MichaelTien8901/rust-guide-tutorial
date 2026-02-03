@@ -412,6 +412,11 @@ impl<T> Builder<T> {
 2. Implement a generic `min` function for any type that implements `PartialOrd`
 3. Create a `Matrix<T, const ROWS: usize, const COLS: usize>` type
 
+## See Also
+
+- [Advanced Traits]({% link part4/05-advanced-traits.md %}) - Associated types and advanced trait patterns
+- [Advanced Types]({% link part4/06-advanced-types.md %}) - Newtype pattern and type aliases
+
 ## Next Steps
 
 Congratulations! You've completed Part 2: Fundamentals. Continue to [Part 3: Intermediate]({% link part3/index.md %}) to learn about collections, iterators, and concurrency.

@@ -372,6 +372,10 @@ impl RequestBuilder {
 2. Create a `Student` struct with `name`, `age`, and `grades` (Vec<f64>), implement `average_grade()`
 3. Implement the builder pattern for a `Config` struct
 
+## See Also
+
+- [Builder Pattern]({% link part5/01-builder-pattern.md %}) - Fluent APIs and advanced builder patterns
+
 ## Next Steps
 
 Learn about [Enums]({% link part2/07-enums.md %}) for types that can be one of several variants.

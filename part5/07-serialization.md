@@ -333,6 +333,10 @@ struct Flexible {
 | `tag` | Enum tagging style |
 | `with` | Custom serialization |
 
+## See Also
+
+- [Serialization Libraries]({% link appendices/libraries/serialization.md %}) - Comprehensive serde ecosystem reference
+
 ## Next Steps
 
 Learn about [Testing Patterns]({% link part5/08-testing-patterns.md %}) for robust tests.

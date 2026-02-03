@@ -391,6 +391,10 @@ impl<T: Display> ToString for T {
 2. Implement `Display` for a custom `Temperature` type
 3. Create a `Validator` trait and implement it for different validation rules
 
+## See Also
+
+- [Advanced Traits]({% link part4/05-advanced-traits.md %}) - Associated types, supertraits, and more
+
 ## Next Steps
 
 Learn about [Generics]({% link part2/10-generics.md %}) to write flexible, reusable code.

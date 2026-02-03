@@ -357,6 +357,11 @@ fn main() -> Result<()> {
 | `dialoguer` | Interactive prompts |
 | `anyhow` | Error handling |
 
+## See Also
+
+- [CLI Libraries]({% link appendices/libraries/cli.md %}) - Comprehensive CLI library reference
+- [Error Patterns]({% link part5/02-error-patterns.md %}) - CLI-friendly error handling
+
 ## Next Steps
 
 Learn about [Web Services]({% link part5/05-web-services.md %}) to build HTTP APIs.

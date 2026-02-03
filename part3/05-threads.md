@@ -102,6 +102,11 @@ fn main() {
 }
 ```
 
+## See Also
+
+- [Real-Time Constraints]({% link part6/06-real-time.md %}) - Deterministic threading for embedded systems
+- [RTOS Integration]({% link part6/07-rtos.md %}) - Real-time operating system patterns
+
 ## Next Steps
 
 Learn about [Channels]({% link part3/06-channels.md %}) for message passing between threads.

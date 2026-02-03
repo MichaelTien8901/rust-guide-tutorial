@@ -52,6 +52,11 @@ fn main() {
 }
 ```
 
+## See Also
+
+- [Traits]({% link part2/09-traits.md %}) - Basic trait concepts
+- [Generics]({% link part2/10-generics.md %}) - Generic type parameters
+
 ## Next Steps
 
 Learn about [Advanced Types]({% link part4/06-advanced-types.md %}).

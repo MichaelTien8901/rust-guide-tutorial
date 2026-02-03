@@ -257,6 +257,12 @@ actix-web = "4"
 - Both integrate well with serde for JSON
 - Use tower-http or actix middleware for cross-cutting concerns
 
+## See Also
+
+- [Async Basics]({% link part3/08-async-basics.md %}) - Async/await fundamentals
+- [Web Frameworks]({% link appendices/libraries/web-frameworks.md %}) - Framework comparison
+- [Serialization]({% link part5/07-serialization.md %}) - JSON and serde patterns
+
 ## Next Steps
 
 Learn about [Database]({% link part5/06-database.md %}) access with sqlx.

@@ -128,6 +128,11 @@ struct Node {
 | `RefCell<T>` | Single | No | Runtime checked |
 | `Mutex<T>` | Shared | Yes | Locked access |
 
+## See Also
+
+- [Memory Layout]({% link part4/08-memory-layout.md %}) - How pointers are represented in memory
+- [Ownership]({% link part2/03-ownership.md %}) - Foundational ownership concepts
+
 ## Next Steps
 
 Learn about [Threads]({% link part3/05-threads.md %}) for concurrent programming.

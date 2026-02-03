@@ -52,6 +52,10 @@ fn main() {
 }
 ```
 
+## See Also
+
+- [Procedural Macros]({% link part4/04-macros-procedural.md %}) - derive and attribute macros
+
 ## Next Steps
 
 Learn about [Procedural Macros]({% link part4/04-macros-procedural.md %}).
