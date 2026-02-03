@@ -7,7 +7,50 @@ nav_order: 7
 
 # Enums and Pattern Matching
 
-Enums let you define a type by enumerating its possible variants. Combined with pattern matching, they're one of Rust's most powerful features.
+## Overview
+
+**Enums** (enumerations) let you define a type by listing its possible variants. Unlike C-style enums, Rust enums can hold data in each variant, making them incredibly powerful for modeling states and alternatives.
+
+```mermaid
+flowchart TD
+    subgraph "C-Style Enum"
+        A["Direction::North = 0"]
+        B["Direction::South = 1"]
+        C["Just numbers"]
+    end
+
+    subgraph "Rust Enum"
+        D["Message::Quit"]
+        E["Message::Move x, y"]
+        F["Message::Write String"]
+        G["Each variant can hold different data!"]
+    end
+```
+
+**Key insight**: Rust enums + pattern matching = algebraic data types. They let you model "one of these things" with compile-time exhaustiveness checking.
+
+## When to Use Enums
+
+| Situation | Use Enum | Example |
+|-----------|----------|---------|
+| Multiple exclusive states | Yes | `ConnectionState { Connecting, Connected, Disconnected }` |
+| Optional value | Yes (`Option<T>`) | `Some(value)` or `None` |
+| Success or failure | Yes (`Result<T,E>`) | `Ok(data)` or `Err(error)` |
+| Commands/messages | Yes | `Command { Start, Stop, Pause }` |
+| Type needs method variants | No, use trait | Different behaviors, same interface |
+
+```mermaid
+flowchart TD
+    A{Is it one of several things?} -->|Yes| B{Do variants have data?}
+    A -->|No| C["Use struct"]
+
+    B -->|No data| D["Simple enum"]
+    B -->|Same data| E["Enum with shared type"]
+    B -->|Different data| F["Enum with variant-specific data"]
+
+    G{Need extensibility?} -->|Yes| H["Consider trait objects"]
+    G -->|No| I["Enum is perfect"]
+```
 
 ## Defining Enums
 
@@ -61,7 +104,19 @@ impl Message {
 
 ## The `match` Expression
 
-`match` is exhaustive pattern matching:
+`match` is exhaustive pattern matching—the compiler ensures you handle every case.
+
+```mermaid
+flowchart LR
+    A["match coin"] --> B{Coin::Penny?}
+    B -->|Yes| C["return 1"]
+    B -->|No| D{Coin::Nickel?}
+    D -->|Yes| E["return 5"]
+    D -->|No| F{Coin::Dime?}
+    F -->|Yes| G["return 10"]
+    F -->|No| H["Coin::Quarter"]
+    H --> I["return 25"]
+```
 
 ```rust
 enum Coin {
@@ -137,7 +192,17 @@ fn value_in_cents(coin: Coin) -> u32 {
 
 ## The `Option<T>` Enum
 
-Rust's way of handling nullable values:
+Rust's way of handling nullable values—there's no `null` in Rust!
+
+```mermaid
+flowchart LR
+    subgraph "Option T"
+        A["Some(T)"] --> B["Has a value"]
+        C["None"] --> D["No value"]
+    end
+
+    E["Must handle both!"] --> F["No null pointer exceptions"]
+```
 
 ```rust
 enum Option<T> {
@@ -194,7 +259,19 @@ fn main() {
 
 ## The `Result<T, E>` Enum
 
-For operations that can fail:
+For operations that can fail—explicit error handling without exceptions.
+
+```mermaid
+flowchart LR
+    subgraph "Result T E"
+        A["Ok(T)"] --> B["Success with value"]
+        C["Err(E)"] --> D["Failure with error"]
+    end
+
+    E["File::open()"] --> F{Success?}
+    F -->|Yes| G["Ok(File)"]
+    F -->|No| H["Err(io::Error)"]
+```
 
 ```rust
 enum Result<T, E> {
@@ -408,16 +485,44 @@ fn execute(cmd: Command) {
 
 ## Summary
 
-| Feature | Syntax |
-|---------|--------|
-| Define enum | `enum Name { A, B }` |
-| With data | `enum Name { A(i32), B { x: i32 } }` |
-| Match | `match val { A => ..., B => ... }` |
-| If let | `if let Some(x) = opt { ... }` |
-| While let | `while let Some(x) = iter.next() { ... }` |
-| Wildcard | `_` |
-| Multiple | `A \| B => ...` |
-| Guard | `x if x > 5 => ...` |
+```mermaid
+mindmap
+  root((Enums))
+    Variants
+      No data
+      Tuple data
+      Struct data
+    Pattern Matching
+      match exhaustive
+      if let single
+      while let loop
+      let else early return
+    Built-in Enums
+      Option T
+      Result T E
+    Patterns
+      Wildcard _
+      Or patterns
+      Guards if
+      Ranges ..=
+      Bindings @
+    Use Cases
+      State machines
+      Commands
+      Error handling
+```
+
+| Feature | Syntax | Use Case |
+|---------|--------|----------|
+| Define enum | `enum Name { A, B }` | Simple variants |
+| With tuple data | `Name { A(i32) }` | Associated value |
+| With struct data | `Name { A { x: i32 } }` | Named fields |
+| Match | `match val { A => ... }` | Exhaustive handling |
+| If let | `if let Some(x) = opt { }` | Single pattern |
+| While let | `while let Some(x) = iter.next()` | Pattern loop |
+| Wildcard | `_` | Catch-all |
+| Or pattern | `A \| B => ...` | Multiple matches |
+| Guard | `x if x > 5 => ...` | Conditional match |
 
 ## Exercises
 

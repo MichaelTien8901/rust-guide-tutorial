@@ -7,7 +7,45 @@ nav_order: 6
 
 # Structs
 
-Structs let you create custom data types by grouping related values together.
+## Overview
+
+**Structs** are Rust's primary way to create custom data types by grouping related values together. They're similar to classes in OOP languages but without inheritance—composition and traits handle that instead.
+
+```mermaid
+flowchart TD
+    subgraph "Struct Types"
+        A["Regular Struct<br/>Named fields"] --> D["User { name, email }"]
+        B["Tuple Struct<br/>Positional fields"] --> E["Color(255, 128, 0)"]
+        C["Unit Struct<br/>No fields"] --> F["Marker"]
+    end
+
+    subgraph "Capabilities"
+        G["impl blocks"]
+        G --> H["Methods &self"]
+        G --> I["Associated functions"]
+        G --> J["Multiple impl blocks"]
+    end
+```
+
+**Key insight**: Structs own their data by default. Use references (`&str`) only when you need to borrow, and add lifetime parameters when you do.
+
+## When to Use Each Struct Type
+
+| Type | Use Case | Example |
+|------|----------|---------|
+| Regular struct | Multiple named fields | `User { name, email, age }` |
+| Tuple struct | Few fields, position meaningful | `Point(x, y)`, `Color(r, g, b)` |
+| Unit struct | Type marker, trait implementation | `struct Meters;` |
+
+```mermaid
+flowchart TD
+    A{How many fields?} -->|None| B["Unit struct"]
+    A -->|1-3, order matters| C["Tuple struct"]
+    A -->|Multiple named| D["Regular struct"]
+
+    E{Need distinct type?} -->|Yes| F["Tuple struct newtype<br/>struct UserId(u64)"]
+    E -->|No| G["Use primitive directly"]
+```
 
 ## Defining Structs
 
@@ -93,6 +131,31 @@ fn main() {
 }
 ```
 
+```mermaid
+flowchart LR
+    subgraph user1["user1 (partially moved)"]
+        A1["email: moved"]
+        A2["username: MOVED"]
+        A3["active: copied"]
+        A4["sign_in_count: copied"]
+    end
+
+    subgraph user2["user2"]
+        B1["email: new"]
+        B2["username: from user1"]
+        B3["active: copied"]
+        B4["sign_in_count: copied"]
+    end
+
+    A2 -.->|moved| B2
+    A3 -.->|copied| B3
+    A4 -.->|copied| B4
+```
+
+{: .warning }
+When using struct update syntax with non-Copy types, the source struct becomes partially moved and unusable.
+```
+
 ## Tuple Structs
 
 Named tuples:
@@ -155,11 +218,11 @@ fn main() {
 
 ### The `self` Parameter
 
-| Syntax | Meaning |
-|--------|---------|
-| `&self` | Immutable borrow of instance |
-| `&mut self` | Mutable borrow of instance |
-| `self` | Takes ownership of instance |
+| Syntax | Meaning | When to Use |
+|--------|---------|-------------|
+| `&self` | Immutable borrow | Read data, most common |
+| `&mut self` | Mutable borrow | Modify data |
+| `self` | Takes ownership | Transform or consume |
 
 ```rust
 impl Rectangle {
@@ -176,6 +239,18 @@ impl Rectangle {
         // self is dropped after this
     }
 }
+```
+
+```mermaid
+flowchart TD
+    A{What does method do?} -->|Read only| B["&self"]
+    A -->|Modify fields| C["&mut self"]
+    A -->|Transform into new type| D["self (ownership)"]
+    A -->|Builder pattern| E["self -> Self"]
+
+    B --> F["rect.area()"]
+    C --> G["rect.set_width(10)"]
+    D --> H["rect.into_square()"]
 ```
 
 ## Associated Functions
@@ -365,6 +440,68 @@ impl RequestBuilder {
     }
 }
 ```
+
+## Memory Layout
+
+Understanding how structs are laid out in memory:
+
+```mermaid
+flowchart LR
+    subgraph "Stack"
+        A["User struct"]
+        A1["username: ptr, len, cap"]
+        A2["email: ptr, len, cap"]
+        A3["sign_in_count: u64"]
+        A4["active: bool + padding"]
+    end
+
+    subgraph "Heap"
+        B["'someusername'"]
+        C["'user@example.com'"]
+    end
+
+    A1 --> B
+    A2 --> C
+```
+
+{: .note }
+Struct fields may be reordered by the compiler for optimal memory alignment. Use `#[repr(C)]` if you need guaranteed layout.
+
+## Summary
+
+```mermaid
+mindmap
+  root((Structs))
+    Types
+      Regular struct
+      Tuple struct
+      Unit struct
+    Methods
+      impl blocks
+      &self methods
+      Associated functions
+    Features
+      Field init shorthand
+      Update syntax ..
+      Destructuring
+    Traits
+      derive macro
+      Debug Clone Copy
+      PartialEq Ord Hash
+    Patterns
+      Builder pattern
+      Newtype pattern
+      Visibility control
+```
+
+| Concept | Syntax | Purpose |
+|---------|--------|---------|
+| Regular struct | `struct Name { field: Type }` | Named fields |
+| Tuple struct | `struct Name(Type, Type)` | Positional fields |
+| Unit struct | `struct Name;` | Marker types |
+| Method | `fn method(&self)` | Instance behavior |
+| Associated fn | `fn new() -> Self` | Constructors |
+| Update syntax | `..other` | Copy fields from another |
 
 ## Exercises
 

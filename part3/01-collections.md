@@ -7,11 +7,78 @@ nav_order: 1
 
 # Collections
 
-Rust's standard library includes several useful data structures called collections. Unlike arrays and tuples, collections store data on the heap and can grow or shrink at runtime.
+## Overview
+
+**Collections** are data structures that can hold multiple values and grow or shrink at runtime. Unlike arrays and tuples (stored on the stack with fixed size), collections store data on the heap.
+
+```mermaid
+flowchart TD
+    subgraph "Choose Your Collection"
+        A{Need order?}
+        A -->|Yes, by index| B["Vec or VecDeque"]
+        A -->|Yes, sorted| C["BTreeMap or BTreeSet"]
+        A -->|No| D{Need key-value?}
+        D -->|Yes| E["HashMap"]
+        D -->|No, unique values| F["HashSet"]
+    end
+```
+
+**Key insight**: Choose collections based on your access patterns—`Vec` for indexed access, `HashMap` for key lookup, `HashSet` for membership testing.
+
+## When to Use Each Collection
+
+| Collection | Best For | Avoid When |
+|------------|----------|------------|
+| `Vec<T>` | Ordered sequences, stack-like access | Need fast key lookup |
+| `HashMap<K,V>` | Fast key-based lookup | Need ordering |
+| `HashSet<T>` | Unique values, membership tests | Need duplicates |
+| `VecDeque<T>` | Push/pop both ends (queue) | Only need one end |
+| `BTreeMap<K,V>` | Sorted key order, range queries | Unordered is fine |
+| `BinaryHeap<T>` | Priority queue, always get max | Need arbitrary access |
+
+```mermaid
+flowchart TD
+    subgraph "Performance Comparison"
+        direction LR
+        V["Vec"]
+        H["HashMap"]
+        B["BTreeMap"]
+    end
+
+    subgraph "Operations"
+        V --> V1["Index: O(1)"]
+        V --> V2["Push/Pop: O(1)"]
+        V --> V3["Search: O(n)"]
+
+        H --> H1["Get: O(1) avg"]
+        H --> H2["Insert: O(1) avg"]
+        H --> H3["Not ordered"]
+
+        B --> B1["Get: O(log n)"]
+        B --> B2["Insert: O(log n)"]
+        B --> B3["Sorted iteration"]
+    end
+```
 
 ## Vec<T> - Dynamic Arrays
 
 ### Creating Vectors
+
+```mermaid
+flowchart LR
+    subgraph "Stack"
+        V["Vec metadata"]
+        V1["ptr"]
+        V2["len: 3"]
+        V3["capacity: 4"]
+    end
+
+    subgraph "Heap"
+        H["[1, 2, 3, _]"]
+    end
+
+    V1 --> H
+```
 
 ```rust
 fn main() {
@@ -114,6 +181,19 @@ fn main() {
 ```
 
 ## HashMap<K, V>
+
+A hash map stores key-value pairs with O(1) average lookup time.
+
+```mermaid
+flowchart LR
+    subgraph "HashMap"
+        K1["'Blue'"] --> V1["10"]
+        K2["'Red'"] --> V2["50"]
+        K3["'Green'"] --> V3["25"]
+    end
+
+    Q["scores.get('Blue')"] --> V1
+```
 
 ### Creating HashMaps
 
@@ -348,14 +428,34 @@ fn main() {
 
 ## Summary
 
-| Collection | Ordered | Unique | Access |
-|------------|---------|--------|--------|
-| `Vec<T>` | Yes | No | Index |
-| `VecDeque<T>` | Yes | No | Index |
-| `HashMap<K,V>` | No | Keys | Key |
-| `HashSet<T>` | No | Yes | Contains |
-| `BTreeMap<K,V>` | Sorted | Keys | Key |
-| `BTreeSet<T>` | Sorted | Yes | Contains |
+```mermaid
+mindmap
+  root((Collections))
+    Sequence
+      Vec dynamic array
+      VecDeque double-ended
+      LinkedList rarely needed
+    Map
+      HashMap fast lookup
+      BTreeMap sorted keys
+    Set
+      HashSet unique values
+      BTreeSet sorted unique
+    Priority
+      BinaryHeap max heap
+```
+
+| Collection | Ordered | Unique | Access | Use Case |
+|------------|---------|--------|--------|----------|
+| `Vec<T>` | Yes | No | Index O(1) | Default choice for lists |
+| `VecDeque<T>` | Yes | No | Index O(1) | Queue/deque operations |
+| `HashMap<K,V>` | No | Keys | Key O(1)* | Fast key-value lookup |
+| `HashSet<T>` | No | Yes | Contains O(1)* | Membership testing |
+| `BTreeMap<K,V>` | Sorted | Keys | Key O(log n) | Range queries, sorted iteration |
+| `BTreeSet<T>` | Sorted | Yes | Contains O(log n) | Sorted unique values |
+| `BinaryHeap<T>` | Heap | No | Max O(1) | Priority queue |
+
+*O(1) average, O(n) worst case
 
 ## Exercises
 
