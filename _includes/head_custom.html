@@ -1,164 +1,89 @@
-<!-- Custom Mermaid configuration with light background for visibility -->
-<script type="module">
-  // Wait for Mermaid to be available
-  const configureMermaid = () => {
-    if (typeof mermaid !== 'undefined') {
-      mermaid.initialize({
-        startOnLoad: true,
-        theme: 'base',
-        securityLevel: 'loose',
-        themeVariables: {
-          // Use LIGHT background for visibility on any page theme
-          background: '#ffffff',
-          mainBkg: '#f8f9fa',
-
-          // Primary colors - blue tones
-          primaryColor: '#4a90d9',
-          primaryTextColor: '#1a1a1a',
-          primaryBorderColor: '#2171b5',
-
-          // Secondary colors - green tones
-          secondaryColor: '#6cc644',
-          secondaryTextColor: '#1a1a1a',
-          secondaryBorderColor: '#4a9c2d',
-
-          // Tertiary colors - purple tones
-          tertiaryColor: '#a855f7',
-          tertiaryTextColor: '#1a1a1a',
-          tertiaryBorderColor: '#7c3aed',
-
-          // Lines and arrows - dark for contrast on light background
-          lineColor: '#333333',
-
-          // Node styling
-          nodeBkg: '#e8f4fd',
-          nodeTextColor: '#1a1a1a',
-          nodeBorder: '#2171b5',
-
-          // Text colors - dark for light background
-          textColor: '#1a1a1a',
-
-          // Flowchart clusters
-          clusterBkg: '#f0f4f8',
-          clusterBorder: '#5a6c7d',
-
-          // Notes
-          noteBkgColor: '#fff8dc',
-          noteTextColor: '#1a1a1a',
-          noteBorderColor: '#d4a574',
-
-          // Sequence diagram
-          actorBkg: '#e8f4fd',
-          actorBorder: '#2171b5',
-          actorTextColor: '#1a1a1a',
-          actorLineColor: '#333333',
-          signalColor: '#333333',
-          signalTextColor: '#1a1a1a',
-
-          // Critical and done styles (for Gantt)
-          critBkgColor: '#fee2e2',
-          critBorderColor: '#dc2626',
-          doneBkgColor: '#d1fae5',
-          doneBorderColor: '#059669',
-
-          // Edge labels
-          edgeLabelBackground: '#ffffff',
-
-          // Gantt chart
-          sectionBkgColor: '#e8f4fd',
-          altSectionBkgColor: '#f0f4f8',
-          gridColor: '#cbd5e1',
-          todayLineColor: '#dc2626',
-
-          // Mindmap
-          mindmapNodeBkg: '#e8f4fd'
-        },
-        flowchart: {
-          useMaxWidth: true,
-          htmlLabels: true,
-          curve: 'basis',
-          diagramPadding: 8
-        },
-        sequence: {
-          diagramMarginX: 50,
-          diagramMarginY: 10,
-          actorMargin: 50,
-          width: 150,
-          height: 65,
-          boxMargin: 10,
-          boxTextMargin: 5,
-          noteMargin: 10,
-          messageMargin: 35
-        },
-        gantt: {
-          titleTopMargin: 25,
-          barHeight: 20,
-          barGap: 4,
-          topPadding: 50
-        }
-      });
-    }
-  };
-
-  // Try to configure immediately and also after DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', configureMermaid);
-  } else {
-    // Small delay to ensure Mermaid script is loaded
-    setTimeout(configureMermaid, 100);
-  }
-</script>
-
+<!-- Force Mermaid diagrams to have light background -->
 <style>
-  /* Mermaid diagram container - light background */
-  .language-mermaid,
+  /* Mermaid container - MUST be light background */
+  .mermaid,
   pre.mermaid,
-  .mermaid {
+  .language-mermaid,
+  code.language-mermaid {
     background-color: #ffffff !important;
-    border-radius: 8px;
-    padding: 16px;
-    margin: 16px 0;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    margin: 16px 0 !important;
+    display: block !important;
   }
 
-  /* Ensure lines and arrows are dark and visible */
-  .mermaid .edgePath .path,
-  .mermaid .flowchart-link {
-    stroke: #333333 !important;
-    stroke-width: 2px !important;
-  }
-
-  .mermaid .arrowheadPath {
-    fill: #333333 !important;
-  }
-
-  /* Sequence diagram lines */
-  .mermaid .messageLine0,
-  .mermaid .messageLine1 {
-    stroke: #333333 !important;
-    stroke-width: 1.5px !important;
-  }
-
-  /* Actor lines */
-  .mermaid .actor-line {
-    stroke: #666666 !important;
-  }
-
-  /* Mindmap lines */
-  .mermaid .mindmap-edges path {
-    stroke: #333333 !important;
-    stroke-width: 2px !important;
-  }
-
-  /* Text visibility */
+  /* All text in Mermaid must be dark */
   .mermaid text,
+  .mermaid tspan,
   .mermaid .nodeLabel,
-  .mermaid .label {
+  .mermaid .label,
+  .mermaid .edgeLabel,
+  .mermaid .cluster-label,
+  .mermaid .messageText,
+  .mermaid .loopText,
+  .mermaid .noteText,
+  .mermaid .labelText,
+  .mermaid .actor {
     fill: #1a1a1a !important;
     color: #1a1a1a !important;
   }
 
-  /* Cluster labels */
-  .mermaid .cluster-label text {
-    fill: #1a1a1a !important;
+  /* All lines and arrows must be dark */
+  .mermaid path,
+  .mermaid line,
+  .mermaid .edgePath path,
+  .mermaid .flowchart-link,
+  .mermaid .messageLine0,
+  .mermaid .messageLine1,
+  .mermaid .relation,
+  .mermaid .actor-line {
+    stroke: #333333 !important;
+  }
+
+  .mermaid marker path,
+  .mermaid .arrowheadPath {
+    fill: #333333 !important;
+    stroke: #333333 !important;
+  }
+
+  /* Node backgrounds - light */
+  .mermaid .node rect,
+  .mermaid .node circle,
+  .mermaid .node ellipse,
+  .mermaid .node polygon,
+  .mermaid .node path {
+    fill: #e8f4fd !important;
+    stroke: #2171b5 !important;
+  }
+
+  /* Cluster backgrounds */
+  .mermaid .cluster rect {
+    fill: #f0f4f8 !important;
+    stroke: #5a6c7d !important;
+  }
+
+  /* Actor boxes in sequence diagrams */
+  .mermaid .actor-box,
+  .mermaid rect.actor {
+    fill: #e8f4fd !important;
+    stroke: #2171b5 !important;
+  }
+
+  /* Notes */
+  .mermaid .note {
+    fill: #fff8dc !important;
+    stroke: #d4a574 !important;
+  }
+
+  /* Mindmap nodes */
+  .mermaid .mindmap-node rect,
+  .mermaid .mindmap-node circle {
+    fill: #e8f4fd !important;
+    stroke: #2171b5 !important;
+  }
+
+  .mermaid .mindmap-edges path {
+    stroke: #333333 !important;
+    stroke-width: 2px !important;
   }
 </style>
