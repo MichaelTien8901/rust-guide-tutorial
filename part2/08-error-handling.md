@@ -7,337 +7,494 @@ nav_order: 8
 
 # Error Handling
 
-Rust has two categories of errors: **recoverable** (Result) and **unrecoverable** (panic).
+## Overview
 
-## Unrecoverable Errors with `panic!`
+Rust takes a unique approach to error handling: it separates errors into **recoverable** (`Result`) and **unrecoverable** (`panic!`). This forces you to think about error cases explicitly, leading to more robust code.
 
-For bugs and unrecoverable situations:
+```mermaid
+flowchart TD
+    A[Error Occurs] --> B{Type of Error?}
 
-```rust
-fn main() {
-    panic!("crash and burn");
-}
+    B -->|"Bug, Corruption,<br/>Impossible State"| C[Unrecoverable]
+    B -->|"Expected failure,<br/>User input, I/O"| D[Recoverable]
+
+    C --> E["panic!()"]
+    E --> F[Program terminates]
+
+    D --> G["Result<T, E>"]
+    G --> H{Handle or Propagate}
+    H -->|Handle| I[Recover gracefully]
+    H -->|Propagate| J["Return Err with ?"]
 ```
 
-### Common Panic Sources
+**Key insight**: Unlike exceptions in other languages, Rust errors are values that must be explicitly handled or propagated.
+
+## When to Use Each Approach
+
+| Situation | Use | Example |
+|-----------|-----|---------|
+| Index out of bounds (bug) | `panic!` | `v[99]` on 3-element vec |
+| File not found | `Result` | User-specified config file |
+| Invalid user input | `Result` | Parsing user-entered number |
+| Invariant violated | `panic!` | Data structure corrupted |
+| Network timeout | `Result` | HTTP request failed |
+| Division by zero (bug) | `panic!` | Shouldn't reach this code |
+
+```mermaid
+flowchart TD
+    A{Who caused the error?} -->|Programmer bug| B[panic!]
+    A -->|External factors| C[Result]
+
+    D{Can the program continue?} -->|No - corrupted state| B
+    D -->|Yes - recoverable| C
+
+    E{Is this a library?} -->|Yes - let caller decide| C
+    E -->|No - you know context| F{Recoverable?}
+    F -->|Yes| C
+    F -->|No| B
+```
+
+## Unrecoverable Errors: `panic!`
+
+### When Programs Panic
 
 ```rust
 fn main() {
-    // Index out of bounds
+    // Explicit panic
+    panic!("Something went terribly wrong!");
+
+    // Implicit panics from bugs
     let v = vec![1, 2, 3];
-    v[99];  // panic!
+    v[99];  // Index out of bounds → panic!
 
-    // Unwrap on None
     let x: Option<i32> = None;
-    x.unwrap();  // panic!
+    x.unwrap();  // Unwrap on None → panic!
 
-    // Explicit assertion
-    assert!(1 == 2);  // panic!
+    assert!(1 == 2);  // Assertion failed → panic!
 }
 ```
 
 ### Viewing Backtraces
 
 ```bash
+# See full stack trace
 RUST_BACKTRACE=1 cargo run
+
+# Even more detail
+RUST_BACKTRACE=full cargo run
 ```
 
-## Recoverable Errors with `Result`
+### Panic Behavior
+
+```mermaid
+sequenceDiagram
+    participant Code
+    participant Runtime
+    participant OS
+
+    Code->>Runtime: panic!("error")
+    Runtime->>Runtime: Unwind stack
+    Runtime->>Runtime: Call drop() on each value
+    Runtime->>OS: Exit with error code
+```
+
+{: .note }
+In release builds, you can configure `panic = "abort"` in Cargo.toml to skip unwinding for smaller binaries.
+
+## Recoverable Errors: `Result<T, E>`
+
+### The Result Type
 
 ```rust
 enum Result<T, E> {
-    Ok(T),
-    Err(E),
+    Ok(T),   // Success with value
+    Err(E),  // Failure with error
 }
 ```
 
-### Basic Usage
+### Basic Pattern Matching
 
 ```rust
 use std::fs::File;
 
 fn main() {
-    let file = File::open("hello.txt");
+    let result = File::open("config.txt");
 
-    let file = match file {
-        Ok(f) => f,
+    let file = match result {
+        Ok(f) => {
+            println!("File opened successfully");
+            f
+        }
         Err(e) => {
-            println!("Error opening file: {}", e);
+            println!("Failed to open file: {}", e);
             return;
         }
     };
 }
 ```
 
-### Matching Different Errors
+### Handling Different Error Types
 
 ```rust
 use std::fs::File;
 use std::io::ErrorKind;
 
 fn main() {
-    let file = File::open("hello.txt");
-
-    let file = match file {
+    let file = match File::open("config.txt") {
         Ok(f) => f,
         Err(e) => match e.kind() {
-            ErrorKind::NotFound => match File::create("hello.txt") {
-                Ok(fc) => fc,
-                Err(e) => panic!("Couldn't create file: {:?}", e),
-            },
-            other => panic!("Couldn't open file: {:?}", other),
+            ErrorKind::NotFound => {
+                // Create file if it doesn't exist
+                File::create("config.txt")
+                    .expect("Failed to create file")
+            }
+            ErrorKind::PermissionDenied => {
+                panic!("Permission denied - check file permissions");
+            }
+            other => {
+                panic!("Unexpected error: {:?}", other);
+            }
         },
     };
 }
 ```
 
-### Cleaner with Closures
+## The `?` Operator: Elegant Error Propagation
+
+The `?` operator is Rust's way of propagating errors concisely.
+
+### How It Works
 
 ```rust
-use std::fs::File;
-use std::io::ErrorKind;
+// With ? operator
+fn read_config() -> Result<String, io::Error> {
+    let mut file = File::open("config.txt")?;
+    let mut contents = String::new();
+    file.read_to_string(&mut contents)?;
+    Ok(contents)
+}
 
-fn main() {
-    let file = File::open("hello.txt").unwrap_or_else(|error| {
-        if error.kind() == ErrorKind::NotFound {
-            File::create("hello.txt").unwrap_or_else(|error| {
-                panic!("Couldn't create file: {:?}", error);
-            })
-        } else {
-            panic!("Couldn't open file: {:?}", error);
-        }
-    });
+// Equivalent match expression
+fn read_config_verbose() -> Result<String, io::Error> {
+    let mut file = match File::open("config.txt") {
+        Ok(f) => f,
+        Err(e) => return Err(e),
+    };
+    let mut contents = String::new();
+    match file.read_to_string(&mut contents) {
+        Ok(_) => Ok(contents),
+        Err(e) => return Err(e),
+    }
 }
 ```
 
-## Shortcuts: `unwrap` and `expect`
+```mermaid
+flowchart LR
+    A["File::open()?"] --> B{Result?}
+    B -->|Ok(file)| C[Continue with file]
+    B -->|Err(e)| D[return Err(e)]
 
-### `unwrap()`
-
-Returns value or panics:
-
-```rust
-let file = File::open("hello.txt").unwrap();
+    style D fill:#FFB6C1
 ```
 
-### `expect()`
-
-Like unwrap with custom message:
-
-```rust
-let file = File::open("hello.txt")
-    .expect("Failed to open hello.txt");
-```
-
-{: .warning }
-Use `unwrap()` and `expect()` sparingly. They're good for prototyping but should be replaced with proper error handling in production code.
-
-## The `?` Operator
-
-Propagate errors concisely:
+### Chaining with `?`
 
 ```rust
 use std::fs::File;
 use std::io::{self, Read};
 
 fn read_username() -> Result<String, io::Error> {
-    let mut file = File::open("username.txt")?;  // Returns Err if failed
-    let mut username = String::new();
-    file.read_to_string(&mut username)?;
-    Ok(username)
-}
-```
-
-### How `?` Works
-
-```rust
-// This:
-let file = File::open("hello.txt")?;
-
-// Is equivalent to:
-let file = match File::open("hello.txt") {
-    Ok(f) => f,
-    Err(e) => return Err(e.into()),
-};
-```
-
-### Chaining with `?`
-
-```rust
-fn read_username() -> Result<String, io::Error> {
     let mut username = String::new();
     File::open("username.txt")?.read_to_string(&mut username)?;
     Ok(username)
 }
-```
 
-### Even Shorter
-
-```rust
-use std::fs;
-
-fn read_username() -> Result<String, io::Error> {
-    fs::read_to_string("username.txt")
+// Even shorter with std::fs
+fn read_username_short() -> Result<String, io::Error> {
+    std::fs::read_to_string("username.txt")
 }
 ```
 
-## `?` with Option
-
-The `?` operator also works with Option:
+### `?` with Option
 
 ```rust
 fn last_char_of_first_line(text: &str) -> Option<char> {
-    text.lines().next()?.chars().last()
+    text.lines()    // Iterator over lines
+        .next()?    // First line, or return None
+        .chars()    // Iterator over chars
+        .last()     // Last char
+}
+
+// Equivalent match
+fn last_char_verbose(text: &str) -> Option<char> {
+    let first_line = match text.lines().next() {
+        Some(line) => line,
+        None => return None,
+    };
+    first_line.chars().last()
 }
 ```
 
-## Error Type Conversion
+## Shortcuts: `unwrap` and `expect`
 
-`?` automatically converts errors using `From`:
+### When to Use Them
+
+```mermaid
+flowchart TD
+    A{Using unwrap/expect?} --> B{In tests?}
+    B -->|Yes| C["✓ OK - tests should panic on failure"]
+    B -->|No| D{In examples/prototypes?}
+    D -->|Yes| E["✓ OK - simplifies code"]
+    D -->|No| F{Logically impossible to fail?}
+    F -->|Yes| G["✓ OK with expect() explaining why"]
+    F -->|No| H["✗ Use proper error handling"]
+
+    style H fill:#FFB6C1
+```
+
+### `unwrap()` - Returns value or panics
 
 ```rust
-use std::error::Error;
-use std::fs::File;
-use std::io::Read;
-
-fn read_file() -> Result<String, Box<dyn Error>> {
-    let mut file = File::open("hello.txt")?;
-    let mut contents = String::new();
-    file.read_to_string(&mut contents)?;
-    Ok(contents)
-}
+// Only use when failure is impossible or in prototypes
+let home = std::env::var("HOME").unwrap();
 ```
 
-## `main` with Result
+### `expect()` - Panics with custom message
 
 ```rust
-use std::error::Error;
-use std::fs::File;
+// Preferred over unwrap - documents why it won't fail
+let config: Config = toml::from_str(&config_text)
+    .expect("Embedded config should always be valid TOML");
+```
 
-fn main() -> Result<(), Box<dyn Error>> {
-    let file = File::open("hello.txt")?;
-    Ok(())
+## Converting Between Result and Option
+
+```rust
+// Option → Result
+let opt: Option<i32> = Some(42);
+let result: Result<i32, &str> = opt.ok_or("Value not found");
+
+// Result → Option (discards error)
+let result: Result<i32, &str> = Ok(42);
+let opt: Option<i32> = result.ok();  // Some(42)
+
+let result: Result<i32, &str> = Err("error");
+let opt: Option<i32> = result.ok();  // None
+```
+
+## Combinator Methods
+
+Functional-style error handling:
+
+```rust
+fn process_data(input: &str) -> Result<i32, String> {
+    input
+        .parse::<i32>()
+        .map(|n| n * 2)                    // Transform Ok value
+        .map_err(|e| e.to_string())        // Transform Err value
+}
+
+fn get_config_or_default() -> Config {
+    load_config()
+        .unwrap_or(Config::default())      // Default on error
+}
+
+fn get_computed_default() -> Config {
+    load_config()
+        .unwrap_or_else(|_| compute_default())  // Lazy default
 }
 ```
+
+### Combinator Cheat Sheet
+
+| Method | Ok Behavior | Err Behavior |
+|--------|-------------|--------------|
+| `map(f)` | Apply `f` to value | Pass through |
+| `map_err(f)` | Pass through | Apply `f` to error |
+| `and_then(f)` | Apply `f` (returns Result) | Pass through |
+| `or_else(f)` | Pass through | Apply `f` (returns Result) |
+| `unwrap_or(v)` | Return value | Return `v` |
+| `unwrap_or_else(f)` | Return value | Call `f()` |
+| `unwrap_or_default()` | Return value | Return `Default::default()` |
 
 ## Custom Error Types
 
-### Simple Custom Error
+### Simple Error Struct
 
 ```rust
+use std::fmt;
+use std::error::Error;
+
 #[derive(Debug)]
-struct ParseError {
+struct ConfigError {
     message: String,
 }
 
-impl std::fmt::Display for ParseError {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "Parse error: {}", self.message)
+impl fmt::Display for ConfigError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Configuration error: {}", self.message)
     }
 }
 
-impl std::error::Error for ParseError {}
+impl Error for ConfigError {}
+
+// Usage
+fn load_config() -> Result<Config, ConfigError> {
+    Err(ConfigError {
+        message: "File not found".to_string(),
+    })
+}
 ```
 
-### Enum for Multiple Errors
+### Error Enum for Multiple Cases
 
 ```rust
+use std::fmt;
+use std::error::Error;
+use std::io;
+
 #[derive(Debug)]
 enum AppError {
-    Io(std::io::Error),
+    Io(io::Error),
     Parse(std::num::ParseIntError),
-    Custom(String),
+    Config(String),
 }
 
-impl std::fmt::Display for AppError {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+impl fmt::Display for AppError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            AppError::Io(e) => write!(f, "IO error: {}", e),
+            AppError::Io(e) => write!(f, "I/O error: {}", e),
             AppError::Parse(e) => write!(f, "Parse error: {}", e),
-            AppError::Custom(msg) => write!(f, "Error: {}", msg),
+            AppError::Config(msg) => write!(f, "Config error: {}", msg),
         }
     }
 }
 
-impl std::error::Error for AppError {}
+impl Error for AppError {
+    fn source(&self) -> Option<&(dyn Error + 'static)> {
+        match self {
+            AppError::Io(e) => Some(e),
+            AppError::Parse(e) => Some(e),
+            AppError::Config(_) => None,
+        }
+    }
+}
 
-impl From<std::io::Error> for AppError {
-    fn from(err: std::io::Error) -> AppError {
+// Enable ? with automatic conversion
+impl From<io::Error> for AppError {
+    fn from(err: io::Error) -> Self {
         AppError::Io(err)
+    }
+}
+
+impl From<std::num::ParseIntError> for AppError {
+    fn from(err: std::num::ParseIntError) -> Self {
+        AppError::Parse(err)
     }
 }
 ```
 
-## When to Panic vs Return Result
+### Usage with `?`
 
-### Use `panic!` When:
-- Bug in your code (invariant violation)
-- Unrecoverable state
-- Tests and examples
-- Prototyping
+```rust
+fn process_file(path: &str) -> Result<i32, AppError> {
+    let content = std::fs::read_to_string(path)?;  // io::Error → AppError
+    let number: i32 = content.trim().parse()?;      // ParseIntError → AppError
+    Ok(number * 2)
+}
+```
 
-### Use `Result` When:
-- Expected failure modes (file not found, network error)
-- User or external input
-- Library code (let caller decide)
+## `main()` Returning Result
+
+```rust
+use std::error::Error;
+
+fn main() -> Result<(), Box<dyn Error>> {
+    let config = std::fs::read_to_string("config.toml")?;
+    let data = process(&config)?;
+    println!("Processed: {:?}", data);
+    Ok(())
+}
+```
+
+When `main` returns `Err`, Rust prints the error and exits with code 1.
+
+## Error Handling Flow Example
+
+```rust
+use std::fs::File;
+use std::io::{self, BufRead, BufReader};
+
+fn count_words_in_file(path: &str) -> Result<usize, io::Error> {
+    let file = File::open(path)?;
+    let reader = BufReader::new(file);
+
+    let mut count = 0;
+    for line in reader.lines() {
+        let line = line?;  // Handle potential I/O error
+        count += line.split_whitespace().count();
+    }
+
+    Ok(count)
+}
+
+fn main() {
+    match count_words_in_file("document.txt") {
+        Ok(count) => println!("Word count: {}", count),
+        Err(e) => {
+            eprintln!("Error reading file: {}", e);
+            std::process::exit(1);
+        }
+    }
+}
+```
 
 ```mermaid
-graph TD
-    A[Error Occurs] --> B{Can program continue?}
-    B -->|No - Bug| C[panic!]
-    B -->|Yes - Expected| D[Result]
-    D --> E{Caller can handle?}
-    E -->|Yes| F[Return Err]
-    E -->|No| G[unwrap/expect]
-```
-
-## Common Patterns
-
-### Converting Option to Result
-
-```rust
-fn get_value(opt: Option<i32>) -> Result<i32, &'static str> {
-    opt.ok_or("Value not found")
-}
-```
-
-### Default on Error
-
-```rust
-let value = some_result.unwrap_or(default_value);
-let value = some_result.unwrap_or_else(|| compute_default());
-let value = some_result.unwrap_or_default();  // Requires Default trait
-```
-
-### Mapping Errors
-
-```rust
-let result: Result<i32, String> = "42"
-    .parse::<i32>()
-    .map_err(|e| format!("Parse failed: {}", e));
-```
-
-### Combining Results
-
-```rust
-fn combine() -> Result<(i32, i32), &'static str> {
-    let a = "42".parse::<i32>().map_err(|_| "parse a failed")?;
-    let b = "24".parse::<i32>().map_err(|_| "parse b failed")?;
-    Ok((a, b))
-}
+flowchart TD
+    A[Open file] -->|Err| X[Return Err]
+    A -->|Ok| B[Create reader]
+    B --> C[Read line]
+    C -->|Err| X
+    C -->|Ok| D[Count words]
+    D --> E{More lines?}
+    E -->|Yes| C
+    E -->|No| F[Return Ok count]
 ```
 
 ## Summary
 
-| Method | Behavior |
-|--------|----------|
-| `unwrap()` | Returns value or panics |
-| `expect(msg)` | Returns value or panics with message |
-| `?` | Returns value or propagates error |
-| `unwrap_or(v)` | Returns value or default |
-| `unwrap_or_else(f)` | Returns value or computes default |
-| `ok_or(e)` | Converts Option to Result |
-| `map_err(f)` | Transforms error type |
+```mermaid
+mindmap
+  root((Error Handling))
+    Unrecoverable
+      panic!
+      unwrap
+      expect
+      assert!
+    Recoverable
+      Result T E
+      ? operator
+      match
+    Combinators
+      map
+      map_err
+      and_then
+      unwrap_or
+    Custom Errors
+      struct
+      enum
+      From trait
+```
+
+| When | Use |
+|------|-----|
+| Bug in code | `panic!` |
+| Test assertions | `panic!`, `assert!` |
+| Expected failures | `Result` |
+| Propagate errors | `?` |
+| Transform errors | `map_err` |
+| Default on failure | `unwrap_or` |
+| Custom error info | Custom error type |
 
 ## Exercises
 
