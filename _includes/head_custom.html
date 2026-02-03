@@ -30,14 +30,29 @@
 
   /* All lines and arrows - dark gray */
   .mermaid path,
-  .mermaid line,
   .mermaid .edgePath path,
   .mermaid .flowchart-link,
   .mermaid .messageLine0,
   .mermaid .messageLine1,
-  .mermaid .relation,
-  .mermaid .actor-line {
+  .mermaid .relation {
     stroke: #4a5568 !important;
+  }
+
+  /* Sequence diagram actor lifelines - force visible */
+  line[id^="actor"] {
+    stroke: #000000 !important;
+    stroke-width: 0.5px !important;
+  }
+
+  /* Sequence diagram message lines */
+  .mermaid .messageText {
+    fill: #2c3e50 !important;
+  }
+
+  .mermaid .messageLine0,
+  .mermaid .messageLine1 {
+    stroke: #4a5568 !important;
+    stroke-width: 1.5px !important;
   }
 
   .mermaid marker path,
@@ -87,3 +102,28 @@
     stroke-width: 2px !important;
   }
 </style>
+
+<!-- Fix sequence diagram lifelines after mermaid renders -->
+<script>
+(function() {
+  function fixActorLines() {
+    var lines = document.querySelectorAll('line[id^="actor"]');
+    for (var i = 0; i < lines.length; i++) {
+      lines[i].setAttribute('stroke', '#000000');
+      lines[i].setAttribute('stroke-width', '0.5px');
+    }
+  }
+
+  // Run after page fully loads
+  if (document.readyState === 'complete') {
+    setTimeout(fixActorLines, 500);
+    setTimeout(fixActorLines, 1500);
+  } else {
+    window.addEventListener('load', function() {
+      setTimeout(fixActorLines, 500);
+      setTimeout(fixActorLines, 1500);
+      setTimeout(fixActorLines, 3000);
+    });
+  }
+})();
+</script>
