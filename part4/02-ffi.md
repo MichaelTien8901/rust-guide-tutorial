@@ -601,7 +601,7 @@ mindmap
 
 - [Unsafe Rust]({% link part4/01-unsafe.md %}) - Raw pointers and unsafe operations
 - [Memory Layout]({% link part4/08-memory-layout.md %}) - `#[repr(C)]` and data layout
-- [Embedded Basics]({% link part6/02-embedded-basics.md %}) - FFI for embedded systems
+- [Bare Metal]({% link part6/02-bare-metal.md %}) - FFI for embedded systems
 
 ## Next Steps
 
