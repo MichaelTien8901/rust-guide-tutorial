@@ -190,11 +190,9 @@ fn read_config_verbose() -> Result<String, io::Error> {
 
 ```mermaid
 flowchart LR
-    A["File::open()?"] --> B{Result?}
-    B -->|Ok(file)| C[Continue with file]
-    B -->|Err(e)| D[return Err(e)]
-
-    style D fill:#FFB6C1
+    A["File::open() with ?"] --> B{Result}
+    B -->|Ok| C[Continue with file]
+    B -->|Err| D[return Err early]
 ```
 
 ### Chaining with `?`
