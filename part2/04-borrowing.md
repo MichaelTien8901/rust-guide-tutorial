@@ -596,6 +596,10 @@ mindmap
    }
    ```
 
+## See Also
+
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part2/borrowing)
+
 ## Next Steps
 
 Learn about [Lifetimes]({% link part2/05-lifetimes.md %}) to understand how Rust tracks reference validity.

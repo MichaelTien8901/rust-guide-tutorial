@@ -573,6 +573,7 @@ fn test_sends_message() {
 - [Ownership]({% link part2/03-ownership.md %}) - Foundational ownership concepts
 - [Threads]({% link part3/05-threads.md %}) - Using Arc with threads
 - [Mutex]({% link part3/07-mutex.md %}) - Thread-safe mutation
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part3/smart-pointers)
 
 ## Next Steps
 

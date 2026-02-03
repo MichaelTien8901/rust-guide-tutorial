@@ -347,6 +347,10 @@ fn read_with_timeout(timeout_us: u32) -> Result<u8, DriverError> {
 4. **Document memory maps** and register layouts
 5. **Handle errors** gracefully
 
+## See Also
+
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part6/drivers)
+
 ## Next Steps
 
 Learn about [Real-Time]({% link part6/06-real-time.md %}) constraints and heapless programming.

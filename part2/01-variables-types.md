@@ -375,6 +375,10 @@ flowchart TD
 3. Create an array and iterate over it
 4. Practice shadowing by transforming a string to its length
 
+## See Also
+
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part2/variables-types)
+
 ## Next Steps
 
 Learn about [Functions]({% link part2/02-functions.md %}) to organize your code.

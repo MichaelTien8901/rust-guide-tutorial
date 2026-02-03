@@ -422,7 +422,7 @@ flowchart LR
 ## See Also
 
 - [Serialization Libraries]({% link appendices/libraries/serialization.md %}) - Comprehensive serde ecosystem reference
-- [Example Code](https://github.com/example/rust-guide/tree/main/examples/part5/serialization)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part5/serialization)
 
 ## Next Steps
 

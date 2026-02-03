@@ -314,6 +314,10 @@ strip = true         # Strip symbols
 | `cargo-binutils` | Inspect binaries |
 | `probe-rs` | Embedded debugging |
 
+## See Also
+
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part6/cross-compile)
+
 ## Next Steps
 
 Continue to [Part 7: UEFI Development]({% link part7/index.md %}) for firmware programming.

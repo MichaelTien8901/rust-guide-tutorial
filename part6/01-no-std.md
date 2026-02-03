@@ -269,6 +269,7 @@ fn safe_divide(a: i32, b: i32) -> Option<i32> {
 
 - [Unsafe Rust]({% link part4/01-unsafe.md %}) - Low-level memory operations
 - [Memory Layout]({% link part4/08-memory-layout.md %}) - Data representation
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part6/no-std)
 
 ## Next Steps
 

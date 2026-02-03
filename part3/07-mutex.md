@@ -501,6 +501,7 @@ mindmap
 - [Smart Pointers]({% link part3/04-smart-pointers.md %}) - Arc and Rc reference counting
 - [Channels]({% link part3/06-channels.md %}) - Message passing alternative
 - [Real-Time Constraints]({% link part6/06-real-time.md %}) - Lock-free patterns for embedded systems
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part3/mutex)
 
 ## Next Steps
 

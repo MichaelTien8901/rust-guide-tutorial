@@ -665,7 +665,7 @@ flowchart TD
 
 - [Traits]({% link part2/09-traits.md %}) - Basic trait concepts
 - [Generics]({% link part2/10-generics.md %}) - Generic type parameters
-- [Example Code](https://github.com/example/rust-guide/tree/main/examples/part4/advanced-traits)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part4/advanced-traits)
 
 ## Next Steps
 

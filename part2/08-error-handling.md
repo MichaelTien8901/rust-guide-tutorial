@@ -504,6 +504,7 @@ mindmap
 
 - [Error Patterns]({% link part5/02-error-patterns.md %}) - Advanced patterns with thiserror and anyhow
 - [Error Handling Libraries]({% link appendices/libraries/error-handling.md %}) - Library reference
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part2/error-handling)
 
 ## Next Steps
 

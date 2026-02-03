@@ -419,8 +419,7 @@ flowchart TB
 
 ## See Also
 
-- [Testing Libraries]({% link appendices/libraries/testing.md %}) - Comprehensive testing library reference
-- [Example Code](https://github.com/example/rust-guide/tree/main/examples/part5/testing-patterns)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part5/testing-patterns)
 
 ## Next Steps
 

@@ -322,7 +322,7 @@ flowchart LR
 
 - [Error Handling]({% link part2/08-error-handling.md %}) - Fundamental error handling with Result
 - [Error Handling Libraries]({% link appendices/libraries/error-handling.md %}) - Library reference
-- [Example Code](https://github.com/example/rust-guide/tree/main/examples/part5/error-patterns)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part5/error-patterns)
 
 ## Next Steps
 

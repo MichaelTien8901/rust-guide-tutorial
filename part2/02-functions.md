@@ -400,6 +400,10 @@ flowchart LR
 2. Write a function that returns the min and max of three numbers
 3. Write a function that takes a function pointer and applies it twice
 
+## See Also
+
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part2/functions)
+
 ## Next Steps
 
 Now learn about [Ownership]({% link part2/03-ownership.md %}), Rust's most unique feature.

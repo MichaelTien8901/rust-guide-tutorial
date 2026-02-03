@@ -450,6 +450,10 @@ fn main(image: Handle, st: SystemTable<Boot>) -> Status {
 | Get info | `File::get_info()` |
 | Delete | `FileHandle::delete()` |
 
+## See Also
+
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part7/uefi-filesystem)
+
 ## Next Steps
 
 Learn about [Graphics]({% link part7/07-graphics.md %}) output using the Graphics Output Protocol.

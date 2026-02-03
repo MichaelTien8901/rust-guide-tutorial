@@ -313,6 +313,10 @@ mod app {
 | RTIC | Interrupt-driven | Hard real-time |
 | FreeRTOS | Traditional RTOS | Legacy/mixed codebases |
 
+## See Also
+
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part6/rtos-patterns)
+
 ## Next Steps
 
 Learn about [Cross-Compilation]({% link part6/08-cross-compilation.md %}) for different targets.

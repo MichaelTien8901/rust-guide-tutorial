@@ -530,6 +530,10 @@ mindmap
 2. Implement a simple calculator using a `Operation` enum
 3. Create a `Tree<T>` enum for a binary tree
 
+## See Also
+
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part2/enums)
+
 ## Next Steps
 
 Learn about [Error Handling]({% link part2/08-error-handling.md %}) with Result and the ? operator.

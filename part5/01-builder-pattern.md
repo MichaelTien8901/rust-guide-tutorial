@@ -353,7 +353,7 @@ flowchart TB
 
 - [Structs]({% link part2/06-structs.md %}) - Basic struct definitions
 - [Generics]({% link part2/10-generics.md %}) - Generic type parameters for typestate
-- [Example Code](https://github.com/example/rust-guide/tree/main/examples/part5/builder-pattern)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part5/builder-pattern)
 
 ## Next Steps
 

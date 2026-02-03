@@ -444,7 +444,7 @@ flowchart LR
 
 - [CLI Libraries]({% link appendices/libraries/cli.md %}) - Comprehensive CLI library reference
 - [Error Patterns]({% link part5/02-error-patterns.md %}) - CLI-friendly error handling
-- [Example Code](https://github.com/example/rust-guide/tree/main/examples/part5/cli-apps)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part5/cli-apps)
 
 ## Next Steps
 

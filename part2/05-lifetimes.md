@@ -478,6 +478,10 @@ flowchart TD
    }
    ```
 
+## See Also
+
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part2/lifetimes)
+
 ## Next Steps
 
 Learn about [Structs]({% link part2/06-structs.md %}) to create custom data types.

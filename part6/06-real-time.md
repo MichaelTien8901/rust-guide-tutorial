@@ -330,6 +330,10 @@ fn measure_stack_usage(stack: &[u32]) -> usize {
 | Deadlines | Time-bounded operations |
 | Watchdog | Fault recovery |
 
+## See Also
+
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part6/real-time)
+
 ## Next Steps
 
 Learn about [RTOS]({% link part6/07-rtos.md %}) integration with FreeRTOS and Embassy.

@@ -546,6 +546,10 @@ mindmap
 
 3. Explain why `Vec<i32>` doesn't implement `Copy` even though `i32` does.
 
+## See Also
+
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part2/ownership)
+
 ## Next Steps
 
 Learn about [Borrowing]({% link part2/04-borrowing.md %}) to use values without taking ownership.

@@ -451,6 +451,7 @@ mindmap
 
 - [Threads]({% link part3/05-threads.md %}) - Creating threads to use with channels
 - [Mutex]({% link part3/07-mutex.md %}) - Alternative: shared state concurrency
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part3/channels)
 
 ## Next Steps
 

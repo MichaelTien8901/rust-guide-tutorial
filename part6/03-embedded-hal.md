@@ -291,6 +291,10 @@ fn main() -> ! {
 | `DelayNs` | Timing |
 | `SetDutyCycle` | PWM |
 
+## See Also
+
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part6/embedded-hal)
+
 ## Next Steps
 
 Learn about [Kernel Modules]({% link part6/04-kernel-modules.md %}) with Rust-for-Linux.

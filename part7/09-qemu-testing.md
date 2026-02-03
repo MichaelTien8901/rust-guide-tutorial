@@ -471,6 +471,10 @@ clean:
 | Serial output | Add `-serial stdio` |
 | Debug log | Add `-debugcon file:debug.log` |
 
+## See Also
+
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part7/uefi-qemu)
+
 ## Next Steps
 
 You've completed Part 7: UEFI Development! Continue to the [Appendices]({% link appendices/index.md %}) for reference material.

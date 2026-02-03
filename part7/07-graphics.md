@@ -492,6 +492,10 @@ fn main(_image: Handle, st: SystemTable<Boot>) -> Status {
 | Draw buffer | `gop.blt(BufferToVideo)` |
 | Copy region | `gop.blt(VideoToVideo)` |
 
+## See Also
+
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part7/uefi-graphics)
+
 ## Next Steps
 
 Learn about [UEFI Variables]({% link part7/08-variables.md %}) for persistent storage.

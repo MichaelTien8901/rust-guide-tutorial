@@ -393,7 +393,7 @@ flowchart LR
 
 - [Web Services]({% link part5/05-web-services.md %}) - Integrating with web frameworks
 - [Database Libraries]({% link appendices/libraries/database.md %}) - Comprehensive database library reference
-- [Example Code](https://github.com/example/rust-guide/tree/main/examples/part5/database)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part5/database)
 
 ## Next Steps
 

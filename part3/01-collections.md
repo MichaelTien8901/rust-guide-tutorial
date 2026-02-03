@@ -463,6 +463,10 @@ mindmap
 2. Remove duplicates from a Vec while preserving order
 3. Implement a simple LRU cache using HashMap and VecDeque
 
+## See Also
+
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part3/collections)
+
 ## Next Steps
 
 Learn about [Iterators]({% link part3/02-iterators.md %}) to process collections efficiently.
