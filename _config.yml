@@ -14,6 +14,9 @@ color_scheme: dark
 mermaid:
   version: "10.6.0"
 
+# Logo and favicon
+logo: "/assets/images/rust_logo.png"
+
 # Search
 search_enabled: true
 search:
