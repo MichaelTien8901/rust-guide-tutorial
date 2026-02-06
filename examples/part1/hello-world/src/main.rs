@@ -6,8 +6,6 @@
 //! - Variables with `let`
 //! - String formatting with `{}`
 
-use std::io;
-
 fn main() {
     // Simple hello world
     println!("Hello, world!");
