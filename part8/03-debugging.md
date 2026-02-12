@@ -494,4 +494,4 @@ Breakpoint 1, Reset () at cortex-m-rt-0.7.3/src/lib.rs:497
 
 With debugging tools in your workflow, continue to [Bare Metal Runtime]({% link part8/04-bare-metal-runtime.md %}) to understand what happens between power-on and your `#[entry]` function.
 
-[Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part8/debugging)
+[Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part8/debugging)

@@ -494,7 +494,7 @@ fn main(_image: Handle, st: SystemTable<Boot>) -> Status {
 
 ## See Also
 
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part7/uefi-graphics)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part7/uefi-graphics)
 
 ## Next Steps
 

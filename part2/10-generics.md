@@ -686,7 +686,7 @@ mindmap
 - [Traits]({% link part2/09-traits.md %}) - Defining shared behavior
 - [Advanced Traits]({% link part4/05-advanced-traits.md %}) - Associated types and advanced patterns
 - [Advanced Types]({% link part4/06-advanced-types.md %}) - Newtype pattern and type aliases
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part2/generics)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part2/generics)
 
 ## Next Steps
 

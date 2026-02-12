@@ -525,4 +525,4 @@ This is the final chapter of Part 8. You have covered the complete embedded Rust
 - Explore the `embassy-boot` bootloader for OTA firmware updates
 - Contribute to the Rust embedded ecosystem — file issues, improve docs, write drivers
 
-[Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part8/async-concurrency)
+[Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part8/async-concurrency)

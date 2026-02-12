@@ -298,7 +298,7 @@ name.push_str("Alice");  // Works!
 
 ## Full Example Code
 
-[See the complete example on GitHub](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part1/hello-world)
+[See the complete example on GitHub](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part1/hello-world)
 
 ## Next Steps
 

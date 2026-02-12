@@ -713,7 +713,7 @@ mindmap
 
 - [Advanced Traits]({% link part4/05-advanced-traits.md %}) - Associated types, supertraits, and more
 - [Generics]({% link part2/10-generics.md %}) - Type parameters and trait bounds
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part2/traits)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part2/traits)
 
 ## Next Steps
 

@@ -349,7 +349,7 @@ fn read_with_timeout(timeout_us: u32) -> Result<u8, DriverError> {
 
 ## See Also
 
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part6/drivers)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part6/drivers)
 
 ## Next Steps
 

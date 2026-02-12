@@ -320,4 +320,4 @@ fn enable_cycle_counter() {
 
 Now that you can write embedded code, learn to debug it in [Debugging Embedded Applications]({% link part8/03-debugging.md %}).
 
-[Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part8/embedded-software)
+[Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part8/embedded-software)

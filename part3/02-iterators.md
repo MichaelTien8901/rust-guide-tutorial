@@ -551,7 +551,7 @@ mindmap
 
 - [Utilities Libraries]({% link appendices/libraries/utilities.md %}) - itertools and more iterator utilities
 - [Closures]({% link part3/03-closures.md %}) - The anonymous functions used with iterators
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part3/iterators)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part3/iterators)
 
 ## Next Steps
 

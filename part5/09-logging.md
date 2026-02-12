@@ -422,7 +422,7 @@ flowchart LR
 ## See Also
 
 - [Logging Libraries]({% link appendices/libraries/logging.md %}) - Comprehensive logging library reference
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part5/logging)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part5/logging)
 
 ## Next Steps
 

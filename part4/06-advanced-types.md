@@ -737,7 +737,7 @@ flowchart TD
 
 - [Structs]({% link part2/06-structs.md %}) - Basic struct definitions
 - [Traits]({% link part2/09-traits.md %}) - Trait fundamentals
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part4/advanced-types)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part4/advanced-types)
 
 ## Next Steps
 

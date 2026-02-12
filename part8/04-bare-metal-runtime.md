@@ -371,4 +371,4 @@ cortex_m::asm::dsb();
 
 Now that you understand the runtime, learn how memory is managed in [Memory Management in no_std]({% link part8/05-memory-management.md %}).
 
-[Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part8/bare-metal-runtime)
+[Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part8/bare-metal-runtime)

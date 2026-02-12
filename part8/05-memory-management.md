@@ -414,4 +414,4 @@ fn lookup_sine(degrees: usize) -> i16 {
 
 With memory under control, learn how to integrate existing C libraries into your Rust firmware in [C Interoperability]({% link part8/06-c-interop.md %}).
 
-[Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part8/memory-management)
+[Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part8/memory-management)

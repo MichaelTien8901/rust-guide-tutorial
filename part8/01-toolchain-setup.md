@@ -248,4 +248,4 @@ The PAC provides raw register access (`peripherals.GPIOA.odr.modify(...)`). The 
 
 Your environment is ready. Continue to [Writing Embedded Software]({% link part8/02-embedded-software.md %}) to write your first program on the STM32F769-DISCO.
 
-[Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part8/toolchain-setup)
+[Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part8/toolchain-setup)

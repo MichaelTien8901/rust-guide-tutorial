@@ -512,7 +512,7 @@ mindmap
 ## See Also
 
 - [Builder Pattern]({% link part5/01-builder-pattern.md %}) - Fluent APIs and advanced builder patterns
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part2/structs)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part2/structs)
 
 ## Next Steps
 

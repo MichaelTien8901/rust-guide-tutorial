@@ -563,7 +563,7 @@ mindmap
 
 - [Iterators]({% link part3/02-iterators.md %}) - Closures power iterator combinators
 - [Threads]({% link part3/05-threads.md %}) - Using closures with `move` for thread safety
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part3/closures)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part3/closures)
 
 ## Next Steps
 

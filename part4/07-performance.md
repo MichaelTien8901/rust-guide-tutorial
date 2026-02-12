@@ -657,7 +657,7 @@ fn process(value: Option<i32>) -> i32 {
 ## See Also
 
 - [Memory Layout]({% link part4/08-memory-layout.md %}) - Understanding data layout
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part4/performance)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part4/performance)
 
 ## Next Steps
 

@@ -694,7 +694,7 @@ let debug_impl = if has_debug {
 ## See Also
 
 - [Declarative Macros]({% link part4/03-macros-declarative.md %}) - Pattern-based macros
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part4/macros-procedural)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part4/macros-procedural)
 
 ## Next Steps
 

@@ -412,4 +412,4 @@ Total                  9636
 
 With your binary optimized for size and performance, learn how to handle concurrency without an OS in [Async and Concurrency]({% link part8/08-async-concurrency.md %}).
 
-[Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part8/binary-optimization)
+[Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part8/binary-optimization)

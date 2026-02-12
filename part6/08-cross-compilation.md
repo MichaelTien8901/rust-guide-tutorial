@@ -316,7 +316,7 @@ strip = true         # Strip symbols
 
 ## See Also
 
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part6/cross-compile)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part6/cross-compile)
 
 ## Next Steps
 

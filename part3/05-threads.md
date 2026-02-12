@@ -543,7 +543,7 @@ mindmap
 - [Mutex]({% link part3/07-mutex.md %}) - Shared mutable state
 - [Real-Time Constraints]({% link part6/06-real-time.md %}) - Deterministic threading for embedded systems
 - [RTOS Integration]({% link part6/07-rtos.md %}) - Real-time operating system patterns
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part3/threads)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part3/threads)
 
 ## Next Steps
 

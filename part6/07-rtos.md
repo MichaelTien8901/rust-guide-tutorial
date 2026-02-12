@@ -315,7 +315,7 @@ mod app {
 
 ## See Also
 
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part6/rtos-patterns)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part6/rtos-patterns)
 
 ## Next Steps
 

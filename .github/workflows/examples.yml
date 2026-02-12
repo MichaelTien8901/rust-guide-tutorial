@@ -6,12 +6,12 @@ name: Build Examples
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
     paths:
       - 'examples/**'
       - '.github/workflows/examples.yml'
   pull_request:
-    branches: [main, master]
+    branches: [main]
     paths:
       - 'examples/**'
       - '.github/workflows/examples.yml'

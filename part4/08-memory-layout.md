@@ -627,7 +627,7 @@ flowchart TD
 - [Unsafe Rust]({% link part4/01-unsafe.md %}) - Low-level memory operations
 - [FFI]({% link part4/02-ffi.md %}) - Interfacing with C
 - [Performance]({% link part4/07-performance.md %}) - Optimization techniques
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part4/memory-layout)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part4/memory-layout)
 
 ## Next Steps
 

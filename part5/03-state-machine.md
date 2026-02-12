@@ -379,7 +379,7 @@ flowchart LR
 
 - [Enums]({% link part2/07-enums.md %}) - Enum fundamentals
 - [Advanced Types]({% link part4/06-advanced-types.md %}) - PhantomData and type-level programming
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part5/state-machine)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part5/state-machine)
 
 ## Next Steps
 

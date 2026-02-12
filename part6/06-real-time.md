@@ -332,7 +332,7 @@ fn measure_stack_usage(stack: &[u32]) -> usize {
 
 ## See Also
 
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part6/real-time)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part6/real-time)
 
 ## Next Steps
 

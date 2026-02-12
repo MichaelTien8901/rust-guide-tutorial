@@ -538,7 +538,7 @@ mindmap
 - [Web Services]({% link part5/05-web-services.md %}) - Build async web applications
 - [Async Runtimes]({% link appendices/libraries/async-runtimes.md %}) - Runtime comparison and details
 - [Threads]({% link part3/05-threads.md %}) - OS thread-based concurrency
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part3/async-basics)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part3/async-basics)
 
 ## Next Steps
 

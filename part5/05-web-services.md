@@ -351,7 +351,7 @@ flowchart LR
 - [Async Basics]({% link part3/08-async-basics.md %}) - Async/await fundamentals
 - [Web Frameworks]({% link appendices/libraries/web-frameworks.md %}) - Framework comparison
 - [Serialization]({% link part5/07-serialization.md %}) - JSON and serde patterns
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part5/web-services)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part5/web-services)
 
 ## Next Steps
 

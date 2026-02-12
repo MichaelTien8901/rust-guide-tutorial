@@ -532,7 +532,7 @@ mindmap
 
 ## See Also
 
-- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part2/enums)
+- [Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part2/enums)
 
 ## Next Steps
 

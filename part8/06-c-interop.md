@@ -446,4 +446,4 @@ In practice, a well-designed wrapper combines all three techniques. The ownershi
 
 With C interop mastered, learn how to reduce your firmware's flash and RAM footprint in [Binary Size Optimization]({% link part8/07-binary-optimization.md %}).
 
-[Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/master/examples/part8/c-interop)
+[Example Code](https://github.com/MichaelTien8901/rust-guide-tutorial/tree/main/examples/part8/c-interop)
