@@ -1,0 +1,11 @@
+[package]
+name = "debugging"
+version = "0.1.0"
+edition = "2021"
+description = "Debugging patterns: defmt logging setup, panic handlers, and debug techniques"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part8/debugging"
+
+[dependencies]

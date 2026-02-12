@@ -1,0 +1,11 @@
+[package]
+name = "embedded-software"
+version = "0.1.0"
+edition = "2021"
+description = "HAL driver patterns, GPIO, peripheral access, and inline assembly concepts"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part8/embedded-software"
+
+[dependencies]

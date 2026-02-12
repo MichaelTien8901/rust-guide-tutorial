@@ -1,0 +1,11 @@
+[package]
+name = "toolchain-setup"
+version = "0.1.0"
+edition = "2021"
+description = "Embedded project skeleton demonstrating toolchain and project configuration"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part8/toolchain-setup"
+
+[dependencies]

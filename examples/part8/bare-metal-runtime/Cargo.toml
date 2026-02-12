@@ -1,0 +1,11 @@
+[package]
+name = "bare-metal-runtime"
+version = "0.1.0"
+edition = "2021"
+description = "Bare metal runtime concepts: startup sequence, vector table, memory initialization"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part8/bare-metal-runtime"
+
+[dependencies]

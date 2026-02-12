@@ -1,0 +1,11 @@
+[package]
+name = "binary-optimization"
+version = "0.1.0"
+edition = "2021"
+description = "Cargo profile comparison and binary size optimization techniques"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part8/binary-optimization"
+
+[dependencies]

@@ -1,0 +1,11 @@
+[package]
+name = "async-concurrency"
+version = "0.1.0"
+edition = "2021"
+description = "Embassy-style async patterns, task spawning, and timer futures"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part8/async-concurrency"
+
+[dependencies]

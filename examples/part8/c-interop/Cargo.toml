@@ -1,0 +1,11 @@
+[package]
+name = "c-interop"
+version = "0.1.0"
+edition = "2021"
+description = "FFI bindings, C library integration, and safe wrapper patterns"
+publish = false
+
+[package.metadata]
+tutorial-chapter = "part8/c-interop"
+
+[dependencies]
