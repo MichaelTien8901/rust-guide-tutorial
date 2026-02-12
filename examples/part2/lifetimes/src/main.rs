@@ -173,7 +173,7 @@ mod tests {
     fn test_longest() {
         assert_eq!(longest("abc", "ab"), "abc");
         assert_eq!(longest("ab", "abc"), "abc");
-        assert_eq!(longest("abc", "xyz"), "abc"); // Same length, returns first
+        assert_eq!(longest("abc", "xyz"), "xyz"); // Same length, returns second (else branch)
     }
 
     #[test]

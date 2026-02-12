@@ -577,8 +577,8 @@ mod tests {
         let mut light = TrafficLight::new();
         assert!(matches!(light, TrafficLight::Red { .. }));
 
-        // Tick through red
-        for _ in 0..30 {
+        // Tick through red (30 ticks to reach 0, then 1 more to transition)
+        for _ in 0..31 {
             light.tick();
         }
         assert!(matches!(light, TrafficLight::Green { .. }));

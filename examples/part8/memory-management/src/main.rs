@@ -269,7 +269,7 @@ fn demonstrate_memory_regions() {
         },
         MemRegion {
             name: "SRAM2",
-            base: 0x2007_8000,
+            base: 0x2007_C000,
             size_kb: 16,
             wait_states: 1,
             dma_accessible: true,
@@ -375,7 +375,7 @@ mod tests {
         let sram1_size: u32 = 368 * 1024;
 
         // SRAM2 follows SRAM1
-        let sram2_start: u32 = 0x2007_8000;
+        let sram2_start: u32 = 0x2007_C000;
         let sram2_size: u32 = 16 * 1024;
 
         // Verify non-overlapping

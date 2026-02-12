@@ -328,11 +328,9 @@ mod tests {
 
     #[test]
     fn test_user_service_sets_correctly() {
-        let mut mock = MockDataStore::new();
-        {
-            let mut service = UserService { store: &mut mock };
-            service.set_user_name("456", "Alice");
-        }
+        let mock = MockDataStore::new();
+        let mut service = UserService::new(mock);
+        service.set_user_name("456", "Alice");
 
         // Note: With mock we'd verify it was called
         // This simplified version just shows the pattern

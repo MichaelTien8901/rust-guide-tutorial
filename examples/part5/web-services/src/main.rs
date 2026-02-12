@@ -82,7 +82,7 @@ impl AppState {
 // Response Types
 // ============================================
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 struct ApiResponse<T> {
     success: bool,
     data: Option<T>,
